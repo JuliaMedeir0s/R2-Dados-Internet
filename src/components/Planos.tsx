@@ -7,67 +7,68 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 export default function Planos() {
-    const planos = [
-        {
+  const planos = [
+    {
       nome: "Plano Pro",
-            preco: "99,90",
-            velocidade: "600MB",
-            wifi: "Wi-fi Pro AC",
-            beneficios: [
-                { icon: "/images/wifi.png", text: "Wi-fi Pro AC" },
-                { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
-                { icon: "/images/suporte.png", text: "Suporte Premium" },
-        { icon: "/images/instalacao.png", text: "Instalação Grátis" },
-      ],
-        },
-        {
-      nome: "Plano Super",
-            preco: "129,90",
-            velocidade: "800MB",
-            wifi: "Wi-fi Pro AX",
-            beneficios: [
-                { icon: "/images/wifi.png", text: "Wi-fi Pro AX" },
-                { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
-                { icon: "/images/suporte.png", text: "Suporte Premium" },
-        { icon: "/images/instalacao.png", text: "Instalação Grátis" },
-      ],
-        },
-        {
-      nome: "Plano Turbo Pro",
-            preco: "149,90",
-            velocidade: "1GB",
-            wifi: "Wi-fi Pro AX",
-            beneficios: [
-                { icon: "/images/wifi.png", text: "Wi-fi Pro AX" },
-                { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
-                { icon: "/images/suporte.png", text: "Suporte Premium" },
+      preco: "99,90",
+      velocidade: "600MB",
+      wifi: "Wi-fi Pro AC",
+      beneficios: [
+        { icon: "/images/wifi.png", text: "Wi-fi Pro AC" },
+        { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
+        { icon: "/images/suporte.png", text: "Suporte Premium" },
         { icon: "/images/instalacao.png", text: "Instalação Grátis" },
       ],
     },
-    ];
+    {
+      nome: "Plano Super",
+      preco: "119,90",
+      velocidade: "800MB",
+      wifi: "Wi-fi Pro AX",
+      beneficios: [
+        { icon: "/images/wifi.png", text: "Wi-fi Pro AX" },
+        { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
+        { icon: "/images/suporte.png", text: "Suporte Premium" },
+        { icon: "/images/instalacao.png", text: "Instalação Grátis" },
+      ],
+    },
+    {
+      nome: "Plano Turbo Pro",
+      preco: "149,90",
+      velocidade: "1GB",
+      wifi: "Wi-fi Pro AX",
+      paramountIncluso: true,
+      beneficios: [
+        { icon: "/images/wifi.png", text: "Wi-fi Pro AX" },
+        { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
+        { icon: "/images/suporte.png", text: "Suporte Premium" },
+        { icon: "/images/instalacao.png", text: "Instalação Grátis" },
+      ],
+    },
+  ];
 
-    const [toggleStates, setToggleStates] = useState({
+  const [toggleStates, setToggleStates] = useState({
     "Plano Pro": { max: false, paramount: false },
     "Plano Super": { max: false, paramount: false },
-    "Plano Turbo Pro": { max: false, paramount: false },
+    "Plano Turbo Pro": { max: false, paramount: true },
   });
 
   const handleToggle = (planoNome: string, service: "max" | "paramount") => {
     setToggleStates((prev) => ({
-            ...prev,
-            [planoNome]: {
-                ...prev[planoNome as keyof typeof prev],
+      ...prev,
+      [planoNome]: {
+        ...prev[planoNome as keyof typeof prev],
         [service]: !prev[planoNome as keyof typeof prev][service],
       },
-        }));
-    };
+    }));
+  };
 
   // Função para calcular o preço total com streamings
   const calcularPrecoTotal = (planoNome: string, precoBase: string) => {
     const precoBaseNum = parseFloat(precoBase.replace(",", "."));
     let adicional = 0;
 
-    if (toggleStates[planoNome as keyof typeof toggleStates].paramount) {
+    if (toggleStates[planoNome as keyof typeof toggleStates].paramount && planoNome !== "Plano Turbo Pro") {
       adicional += 19.90;
     }
     if (toggleStates[planoNome as keyof typeof toggleStates].max) {
@@ -78,18 +79,18 @@ export default function Planos() {
     return total.toFixed(2).replace(".", ",");
   };
 
-    return (
-        <section className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold font-montserrat text-secondary mb-4">
             Muitas formas de te conectar
-                    </h2>
+          </h2>
           <p className="text-xl text-gray-600 font-montserrat max-w-3xl mx-auto hidden max-lg:block">
             Temos os melhores planos, passe para o lado e selecione o plano
             ideal para você!
-                    </p>
-                </div>
+          </p>
+        </div>
 
         <Swiper
           modules={[Navigation]}
@@ -106,7 +107,7 @@ export default function Planos() {
           }}
           className="px-10"
         >
-                    {planos.map((plano) => (
+          {planos.map((plano) => (
             <SwiperSlide
               key={plano.nome}
               className="flex justify-center items-center py-5"
@@ -116,19 +117,19 @@ export default function Planos() {
                   <h3 className="text-sm font-montserrat w-full py-1 font-bold">
                     {plano.nome}
                   </h3>
-                            </div>
-                            
+                </div>
+
                 <div className="pt-6">
                   <div className="text-center mb-2">
                     <span className="text-6xl font-montserrat font-bold text-[#003fbd]">
                       {plano.velocidade}
                     </span>
-                                </div>
+                  </div>
 
                   <hr className="border-b-2 border-primary mb-4 w-4/5 mx-auto" />
-                                
-                                <div className="space-y-4 mb-6">
-                                    {plano.beneficios.map((beneficio, index) => (
+
+                  <div className="space-y-4 mb-6">
+                    {plano.beneficios.map((beneficio, index) => (
                       <div
                         key={index}
                         className="flex space-x-3 justify-center items-center font-montserrat"
@@ -138,19 +139,19 @@ export default function Planos() {
                           alt={beneficio.text}
                           className="w-6 h-6 text-secondary"
                         />
-                                            <span className="text-gray-700">{beneficio.text}</span>
-                                        </div>
-                                    ))}
-                                </div>
+                        <span className="text-gray-700">{beneficio.text}</span>
+                      </div>
+                    ))}
+                  </div>
 
-                                <div className="mb-8">
+                  <div className="mb-8">
                     <h4 className="text-xl font-montserrat text-gray-700 mb-3 text-center">
                       Turbine seu plano
                     </h4>
-                                    <div className="flex flex-col gap-4 px-8">
-                                        <div className="flex items-center justify-between bg-gray-100 rounded-xl px-8 py-4 border-2 border-gray-300">
+                    <div className="flex flex-col gap-4 px-8">
+                      <div className="flex items-center justify-between bg-gray-100 rounded-xl px-8 py-4 border-2 border-gray-300">
                         <img src="/images/max.png" alt="max" className="h-4" />
-                                            <Switch
+                        <Switch
                           checked={
                             toggleStates[
                               plano.nome as keyof typeof toggleStates
@@ -159,79 +160,91 @@ export default function Planos() {
                           onCheckedChange={() =>
                             handleToggle(plano.nome, "max")
                           }
-                                            />
-                                        </div>
-                                        <div className="flex items-center justify-between bg-gray-100 rounded-xl px-8 py-4 border-2 border-gray-300">
-                        <img
-                          src="/images/paramount.png"
-                          alt="Paramount"
-                          className="h-7"
                         />
-                                            <Switch
-                          checked={
-                            toggleStates[
-                              plano.nome as keyof typeof toggleStates
-                            ].paramount
-                          }
-                          onCheckedChange={() =>
-                            handleToggle(plano.nome, "paramount")
-                          }
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                  <div className="text-center mb-2">
-                    <span className="text-xl font-montserrat text-primary font-bold">
-                      R$<span className="text-4xl">{calcularPrecoTotal(plano.nome, plano.preco)}</span>/mês
-                    </span>
-                                </div>
-                                
-                  {/* Exibição dos streamings selecionados */}
-                  {(toggleStates[plano.nome as keyof typeof toggleStates].max || 
-                    toggleStates[plano.nome as keyof typeof toggleStates].paramount) && (
+                      </div>
+                      <div
+                        className={`flex items-center justify-between rounded-xl px-8 py-4 border-2 ${plano.nome === "Plano Turbo Pro"
+                          ? "bg-green-50 border-green-300"
+                          : "bg-gray-100 border-gray-300"
+                          }`}
+                      >
+                        <div className="flex items-center gap-12">
+                          <img src="/images/paramount.png" alt="Paramount" className="h-7" />
+                          {plano.nome === "Plano Turbo Pro" && (
+                            <span className="text-xs font-montserrat font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">
+                              Já incluso
+                            </span>
+                          )}
+                        </div>
+
+                        {plano.nome !== "Plano Turbo Pro" && (
+                          <Switch
+                            checked={toggleStates[plano.nome as keyof typeof toggleStates].paramount}
+                            onCheckedChange={() => handleToggle(plano.nome, "paramount")}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center mb-2">
+                  <span className="text-xl font-montserrat text-primary font-bold">
+                    R$<span className="text-4xl">{calcularPrecoTotal(plano.nome, plano.preco)}</span>/mês
+                  </span>
+                </div>
+
+                {/* rodapé do preço */}
+                {(plano.nome === "Plano Turbo Pro" ||
+                  toggleStates[plano.nome as keyof typeof toggleStates].max ||
+                  toggleStates[plano.nome as keyof typeof toggleStates]
+                    .paramount) && (
                     <div className="text-center mb-2 px-4">
                       <p className="text-xs text-gray-600 font-montserrat">
                         Plano base: R$ {plano.preco}
-                        {toggleStates[plano.nome as keyof typeof toggleStates].paramount && 
+                        {plano.nome === "Plano Turbo Pro" &&
+                          " (Paramount+ incluso)"}
+                        {plano.nome !== "Plano Turbo Pro" &&
+                          toggleStates[
+                            plano.nome as keyof typeof toggleStates
+                          ].paramount &&
                           " + Paramount+ R$ 19,90"}
-                        {toggleStates[plano.nome as keyof typeof toggleStates].max && 
-                          " + Max R$ 29,90"}
+                        {toggleStates[
+                          plano.nome as keyof typeof toggleStates
+                        ].max && " + Max R$ 29,90"}
                       </p>
                     </div>
                   )}
 
-                  <a
-                    href={`https://wa.me/553136621235?text=${encodeURIComponent(
-                      `Olá, tenho interesse no plano de ${
-                        plano.velocidade
-                      }${Object.entries(
-                        toggleStates[plano.nome as keyof typeof toggleStates]
+                <a
+                  href={`https://wa.me/553136621235?text=${encodeURIComponent(
+                    `Olá, tenho interesse no plano de ${plano.velocidade
+                    }${Object.entries(
+                      toggleStates[plano.nome as keyof typeof toggleStates]
+                    )
+                      .filter(([_, value]) => value)
+                      .map(([key]) =>
+                        key === "max" ? " com HBO Max" : " com Paramount+"
                       )
-                        .filter(([_, value]) => value)
-                        .map(([key]) =>
-                          key === "max" ? " com HBO Max" : " com Paramount+"
-                        )
-                        .join(" e")}`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-60 bg-white border-2 border-primary text-primary py-2 rounded-full font-semibold hover:bg-primary transition-colors flex items-center justify-center space-x-1 mb-6 mx-auto group"
-                  >
-                    <span className="text-2sm text-blue-600 font-montserrat group-hover:text-white transition-colors">
-                      Saiba Mais
-                    </span>
-                    <Icon
-                      icon="ph:arrow-right-bold"
-                      className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors"
-                    />
-                  </a>
-                            </div>
-                        </div>
+                      .join(" e")}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-60 bg-white border-2 border-primary text-primary py-2 rounded-full font-semibold hover:bg-primary transition-colors flex items-center justify-center space-x-1 mb-6 mx-auto group"
+                >
+                  <span className="text-2sm text-blue-600 font-montserrat group-hover:text-white transition-colors">
+                    Saiba Mais
+                  </span>
+                  <Icon
+                    icon="ph:arrow-right-bold"
+                    className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors"
+                  />
+                </a>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
-            </div>
-        </section>
-    );
+      </div>
+    </section >
+  );
 }
