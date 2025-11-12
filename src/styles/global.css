@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+body {
+	font-family: 'Montserrat', sans-serif;
+}
+
+@theme {
+	--color-primary: #ff6600;
+	--color-secondary: #003fbd;
+
+	--font-unineue: 'unineue', sans-serif;
+	--font-ibrand: 'ibrand', sans-serif;
+	--font-unineue-heavy: 'unineue-heavy', sans-serif;
+}
+
+@layer base {
+	@font-face {
+		font-family: 'unineue';
+		src: url("/fonts/UniNeueRegular.otf") format("opentype");
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'ibrand';
+		src: url("/fonts/ibrand.otf") format("opentype");
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'unineue-heavy';
+		src: url("/fonts/UniNeueHeavy.otf") format("opentype");
+		font-weight: 800;
+	}
+}
+
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background: #3B094D;
+	border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb{
+	background: var(--color-primary);
+	border-radius: 15px;
+	animation-duration: 3s
+}

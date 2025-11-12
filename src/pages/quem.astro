@@ -1,0 +1,15 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Banner from '@/components/Banner';
+import Diferenciais from '@/components/Diferenciais.astro';
+import FaleConosco from '@/components/FaleConosco';
+import Lojas from '@/components/Lojas';
+---
+
+<Layout>
+    <div class="max-lg:hidden"><Banner client:load href="/banners/Home.mp4"/></div>
+    <div class="hidden max-lg:block"><Banner client:load href="/banners/HomeMobile.mp4"/></div>
+    <Diferenciais client:load />
+    <FaleConosco client:load />
+    <Lojas client:load />
+</Layout>

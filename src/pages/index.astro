@@ -1,0 +1,27 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Banner from '@/components/Banner';
+import Planos from '@/components/Planos';
+import Teste from '@/components/Teste';
+import Lojas from '@/components/Lojas';
+import FAQ from '@/components/FAQ';
+import FaleConosco from '@/components/FaleConosco';
+import Hero from '@/components/Hero';
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout>
+    <Hero client:load />
+    <Planos client:load />
+    <Teste client:load />
+    <img src="/banners/apps.png" alt="apps" class="max-lg:hidden" />
+    <img src="/banners/appsMobile.png" alt="apps" class="hidden max-lg:block" />
+    <Lojas client:load />
+    <a href="/indique">
+        <img src="/banners/indique.png" alt="indique" class="w-3/4 mx-auto rounded-4xl mt-10 max-lg:hidden" />
+        <img src="/banners/indiqueMobile.png" alt="indique" class="hidden max-lg:block" />
+    </a>
+    <FAQ client:load />
+    <FaleConosco client:load />
+</Layout>

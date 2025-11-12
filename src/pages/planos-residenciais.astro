@@ -1,0 +1,19 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Banner from '@/components/Banner';
+import Planos from '@/components/Planos';
+import Teste from '@/components/Teste';
+import FaleConosco from '@/components/FaleConosco';
+import Lojas from '@/components/Lojas';
+---
+
+<Layout>
+    <div class="max-lg:hidden"><Banner client:load href="/banners/Home.mp4"/></div>
+    <div class="hidden max-lg:block"><Banner client:load href="/banners/HomeMobile.mp4"/></div>
+    <Planos client:load />
+    <Teste client:load />
+    <img src="/banners/apps.png" alt="apps" class="max-lg:hidden" />
+    <img src="/banners/appsMobile.png" alt="apps" class="hidden max-lg:block" />
+    <FaleConosco client:load />
+    <Lojas client:load />
+</Layout>
