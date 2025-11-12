@@ -18,6 +18,7 @@ export default function Footer() {
             />
             <div className="flex gap-3 mt-4 flex-col">
               <a
+                id="app-android"
                 href="https://play.google.com/store/search?q=minha%20r2&c=apps"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -31,6 +32,7 @@ export default function Footer() {
                 <span>Baixe nosso app</span>
               </a>
               <a
+                id="app-ios"
                 href="https://apps.apple.com/br/app/minha-r2/id6737197287"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -151,6 +153,7 @@ export default function Footer() {
             <div className="space-y-2">
               <div className="flex items-center justify-center md:justify-start">
                 <a
+                  id="whatsapp"
                   href="https://api.whatsapp.com/send/?phone=553136621235&text=Ol%C3%A1%2C+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+os+servi%C3%A7os+da+R2+Internet.&type=phone_number&app_absent=0"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -165,6 +168,7 @@ export default function Footer() {
                 </div>
               <div className="flex items-center justify-center md:justify-start">
                 <a
+                  id="telefone"
                   href="tel:+553136621235"
                   className="flex items-center hover:opacity-80 transition-opacity"
                 >
@@ -177,6 +181,7 @@ export default function Footer() {
                 </div>
               <div className="flex items-center justify-center md:justify-start">
                 <a
+                  id="email"
                   href="mailto:contato@r2dados.com"
                   className="flex items-center hover:opacity-80 transition-opacity"
                 >
@@ -197,6 +202,7 @@ export default function Footer() {
             </h3>
             <div className="flex space-x-1 justify-center md:justify-start">
               <a
+                id="instagram"
                 href="https://www.instagram.com/r2internet/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -208,6 +214,7 @@ export default function Footer() {
                 />
               </a>
               <a
+                id="facebook"
                 href="https://www.facebook.com/r2dados"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -219,6 +226,7 @@ export default function Footer() {
                 />
               </a>
               <a
+                id="whatsapp"
                 href="https://api.whatsapp.com/send/?phone=553136621235&text=Ol%C3%A1%2C+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+os+servi%C3%A7os+da+R2+Internet.&type=phone_number&app_absent=0"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -230,6 +238,7 @@ export default function Footer() {
                 />
               </a>
               <a
+                id="instagram-empresas"
                 href="https://www.instagram.com/r2.empresas/"
                 target="_blank"
                 rel="noopener noreferrer"

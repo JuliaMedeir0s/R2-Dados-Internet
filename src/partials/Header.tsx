@@ -65,6 +65,7 @@ export default function Header() {
             {/* Desktop Client Area Button */}
             <div className="hidden xl:flex items-center ml-8">
               <a
+                id="area-cliente"
                 href="https://ixc.r2dados.com.br/central_assinante_web/login"
                 className="bg-secondary text-white px-4 xl:px-10 py-2 xl:py-3 rounded-full font-medium transition-colors flex items-center gap-2 shadow-lg hover:opacity-90 whitespace-nowrap text-sm xl:text-base"
               >
