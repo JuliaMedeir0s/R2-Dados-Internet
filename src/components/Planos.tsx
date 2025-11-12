@@ -47,9 +47,14 @@ export default function Planos() {
     },
   ];
 
+  const PARAMOUNT_INCLUSO = new Set<string>([
+    "Plano Turbo Pro",
+    "Plano Super",
+  ]);
+
   const [toggleStates, setToggleStates] = useState({
     "Plano Pro": { max: false, paramount: false },
-    "Plano Super": { max: false, paramount: false },
+    "Plano Super": { max: false, paramount: true },
     "Plano Turbo Pro": { max: false, paramount: true },
   });
 
@@ -68,7 +73,7 @@ export default function Planos() {
     const precoBaseNum = parseFloat(precoBase.replace(",", "."));
     let adicional = 0;
 
-    if (toggleStates[planoNome as keyof typeof toggleStates].paramount && planoNome !== "Plano Turbo Pro") {
+    if (toggleStates[planoNome as keyof typeof toggleStates].paramount && !PARAMOUNT_INCLUSO.has(planoNome)) {
       adicional += 19.90;
     }
     if (toggleStates[planoNome as keyof typeof toggleStates].max) {
@@ -163,21 +168,21 @@ export default function Planos() {
                         />
                       </div>
                       <div
-                        className={`flex items-center justify-between rounded-xl px-8 py-4 border-2 ${plano.nome === "Plano Turbo Pro"
+                        className={`flex items-center justify-between rounded-xl px-8 py-4 border-2 ${PARAMOUNT_INCLUSO.has(plano.nome)
                           ? "bg-green-50 border-green-300"
                           : "bg-gray-100 border-gray-300"
                           }`}
                       >
                         <div className="flex items-center gap-12">
                           <img src="/images/paramount.png" alt="Paramount" className="h-7" />
-                          {plano.nome === "Plano Turbo Pro" && (
+                          {PARAMOUNT_INCLUSO.has(plano.nome) && (
                             <span className="text-xs font-montserrat font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">
                               Já incluso
                             </span>
                           )}
                         </div>
 
-                        {plano.nome !== "Plano Turbo Pro" && (
+                        {!PARAMOUNT_INCLUSO.has(plano.nome) && (
                           <Switch
                             checked={toggleStates[plano.nome as keyof typeof toggleStates].paramount}
                             onCheckedChange={() => handleToggle(plano.nome, "paramount")}
@@ -202,16 +207,11 @@ export default function Planos() {
                     <div className="text-center mb-2 px-4">
                       <p className="text-xs text-gray-600 font-montserrat">
                         Plano base: R$ {plano.preco}
-                        {plano.nome === "Plano Turbo Pro" &&
-                          " (Paramount+ incluso)"}
-                        {plano.nome !== "Plano Turbo Pro" &&
-                          toggleStates[
-                            plano.nome as keyof typeof toggleStates
-                          ].paramount &&
+                        {PARAMOUNT_INCLUSO.has(plano.nome) && " (Paramount+ incluso)"}
+                        {!PARAMOUNT_INCLUSO.has(plano.nome) &&
+                          toggleStates[plano.nome as keyof typeof toggleStates].paramount &&
                           " + Paramount+ R$ 19,90"}
-                        {toggleStates[
-                          plano.nome as keyof typeof toggleStates
-                        ].max && " + Max R$ 29,90"}
+                        {toggleStates[plano.nome as keyof typeof toggleStates].max && " + Max R$ 29,90"}
                       </p>
                     </div>
                   )}
