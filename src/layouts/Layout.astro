@@ -6,26 +6,135 @@ import Footer from "@/partials/Footer.tsx";
 
 <!doctype html>
 <html lang="pt-br">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/images/LogoSite.png" />
-		<meta name="generator" content={Astro.generator} />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Encode+Sans:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-			rel="stylesheet"
-		/>
-		<title>R2 Internet</title>
-		<meta
-			name="description"
-			content="R2 Internet é uma empresa de internet que oferece serviços de internet para residências e empresas."
-		/>
-	</head>
-	<body>
-		<Header client:only />
-		<slot />
-		<Footer client:only />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/images/LogoSite.png" />
+    <meta name="generator" content={Astro.generator} />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NLJ7KGFK");
+    </script>
+    <!-- End Google Tag Manager -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Encode+Sans:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>R2 Internet</title>
+    <meta
+      name="description"
+      content="R2 Internet é uma empresa de internet que oferece serviços de internet para residências e empresas."
+    />
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NLJ7KGFK"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
+    <!-- End Google Tag Manager (noscript) -->
+    <Header client:only />
+    <slot />
+    <Footer client:only />
+    <script is:inline>
+      if (typeof window !== "undefined") {
+        (function () {
+          // URL atual
+          var currentUrl = window.location.href;
+          var url = new URL(currentUrl);
+
+          // slug/path da página
+          var pagePath = url.pathname.replace(/^\/|\/$/g, "");
+
+          // referrer limpo
+          var cleanReferrer = document.referrer
+            ? document.referrer.replace(/^https?:\/\//, "")
+            : "";
+
+          // valores base de UTM
+          var utmSource =
+            url.searchParams.get("utm_source") || cleanReferrer || "Site";
+          var utmMedium = url.searchParams.get("utm_medium") || "Organico";
+          var utmCampaign = url.searchParams.get("utm_campaign") || "Direto";
+          var utmContent =
+            url.searchParams.get("utm_content") || pagePath || "Home";
+          var utmTerm = url.searchParams.get("utm_term") || "";
+
+          var links = document.querySelectorAll("a[href]");
+
+          for (var i = 0; i < links.length; i++) {
+            var link = links[i];
+
+            // ignore links com atributo popup
+            if (link.hasAttribute("popup")) continue;
+
+            var destinationUrl = link.href;
+
+            // ignora âncoras
+            if (
+              destinationUrl.indexOf("#") !== -1 &&
+              destinationUrl.split("#")[0] ===
+                window.location.href.split("#")[0]
+            ) {
+              continue;
+            }
+
+            // já tem UTM? então não mexe
+            if (
+              destinationUrl.includes("utm_source") ||
+              destinationUrl.includes("utm_medium") ||
+              destinationUrl.includes("utm_campaign") ||
+              destinationUrl.includes("utm_content") ||
+              destinationUrl.includes("utm_term")
+            ) {
+              continue;
+            }
+
+            // monta parâmetros UTM
+            var hasQuery = destinationUrl.indexOf("?") !== -1;
+            destinationUrl += hasQuery ? "&" : "?";
+            destinationUrl += "utm_source=" + encodeURIComponent(utmSource);
+            destinationUrl += "&utm_medium=" + encodeURIComponent(utmMedium);
+            destinationUrl +=
+              "&utm_campaign=" + encodeURIComponent(utmCampaign);
+            destinationUrl += "&utm_content=" + encodeURIComponent(utmContent);
+            destinationUrl += "&utm_term=" + encodeURIComponent(utmTerm);
+
+            if (
+              destinationUrl.includes("pay.hotmart") ||
+              destinationUrl.includes("pay.kiwify")
+            ) {
+              var sckValue =
+                utmSource +
+                "-" +
+                utmMedium +
+                "-" +
+                utmCampaign +
+                "-" +
+                utmContent +
+                "-" +
+                utmTerm;
+              destinationUrl += "&sck=" + encodeURIComponent(sckValue);
+            }
+
+            link.href = destinationUrl;
+          }
+        })();
+      }
+    </script>
+  </body>
 </html>

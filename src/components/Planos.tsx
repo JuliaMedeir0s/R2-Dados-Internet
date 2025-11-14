@@ -6,7 +6,11 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
+import { useUtm, getWhatsappText } from "@/lib/utmMessages";
+
 export default function Planos() {
+  const utm = useUtm();
+
   const planos = [
     {
       nome: "Plano Pro",
@@ -37,7 +41,6 @@ export default function Planos() {
       preco: "149,90",
       velocidade: "1GB",
       wifi: "Wi-fi Pro AX",
-      paramountIncluso: true,
       beneficios: [
         { icon: "/images/wifi.png", text: "Wi-fi Pro AX" },
         { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
@@ -47,10 +50,7 @@ export default function Planos() {
     },
   ];
 
-  const PARAMOUNT_INCLUSO = new Set<string>([
-    "Plano Turbo Pro",
-    "Plano Super",
-  ]);
+  const PARAMOUNT_INCLUSO = new Set<string>(["Plano Turbo Pro", "Plano Super"]);
 
   const [toggleStates, setToggleStates] = useState({
     "Plano Pro": { max: false, paramount: false },
@@ -73,15 +73,27 @@ export default function Planos() {
     const precoBaseNum = parseFloat(precoBase.replace(",", "."));
     let adicional = 0;
 
-    if (toggleStates[planoNome as keyof typeof toggleStates].paramount && !PARAMOUNT_INCLUSO.has(planoNome)) {
-      adicional += 19.90;
+    if (
+      toggleStates[planoNome as keyof typeof toggleStates].paramount &&
+      !PARAMOUNT_INCLUSO.has(planoNome)
+    ) {
+      adicional += 19.9;
     }
     if (toggleStates[planoNome as keyof typeof toggleStates].max) {
-      adicional += 29.90;
+      adicional += 29.9;
     }
 
     const total = precoBaseNum + adicional;
     return total.toFixed(2).replace(".", ",");
+  };
+
+  const extrasWhats = (planoNome: string) => {
+    if (PARAMOUNT_INCLUSO.has(planoNome)) return " com Paramount+";
+    const toggles = toggleStates[planoNome as keyof typeof toggleStates];
+    const partes: string[] = [];
+    if (toggles.paramount) partes.push(" com Paramount+");
+    if (toggles.max) partes.push(" com HBO Max");
+    return partes.join(" e");
   };
 
   return (
@@ -168,13 +180,18 @@ export default function Planos() {
                         />
                       </div>
                       <div
-                        className={`flex items-center justify-between rounded-xl px-8 py-4 border-2 ${PARAMOUNT_INCLUSO.has(plano.nome)
-                          ? "bg-green-50 border-green-300"
-                          : "bg-gray-100 border-gray-300"
-                          }`}
+                        className={`flex items-center justify-between rounded-xl px-8 py-4 border-2 ${
+                          PARAMOUNT_INCLUSO.has(plano.nome)
+                            ? "bg-green-50 border-green-300"
+                            : "bg-gray-100 border-gray-300"
+                        }`}
                       >
                         <div className="flex items-center gap-12">
-                          <img src="/images/paramount.png" alt="Paramount" className="h-7" />
+                          <img
+                            src="/images/paramount.png"
+                            alt="Paramount"
+                            className="h-7"
+                          />
                           {PARAMOUNT_INCLUSO.has(plano.nome) && (
                             <span className="text-xs font-montserrat font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">
                               Já incluso
@@ -184,8 +201,14 @@ export default function Planos() {
 
                         {!PARAMOUNT_INCLUSO.has(plano.nome) && (
                           <Switch
-                            checked={toggleStates[plano.nome as keyof typeof toggleStates].paramount}
-                            onCheckedChange={() => handleToggle(plano.nome, "paramount")}
+                            checked={
+                              toggleStates[
+                                plano.nome as keyof typeof toggleStates
+                              ].paramount
+                            }
+                            onCheckedChange={() =>
+                              handleToggle(plano.nome, "paramount")
+                            }
                           />
                         )}
                       </div>
@@ -195,7 +218,11 @@ export default function Planos() {
 
                 <div className="text-center mb-2">
                   <span className="text-xl font-montserrat text-primary font-bold">
-                    R$<span className="text-4xl">{calcularPrecoTotal(plano.nome, plano.preco)}</span>/mês
+                    R$
+                    <span className="text-4xl">
+                      {calcularPrecoTotal(plano.nome, plano.preco)}
+                    </span>
+                    /mês
                   </span>
                 </div>
 
@@ -204,29 +231,24 @@ export default function Planos() {
                   toggleStates[plano.nome as keyof typeof toggleStates].max ||
                   toggleStates[plano.nome as keyof typeof toggleStates]
                     .paramount) && (
-                    <div className="text-center mb-2 px-4">
-                      <p className="text-xs text-gray-600 font-montserrat">
-                        Plano base: R$ {plano.preco}
-                        {PARAMOUNT_INCLUSO.has(plano.nome) && " (Paramount+ incluso)"}
-                        {!PARAMOUNT_INCLUSO.has(plano.nome) &&
-                          toggleStates[plano.nome as keyof typeof toggleStates].paramount &&
-                          " + Paramount+ R$ 19,90"}
-                        {toggleStates[plano.nome as keyof typeof toggleStates].max && " + Max R$ 29,90"}
-                      </p>
-                    </div>
-                  )}
+                  <div className="text-center mb-2 px-4">
+                    <p className="text-xs text-gray-600 font-montserrat">
+                      Plano base: R$ {plano.preco}
+                      {PARAMOUNT_INCLUSO.has(plano.nome) &&
+                        " (Paramount+ incluso)"}
+                      {!PARAMOUNT_INCLUSO.has(plano.nome) &&
+                        toggleStates[plano.nome as keyof typeof toggleStates]
+                          .paramount &&
+                        " + Paramount+ R$ 19,90"}
+                      {toggleStates[plano.nome as keyof typeof toggleStates]
+                        .max && " + Max R$ 29,90"}
+                    </p>
+                  </div>
+                )}
 
                 <a
                   href={`https://wa.me/553136621235?text=${encodeURIComponent(
-                    `Olá, tenho interesse no plano de ${plano.velocidade
-                    }${Object.entries(
-                      toggleStates[plano.nome as keyof typeof toggleStates]
-                    )
-                      .filter(([_, value]) => value)
-                      .map(([key]) =>
-                        key === "max" ? " com HBO Max" : " com Paramount+"
-                      )
-                      .join(" e")}`
+                    getWhatsappText(plano.nome, plano.velocidade, utm)
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -245,6 +267,6 @@ export default function Planos() {
           ))}
         </Swiper>
       </div>
-    </section >
+    </section>
   );
 }

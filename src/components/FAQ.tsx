@@ -58,6 +58,7 @@ export default function FAQ() {
             {/* Ícones de Contato */}
             <div className="flex space-x-4 max-lg:-mt-5 max-lg:justify-center">
               <a
+                id="whatsapp"
                 href="https://api.whatsapp.com/send/?phone=553136621235&text=Ol%C3%A1%2C+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+os+servi%C3%A7os+da+R2+Internet.&type=phone_number&app_absent=0"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -69,6 +70,7 @@ export default function FAQ() {
                 />
               </a>
               <a
+                id="instagram"
                 href="https://www.instagram.com/r2internet/"
                 className="w-14 h-14 bg-primary rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors"
               >
@@ -78,6 +80,7 @@ export default function FAQ() {
                 />
               </a>
               <a
+                id="instagram-empresas"
                 href="https://www.instagram.com/r2.empresas/"
                 className="w-14 h-14 bg-primary rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors"
               >
@@ -87,6 +90,7 @@ export default function FAQ() {
                 />
               </a>
               <a
+                id="facebook"
                 href="https://www.facebook.com/r2dados"
                 className="w-14 h-14 bg-primary rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors"
               >
@@ -111,7 +115,10 @@ export default function FAQ() {
                   </h3>
                   <div className="flex-shrink-0">
                     {openIndex === index ? (
-                      <Icon icon="ph:x-bold" className="w-6 h-6 text-secondary" />
+                      <Icon
+                        icon="ph:x-bold"
+                        className="w-6 h-6 text-secondary"
+                      />
                     ) : (
                       <Icon
                         icon="ph:plus-bold"
