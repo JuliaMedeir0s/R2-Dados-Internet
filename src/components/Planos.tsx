@@ -6,7 +6,11 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { useUtm, getPlanWhatsappText } from "@/lib/whatsapp";
+import {
+  useUtm,
+  getPlanWhatsappText,
+  buildPlanWhatsappHref,
+} from "@/lib/whatsapp";
 
 export default function Planos() {
   const utm = useUtm();
@@ -26,7 +30,7 @@ export default function Planos() {
     },
     {
       nome: "Plano Super",
-      preco: "119,90",
+      preco: "129,90",
       velocidade: "800MB",
       wifi: "Wi-fi Pro AX",
       beneficios: [
@@ -50,35 +54,34 @@ export default function Planos() {
     },
   ];
 
-  const PARAMOUNT_INCLUSO = new Set<string>(["Plano Turbo Pro", "Plano Super"]);
+  // REMOVIDO: const PARAMOUNT_INCLUSO
 
   const [toggleStates, setToggleStates] = useState({
-    "Plano Pro": { max: false, paramount: false },
-    "Plano Super": { max: false, paramount: true },
-    "Plano Turbo Pro": { max: false, paramount: true },
+    "Plano Pro": { max: false },
+    "Plano Super": { max: false },
+    "Plano Turbo Pro": { max: false },
   });
 
-  const handleToggle = (planoNome: string, service: "max" | "paramount") => {
+  const handleToggle = (planoNome: string, service: "max") => {
     setToggleStates((prev) => ({
       ...prev,
       [planoNome]: {
         ...prev[planoNome as keyof typeof prev],
-        [service]: !prev[planoNome as keyof typeof prev][service],
+        [service]:
+          !prev[planoNome as keyof typeof prev][
+            service as keyof (typeof prev)[keyof typeof prev]
+          ],
       },
     }));
   };
 
-  // Função para calcular o preço total com streamings
+  // Função para calcular o preço total com streamings (apenas MAX)
   const calcularPrecoTotal = (planoNome: string, precoBase: string) => {
     const precoBaseNum = parseFloat(precoBase.replace(",", "."));
     let adicional = 0;
 
-    if (
-      toggleStates[planoNome as keyof typeof toggleStates].paramount &&
-      !PARAMOUNT_INCLUSO.has(planoNome)
-    ) {
-      adicional += 19.9;
-    }
+    // REMOVIDO: Lógica do Paramount+
+
     if (toggleStates[planoNome as keyof typeof toggleStates].max) {
       adicional += 29.9;
     }
@@ -121,10 +124,10 @@ export default function Planos() {
               toggleStates[plano.nome as keyof typeof toggleStates]
             )
               .filter(([_, value]) => value)
-              .map(([key]) =>
-                key === "max" ? " com HBO Max" : " com Paramount+"
+              .map(
+                ([key]) => (key === "max" ? " com HBO Max" : "") // Mantém só o Max
               )
-              .join(" e");
+              .join("");
 
             const extrasLabel = extrasLabelRaw ? ` ${extrasLabelRaw}` : "";
 
@@ -198,40 +201,7 @@ export default function Planos() {
                           />
                         </div>
 
-                        {/* PARAMOUNT */}
-                        <div
-                          className={`flex items-center justify-between rounded-xl px-8 py-4 border-2 ${
-                            PARAMOUNT_INCLUSO.has(plano.nome)
-                              ? "bg-green-50 border-green-300"
-                              : "bg-gray-100 border-gray-300"
-                          }`}
-                        >
-                          <div className="flex items-center gap-12">
-                            <img
-                              src="/images/paramount.png"
-                              alt="Paramount"
-                              className="h-7"
-                            />
-                            {PARAMOUNT_INCLUSO.has(plano.nome) && (
-                              <span className="text-xs font-montserrat font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">
-                                Já incluso
-                              </span>
-                            )}
-                          </div>
-
-                          {!PARAMOUNT_INCLUSO.has(plano.nome) && (
-                            <Switch
-                              checked={
-                                toggleStates[
-                                  plano.nome as keyof typeof toggleStates
-                                ].paramount
-                              }
-                              onCheckedChange={() =>
-                                handleToggle(plano.nome, "paramount")
-                              }
-                            />
-                          )}
-                        </div>
+                        {/* REMOVIDO: PARAMOUNT */}
                       </div>
                     </div>
                   </div>
@@ -246,19 +216,11 @@ export default function Planos() {
                     </span>
                   </div>
 
-                  {(plano.nome === "Plano Turbo Pro" ||
-                    toggleStates[plano.nome as keyof typeof toggleStates].max ||
-                    toggleStates[plano.nome as keyof typeof toggleStates]
-                      .paramount) && (
+                  {toggleStates[plano.nome as keyof typeof toggleStates]
+                    .max && (
                     <div className="text-center mb-2 px-4">
                       <p className="text-xs text-gray-600 font-montserrat">
                         Plano base: R$ {plano.preco}
-                        {PARAMOUNT_INCLUSO.has(plano.nome) &&
-                          " (Paramount+ incluso)"}
-                        {!PARAMOUNT_INCLUSO.has(plano.nome) &&
-                          toggleStates[plano.nome as keyof typeof toggleStates]
-                            .paramount &&
-                          " + Paramount+ R$ 19,90"}
                         {toggleStates[plano.nome as keyof typeof toggleStates]
                           .max && " + Max R$ 29,90"}
                       </p>
@@ -266,9 +228,11 @@ export default function Planos() {
                   )}
 
                   <a
-                    href={`https://wa.me/553136621235?text=${encodeURIComponent(
-                      whatsappText
-                    )}`}
+                    href={buildPlanWhatsappHref(undefined, utm, {
+                      planName: plano.nome,
+                      speed: plano.velocidade,
+                      extrasLabel,
+                    })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-60 bg-white border-2 border-primary text-primary py-2 rounded-full font-semibold hover:bg-primary transition-colors flex items-center justify-center space-x-1 mb-6 mx-auto group"

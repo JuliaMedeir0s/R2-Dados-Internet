@@ -1,6 +1,8 @@
 // src/lib/whatsapp.ts
 import { useEffect, useState } from "react";
 
+export const DEFAULT_WHATSAPP_PHONE = "553136621235";
+
 /** Informações de UTM capturadas da URL/referrer */
 export type UTM = {
   source: string;
@@ -33,7 +35,7 @@ export const useUtm = () => {
     // se não veio utm_source, vê se o referrer é de fora ou do próprio site
     if (!utmSource) {
       if (cleanReferrer && !cleanReferrer.startsWith(currentHost)) {
-        utmSource = cleanReferrer; // ex: google.com, instagram.com
+        utmSource = cleanReferrer; 
       } else {
         utmSource = "Site";
       }
@@ -126,14 +128,22 @@ export const getGenericWhatsappText = (
 };
 
 /** Gera o link completo do WhatsApp usando a mensagem genérica */
-export const buildGenericWhatsappHref = (
-  phone: string,
+export const buildPlanWhatsappHref = (
+  phone: string | null | undefined,
   utm: UTM | null,
-  context?: string
+  options: {
+    planName: string;
+    speed: string;
+    extrasLabel?: string;
+  }
 ) => {
-  const text = getGenericWhatsappText(utm, context);
-  return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+  const finalPhone = phone || DEFAULT_WHATSAPP_PHONE;
+  const text = getPlanWhatsappText(utm, options);
+
+  return `https://wa.me/${finalPhone}?text=${encodeURIComponent(text)}`;
 };
+
+
 
 /**
  * Mensagem para os planos (cartões de plano)
