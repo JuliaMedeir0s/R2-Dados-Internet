@@ -1,6 +1,5 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { Switch } from "@/components/ui/switch";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -8,7 +7,6 @@ import "swiper/css/navigation";
 
 import {
   useUtm,
-  getPlanWhatsappText,
   buildPlanWhatsappHref,
 } from "@/lib/whatsapp";
 
@@ -27,6 +25,11 @@ export default function Planos() {
         { icon: "/images/suporte.png", text: "Suporte Premium" },
         { icon: "/images/instalacao.png", text: "Instalação Grátis" },
       ],
+      assinaturas: [
+        { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
+        { nome: "BitBook", icon: "/images/bitbook_logo.png" },
+        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+      ],
     },
     {
       nome: "Plano Super",
@@ -38,6 +41,12 @@ export default function Planos() {
         { icon: "/images/fibra.png", text: "100% Fibra Óptica" },
         { icon: "/images/suporte.png", text: "Suporte Premium" },
         { icon: "/images/instalacao.png", text: "Instalação Grátis" },
+      ],
+      assinaturas: [
+        { nome: "Deezer", icon: "/images/deezer_logo.png" },
+        { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
+        { nome: "BitBook", icon: "/images/bitbook_logo.png" },
+        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
       ],
     },
     {
@@ -51,43 +60,28 @@ export default function Planos() {
         { icon: "/images/suporte.png", text: "Suporte Premium" },
         { icon: "/images/instalacao.png", text: "Instalação Grátis" },
       ],
+      assinaturas: [
+        { nome: "Deezer", icon: "/images/deezer_logo.png" },
+        { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
+        { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
+        { nome: "BitBook", icon: "/images/bitbook_logo.png" },
+        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+      ],
     },
   ];
 
-  // REMOVIDO: const PARAMOUNT_INCLUSO
+  const [assinaturasAbertas, setAssinaturasAbertas] = useState(() =>
+    planos.reduce(
+      (acc, plano) => ({ ...acc, [plano.nome]: false }),
+      {} as Record<string, boolean>
+    )
+  );
 
-  const [toggleStates, setToggleStates] = useState({
-    "Plano Pro": { max: false },
-    "Plano Super": { max: false },
-    "Plano Turbo Pro": { max: false },
-  });
-
-  const handleToggle = (planoNome: string, service: "max") => {
-    setToggleStates((prev) => ({
+  const alternarAssinaturas = (planoNome: string) => {
+    setAssinaturasAbertas((prev) => ({
       ...prev,
-      [planoNome]: {
-        ...prev[planoNome as keyof typeof prev],
-        [service]:
-          !prev[planoNome as keyof typeof prev][
-            service as keyof (typeof prev)[keyof typeof prev]
-          ],
-      },
+      [planoNome]: !prev[planoNome],
     }));
-  };
-
-  // Função para calcular o preço total com streamings (apenas MAX)
-  const calcularPrecoTotal = (planoNome: string, precoBase: string) => {
-    const precoBaseNum = parseFloat(precoBase.replace(",", "."));
-    let adicional = 0;
-
-    // REMOVIDO: Lógica do Paramount+
-
-    if (toggleStates[planoNome as keyof typeof toggleStates].max) {
-      adicional += 29.9;
-    }
-
-    const total = precoBaseNum + adicional;
-    return total.toFixed(2).replace(".", ",");
   };
 
   return (
@@ -119,24 +113,20 @@ export default function Planos() {
           className="px-10"
         >
           {planos.map((plano) => {
-            // calcula os extras desse plano específico
-            const extrasLabelRaw = Object.entries(
-              toggleStates[plano.nome as keyof typeof toggleStates]
-            )
-              .filter(([_, value]) => value)
-              .map(
-                ([key]) => (key === "max" ? " com HBO Max" : "") // Mantém só o Max
-              )
-              .join("");
+            const extrasLabel = plano.assinaturas?.length
+              ? ` com assinaturas: ${plano.assinaturas
+                .map((assinatura) => assinatura.nome)
+                .join(", ")}`
+              : "";
 
-            const extrasLabel = extrasLabelRaw ? ` ${extrasLabelRaw}` : "";
-
-            // monta a mensagem de WhatsApp usando o helper centralizado
-            const whatsappText = getPlanWhatsappText(utm, {
-              planName: plano.nome,
-              speed: plano.velocidade,
-              extrasLabel,
-            });
+            const mostrarTodas = assinaturasAbertas[plano.nome];
+            const temMais = (plano.assinaturas?.length || 0) > 3;
+            const assinaturasVisiveis = temMais && !mostrarTodas
+              ? plano.assinaturas?.slice(0, 2)
+              : plano.assinaturas;
+            const assinaturasOcultasCount = temMais
+              ? (plano.assinaturas?.length || 0) - 2
+              : 0;
 
             return (
               <SwiperSlide
@@ -179,29 +169,50 @@ export default function Planos() {
 
                     <div className="mb-8">
                       <h4 className="text-xl font-montserrat text-gray-700 mb-3 text-center">
-                        Turbine seu plano
+                        Assinaturas Inclusas
                       </h4>
-                      <div className="flex flex-col gap-4 px-8">
-                        {/* MAX */}
-                        <div className="flex items-center justify-between bg-gray-100 rounded-xl px-8 py-4 border-2 border-gray-300">
-                          <img
-                            src="/images/max.png"
-                            alt="max"
-                            className="h-4"
-                          />
-                          <Switch
-                            checked={
-                              toggleStates[
-                                plano.nome as keyof typeof toggleStates
-                              ].max
-                            }
-                            onCheckedChange={() =>
-                              handleToggle(plano.nome, "max")
-                            }
-                          />
-                        </div>
+                      <div className="flex flex-col gap-3 px-6">
+                        <div className="flex flex-wrap justify-center gap-3">
+                          {assinaturasVisiveis?.map((assinatura, index) => (
+                            <div
+                              key={`${assinatura.nome}-${index}`}
+                              className="flex flex-col items-center"
+                            >
+                              <div
+                                className="w-16 h-16 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center overflow-hidden"
+                                title={assinatura.nome}
+                              >
+                                <img
+                                  src={assinatura.icon}
+                                  alt={assinatura.nome}
+                                  className="w-10 h-10 object-contain"
+                                />
+                              </div>
+                            </div>
+                          ))}
 
-                        {/* REMOVIDO: PARAMOUNT */}
+                          {temMais && !mostrarTodas && (
+                            <button
+                              type="button"
+                              className="w-16 h-16 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center text-primary font-montserrat font-bold text-lg"
+                              onClick={() => alternarAssinaturas(plano.nome)}
+                              aria-label="Ver mais assinaturas"
+                            >
+                              +{assinaturasOcultasCount}
+                            </button>
+                          )}
+
+                          {temMais && mostrarTodas && (
+                            <button
+                              type="button"
+                              className="w-16 h-16 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center text-primary font-montserrat font-bold text-lg"
+                              onClick={() => alternarAssinaturas(plano.nome)}
+                              aria-label="Ocultar assinaturas extras"
+                            >
+                              -
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -209,23 +220,10 @@ export default function Planos() {
                   <div className="text-center mb-2">
                     <span className="text-xl font-montserrat text-primary font-bold">
                       R$
-                      <span className="text-4xl">
-                        {calcularPrecoTotal(plano.nome, plano.preco)}
-                      </span>
+                      <span className="text-4xl">{plano.preco}</span>
                       /mês
                     </span>
                   </div>
-
-                  {toggleStates[plano.nome as keyof typeof toggleStates]
-                    .max && (
-                    <div className="text-center mb-2 px-4">
-                      <p className="text-xs text-gray-600 font-montserrat">
-                        Plano base: R$ {plano.preco}
-                        {toggleStates[plano.nome as keyof typeof toggleStates]
-                          .max && " + Max R$ 29,90"}
-                      </p>
-                    </div>
-                  )}
 
                   <a
                     href={buildPlanWhatsappHref(undefined, utm, {
@@ -245,6 +243,10 @@ export default function Planos() {
                       className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors"
                     />
                   </a>
+
+                  <p className="text-sm font-montserrat text-primary text-center mb-4">
+                    *Consulte condições dessa oferta
+                  </p>
                 </div>
               </SwiperSlide>
             );
