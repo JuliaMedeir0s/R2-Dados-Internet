@@ -162,10 +162,11 @@ export const getPlanWhatsappText = (
 ): string => {
   const { planName, speed, extrasLabel } = options;
   const extras = extrasLabel ? extrasLabel : "";
+  const planLabel = planName ? `${planName} de ${speed}` : `plano de ${speed}`;
 
   // Sem UTM nenhuma
   if (!utm) {
-    return `Olá, tenho interesse no plano de ${speed}${extras}.`;
+    return `Olá, tenho interesse no plano ${planLabel}${extras}.`;
   }
 
   const origem = getFriendlySource(utm);
@@ -186,9 +187,9 @@ export const getPlanWhatsappText = (
 
   // 2) Se tem campanha mas sem template específico, menciona a campanha
   if (utm.campaign) {
-    return `Olá, vim do ${origem} e gostaria de saber mais sobre a campanha ${campanhaLegivel} no plano de ${speed}${extras}.`;
+    return `Olá, vim do ${origem} e gostaria de saber mais sobre a campanha ${campanhaLegivel} no plano ${planLabel}${extras}.`;
   }
 
   // 3) Sem campanha, só origem + plano
-  return `Olá, vim do ${origem} e gostaria de saber mais sobre o plano de ${speed}${extras}.`;
+  return `Olá, vim do ${origem} e gostaria de saber mais sobre o plano ${planLabel}${extras}.`;
 };
