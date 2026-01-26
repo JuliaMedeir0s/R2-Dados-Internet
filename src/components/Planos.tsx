@@ -107,8 +107,7 @@ export default function Planos() {
         { nome: "Max", icon: "/images/max.png" },
         { nome: "Disney+", icon: "/images/disney_plus_logo.png" },
       ],
-      extras: [
-      ],
+      extras: [],
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
@@ -135,7 +134,7 @@ export default function Planos() {
       ],
       extras: [
         { nome: "Deezer", icon: "/images/deezer_logo.png" },
-        { nome: "ExitLag", icon: "/images/exitlag_logo.png" },
+        { nome: "Sky+ Light", icon: "/images/SKY_light_logo.png" },
       ],
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
@@ -162,8 +161,8 @@ export default function Planos() {
         { nome: "Disney+", icon: "/images/disney_plus_logo.png" },
       ],
       extras: [
-        { nome: "Deezer", icon: "/images/deezer_logo.png" },
         { nome: "ExitLag", icon: "/images/exitlag_logo.png" },
+        { nome: "Kaspersky", icon: "/images/kaspersky_logo.png" },
       ],
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
@@ -185,8 +184,7 @@ export default function Planos() {
         { icon: "/images/instalacao.png", text: "Instalação Grátis*" },
       ],
       streamings: [{ nome: "Premiere", icon: "/images/premiere_logo.png" }],
-      extras: [
-      ],
+      extras: [{ nome: "Deezer", icon: "/images/deezer_logo.png" }],
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
@@ -221,7 +219,7 @@ export default function Planos() {
         { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
         { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
       ],
-      inclusos: ["Telefone Fixo", "Mesh"],
+      inclusos: ["Telefone Fixo", "IP Público Dinâmico", "Mesh"],
     },
   ];
 
@@ -255,14 +253,15 @@ export default function Planos() {
     </span>
   );
 
-  const renderMiniRow = (label: string, items?: ItemIcon[], plan?: Plano) => {
+  const renderMiniRow = (label: string, labelSingular: string, items?: ItemIcon[], plan?: Plano) => {
     if (!items?.length) return null;
     const preview = items.slice(0, 2);
     const remaining = items.length - preview.length;
+    const displayLabel = items.length === 1 ? labelSingular : label;
 
     return (
       <div className="px-6 mb-3">
-        <p className="text-xs text-gray-500 mb-1 text-center">{label}</p>
+        <p className="text-xs text-gray-500 mb-1 text-center">{displayLabel}</p>
         <div className="flex items-center justify-center gap-2 flex-wrap">
           {preview.map((item) => (
             <span
@@ -340,14 +339,16 @@ export default function Planos() {
 
   const ModalNotas = ({ plano }: { plano: Plano }) => {
     const hasOptions = (plano.streamings?.length || 0) > 0 || (plano.extras?.length || 0) > 0;
+    const hasStreamings = (plano.streamings?.length || 0) > 0;
     const hasPhone = plano.inclusos?.includes("Telefone Fixo");
     const hasIp = plano.inclusos?.includes("IP Público Dinâmico");
     const hasMesh = plano.inclusos?.includes("Mesh");
 
     return (
       <div className="text-xs text-gray-600 space-y-1">
-        <p>* Combos são ativados automaticamente ao contratar.</p>
+        <p>* Bitt Trainers e BitBook são ativados automaticamente. Demais aplicativos serão ativados em contato com nosso suporte.</p>
         {hasOptions && <p>* Escolha de streaming/extra é feita com a equipe de suporte durante a ativação.</p>}
+        {hasStreamings && <p>* Os streamings incluídos possuem anúncios.</p>}
         {hasPhone && <p>* Telefone fixo é ativado pela equipe de suporte durante a ativação.</p>}
         {hasIp && <p>* IP público dinâmico exige abertura de chamado.</p>}
         {hasMesh && <p>* Mesh exige abertura de chamado para ativação.</p>}
@@ -505,10 +506,12 @@ export default function Planos() {
                       </div>
                     )}
 
-                    {renderMiniRow("Escolha 1 extra", plano.extras, plano)}
+                    {renderMiniRow("Escolha 1 extra", "Extra incluído", plano.extras, plano)}
 
                     <div className="px-6 mb-3">
-                      <p className="text-xs text-gray-500 mb-1 text-center">Assinaturas Inclusas</p>
+                      <p className="text-xs text-gray-500 mb-1 text-center">
+                        {assinaturasVisiveis && assinaturasVisiveis.length === 1 && !temMais ? "Assinatura incluída" : "Assinaturas inclusas"}
+                      </p>
                       <div className="flex items-center justify-center gap-2 flex-wrap">
                         {assinaturasVisiveis?.map((assinatura, index) => (
                           <span
@@ -611,16 +614,11 @@ export default function Planos() {
                 <span className="text-base font-montserrat font-bold text-secondary">R$ {planoModal.preco}/mês</span>
               </div>
 
-              <div>
-                <p className="text-xs text-gray-500 mb-2">Combos inclusos</p>
-                <div className="flex flex-wrap gap-2">
-                    {planoModal.assinaturas.map((assinatura) => renderBadge(assinatura))}
-                </div>
-              </div>
-
                 {planoModal.streamings?.length ? (
                   <div>
-                    <p className="text-xs text-gray-500 mb-2">Escolha 1 streaming</p>
+                    <p className="text-xs text-gray-500 mb-2">
+                      {planoModal.streamings.length === 1 ? "Streaming incluído" : "Escolha 1 streaming"}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {planoModal.streamings.map((stream) => renderBadge(stream))}
                     </div>
@@ -629,12 +627,23 @@ export default function Planos() {
 
                 {planoModal.extras?.length ? (
                   <div>
-                    <p className="text-xs text-gray-500 mb-2">Escolha 1 extra</p>
+                    <p className="text-xs text-gray-500 mb-2">
+                      {planoModal.extras.length === 1 ? "Extra incluído" : "Escolha 1 extra"}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {planoModal.extras.map((extra) => renderBadge(extra))}
                     </div>
                   </div>
                 ) : null}
+
+              <div>
+                <p className="text-xs text-gray-500 mb-2">
+                  {planoModal.assinaturas.length === 1 ? "Assinatura incluída" : "Assinaturas inclusas"}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                    {planoModal.assinaturas.map((assinatura) => renderBadge(assinatura))}
+                </div>
+              </div>
 
               {planoModal.inclusos?.length ? (
                 <div>
