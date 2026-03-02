@@ -7,9 +7,9 @@ import 'swiper/css/pagination';
 export default function Hero() {
     const banners = [
       {
-        desktop: "/banners/BlocoR2.png",
-        mobile: "/banners/BlocoR2_Mobile.png",
-        alt: "Banner 1 - Bloco R2",
+        desktop: "/banners/MesConsumidor.webp",
+        mobile: "/banners/MesConsumidor_Mobile.webp",
+        alt: "Banner 1 - Mês do Consumidor",
       },
       {
         desktop: "/banners/Banner3.png",
