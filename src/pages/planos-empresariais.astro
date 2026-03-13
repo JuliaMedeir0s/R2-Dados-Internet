@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Banner from '@/components/Banner';
+import PlanosEmpresariaisSection from '@/components/PlanosEmpresariais';
 import Servicos from '@/components/Servicos';
 import Conecte from '@/components/Conecte.astro';
 import Lojas from '@/components/Lojas';
@@ -10,6 +11,7 @@ import FaleConosco from '@/components/FaleConosco';
 <Layout>
     <div class="max-lg:hidden"><Banner client:load href="/banners/Empresarial.mp4"/></div>
     <div class="hidden max-lg:block"><Banner client:load href="/banners/EmpresarialMobile.mp4"/></div>
+    <PlanosEmpresariaisSection client:load />
     <Servicos client:load />
     <Conecte client:load />
     <Lojas client:load  />
