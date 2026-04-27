@@ -43,7 +43,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
       ],
       inclusos: [],
     },
@@ -63,7 +63,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
         { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
       ],
       inclusos: [],
@@ -87,7 +87,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
       ],
       inclusos: [],
     },
@@ -111,7 +111,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
         { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
       ],
       inclusos: [],
@@ -139,7 +139,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
         { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
       ],
       inclusos: ["Telefone Fixo"],
@@ -167,7 +167,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
         { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
       ],
       inclusos: ["Telefone Fixo", "IP Público Dinâmico"],
@@ -188,7 +188,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
         { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
       ],
       inclusos: ["Telefone Fixo"],
@@ -216,7 +216,7 @@ export default function Planos() {
       assinaturas: [
         { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
         { nome: "BitBook", icon: "/images/bitbook_logo.png" },
-        { nome: "Clipsy", icon: "/images/clipsy_logo.png" },
+        { nome: "Formind", icon: "/images/formind_logo.png" },
         { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
       ],
       inclusos: ["Telefone Fixo", "IP Público Dinâmico", "Mesh"],
