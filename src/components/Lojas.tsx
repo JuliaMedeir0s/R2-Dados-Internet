@@ -53,17 +53,17 @@ export default function Lojas() {
     {
       nome: "Loja Santa Amelia",
       endereco: "Av. Portugal, 2823 - Santa Amelia, Belo Horizonte - MG",
-      imagem: "/images/Santa_Amelia.png",
+      imagem: "/images/Santa_Amelia.jpeg",
     },
     {
       nome: "Loja Santa Helena",
       endereco: "Rua Passos, 385 - Santa Helena, Contagem - MG",
-      imagem: "/images/Santa_Helena.png",
+      imagem: "/images/Santa_Helena.jpeg",
     },
     {
       nome: "Loja Petrolândia",
       endereco: "Rua da Benzina, 37 - Petrolândia, Contagem - MG",
-      imagem: "/images/Petrolandia.png",
+      imagem: "/images/Petrolandia.jpeg",
     },
   ];
 
