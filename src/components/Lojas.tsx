@@ -47,8 +47,23 @@ export default function Lojas() {
     },
     {
       nome: "Loja Confins",
-      endereco: "Rua Maria Rodrigues, Nº 114 - Centro - Confins - MG.",
+      endereco: "Rua Maria Rodrigues, Nº 114 - Centro - Confins - MG",
       imagem: "/images/Confins.png",
+    },
+    {
+      nome: "Loja Santa Amelia",
+      endereco: "Av. Portugal, 2823 - Santa Amelia, Belo Horizonte - MG",
+      imagem: "/images/Santa_Amelia.png",
+    },
+    {
+      nome: "Loja Santa Helena",
+      endereco: "Rua Passos, 385 - Santa Helena, Contagem - MG",
+      imagem: "/images/Santa_Helena.png",
+    },
+    {
+      nome: "Loja Petrolândia",
+      endereco: "Rua da Benzina, 37 - Petrolândia, Contagem - MG",
+      imagem: "/images/Petrolandia.png",
     },
   ];
 
