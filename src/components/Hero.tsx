@@ -7,19 +7,24 @@ import 'swiper/css/pagination';
 export default function Hero() {
     const banners = [
       {
-        desktop: "/banners/aniversario_R2_desktop.webp",
-        mobile: "/banners/aniversario_R2_mobile.webp",
-        alt: "Banner 1 - Aniversário R2",
+        desktop: "/banners/R2_JULHO_premiere.webp",
+        mobile: "/banners/R2_JULHO_premiere_mobile.webp",
+        alt: "Banner 1 - Promoção de Julho Premiere",
+      },
+      {
+        desktop: "/banners/R2_JULHO_hbo.webp",
+        mobile: "/banners/R2_JULHO_hbo_mobile.webp",
+        alt: "Banner 1 - Promoção de Julho HBO",
       },
       {
         desktop: "/banners/Banner3.png",
         mobile: "/banners/Banner3Mobile.png",
-        alt: "Banner 2",
+        alt: "Banner 3",
       },
       {
         desktop: "/banners/Banner4.png",
         mobile: "/banners/Banner4Mobile.png",
-        alt: "Banner 3",
+        alt: "Banner 4",
       },
     ];
 
