@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens extraídos do Figma (arquivo "R2", página DESIGN FINAL).
+ * Duas paletas de marca: "brand" (laranja, uso residencial) e "corp" (azul-marinho, uso empresarial).
+ */
+:root {
+  --background: #ffffff;
+  --foreground: #2c2c2c;
+
+  /* COR A — paleta residencial (laranja) */
+  --brand-1: #ff5500;
+  --brand-4: #cb2c01;
+  --brand-5: #e63700;
+  --brand-6: #ff3d00;
+  --brand-7: #ff7a43;
+  --brand-8: #ffb27d;
+  --brand-9: #ffbb05;
+  --brand-10: #ff6700;
+
+  /* COR B — paleta empresarial (azul-marinho) */
+  --corp-1: #0037ff;
+  --corp-2: #000f26;
+  --corp-3: #051a39;
+  --corp-4: #00327c;
+  --corp-5: #0083ff;
+  --corp-6: #cbe2ff;
+  --corp-7: #2ef0ff;
+  --corp-8: #00b2ca;
+
+  /* Neutros */
+  --texto: #2c2c2c;
+  --cinza-claro: #f4f4f4;
+  --branco: #ffffff;
+  --preto: #000000;
+
+  /* shadcn/ui — mantidos por compatibilidade com os componentes de base */
+  --radius: 0.5rem;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 24 100% 50%;
+  --primary: 24 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 8%;
+  --secondary-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --muted: 0 0% 96%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 210 40% 8%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 9% 17%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 9% 17%;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-brand-1: var(--brand-1);
+  --color-brand-4: var(--brand-4);
+  --color-brand-5: var(--brand-5);
+  --color-brand-6: var(--brand-6);
+  --color-brand-7: var(--brand-7);
+  --color-brand-8: var(--brand-8);
+  --color-brand-9: var(--brand-9);
+  --color-brand-10: var(--brand-10);
+
+  --color-corp-1: var(--corp-1);
+  --color-corp-2: var(--corp-2);
+  --color-corp-3: var(--corp-3);
+  --color-corp-4: var(--corp-4);
+  --color-corp-5: var(--corp-5);
+  --color-corp-6: var(--corp-6);
+  --color-corp-7: var(--corp-7);
+  --color-corp-8: var(--corp-8);
+
+  --color-texto: var(--texto);
+  --color-cinza-claro: var(--cinza-claro);
+  --color-branco: var(--branco);
+  --color-preto: var(--preto);
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--primary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --font-sans: var(--font-poppins);
+  --font-body: var(--font-inter);
+
+  /* Escala tipográfica — Web/H1..H5 do Figma */
+  --text-h1: 64px;
+  --text-h1--line-height: 69px;
+  --text-h2: 48px;
+  --text-h2--line-height: 53px;
+  --text-h3: 32px;
+  --text-h3--line-height: 37px;
+  --text-h4: 24px;
+  --text-h4--line-height: 29px;
+  --text-h5: 20px;
+  --text-h5--line-height: 25px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Marquee horizontal usado no ticker de serviços da página Empresarial —
+   CSS puro (sem JS de cliente): a lista é duplicada no componente e este
+   keyframe desliza o conjunto duplicado exatamente 50%, criando um loop
+   contínuo e imperceptível. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
