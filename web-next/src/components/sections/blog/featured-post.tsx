@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { SectionTag } from "@/components/ui/section-tag";
 import type { BlogPost } from "@/lib/blog-data";
 
 // Card grande de post em destaque: foto sangrando no card inteiro, com um
@@ -25,9 +26,9 @@ export function FeaturedPost({ post }: { post: BlogPost }) {
       />
 
       <div className="relative">
-        <span className="mb-4 inline-block w-fit rounded-full border border-white/60 px-4 py-1 text-xs font-bold uppercase tracking-wide">
+        <SectionTag tone="white" className="mb-4">
           {post.categoria}
-        </span>
+        </SectionTag>
         <h2 className="max-w-2xl text-2xl font-bold md:text-4xl">{post.titulo}</h2>
         <div className="mt-4 flex items-center gap-2 text-sm text-white/80">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">

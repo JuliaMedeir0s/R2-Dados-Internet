@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { SectionTag } from "@/components/ui/section-tag";
 import type { BlogPost } from "@/lib/blog-data";
 import { CATEGORIAS } from "./hero-search";
 
@@ -20,9 +21,8 @@ function RelatedCard({ post }: { post: BlogPost }) {
           className="object-cover"
         />
       </div>
-      <span className="inline-block w-fit rounded-full border border-brand-1 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
-        {post.categoria}
-      </span>
+      {/* `w-fit` porque o card é um flex column: sem isso a pill estica. */}
+      <SectionTag className="w-fit">{post.categoria}</SectionTag>
       <h3 className="text-lg font-bold text-brand-1 group-hover:text-brand-5">{post.titulo}</h3>
       <div className="flex items-center gap-2 text-sm text-texto/70">
         <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-8/20">

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 import { useUtm, getGenericWhatsappText, DEFAULT_WHATSAPP_PHONE } from "@/lib/whatsapp";
 
 // Mesma estrutura do CTA residencial (card inteiro clicável, sem botão), em
@@ -35,13 +36,16 @@ export function EmpresarialCtaBanner() {
             Internet em Minas Gerais
           </SectionTag>
 
-          <h2 className="mt-4 text-3xl leading-tight md:text-5xl">
-            <span className="font-light">Infraestrutura de</span>
-            <br />
-            <span className="font-bold">Telecom</span>{" "}
-            <span className="font-light">com</span>{" "}
-            <span className="font-bold">Gestão Completa!</span>
-          </h2>
+          <SectionTitle
+            tone="white"
+            segments={[
+              { text: "Infraestrutura de", weight: "light", breakAfter: true },
+              { text: "Telecom", weight: "bold" },
+              { text: "com", weight: "light" },
+              { text: "Gestão Completa!", weight: "bold" },
+            ]}
+            className="mt-4 md:text-5xl"
+          />
 
           <p className="mt-4 text-sm text-white/80 md:text-base">
             Internet dedicada, link de alta disponibilidade e monitoramento

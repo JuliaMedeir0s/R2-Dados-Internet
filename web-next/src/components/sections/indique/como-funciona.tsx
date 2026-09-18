@@ -3,6 +3,7 @@
 import { Icon } from "@iconify/react";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 import { STEPS } from "@/lib/indique-data";
 import { useUtm, getGenericWhatsappText, DEFAULT_WHATSAPP_PHONE } from "@/lib/whatsapp";
 
@@ -20,13 +21,17 @@ export function ComoFunciona() {
         <SectionTag>Indique &amp; Ganhe</SectionTag>
 
         {/* O Figma (indique_00) abre e fecha o título em negrito, com o
-            trecho leve no meio — não é o leve+negrito do `SectionTitle`, daí
-            o `h2` na mão, mesmo padrão do `blackbox` e do `cta-banner`. */}
-        <h2 className="mt-3 text-2xl leading-tight text-brand-1 md:text-3xl">
-          <span className="font-bold">Já é cliente R2?</span>{" "}
-          <span className="font-light">Então sua conexão pode</span>{" "}
-          <span className="font-bold">render ainda mais vantagens</span>
-        </h2>
+            trecho leve no meio. O `leading-tight` é repetido de propósito: o
+            `text-2xl` do override apaga o da primitiva, porque o
+            tailwind-merge trata tamanho e entrelinha como o mesmo grupo. */}
+        <SectionTitle
+          segments={[
+            { text: "Já é cliente R2?", weight: "bold" },
+            { text: "Então sua conexão pode", weight: "light" },
+            { text: "render ainda mais vantagens", weight: "bold" },
+          ]}
+          className="mt-3 text-2xl leading-tight md:text-3xl"
+        />
 
         <p className="mx-auto mt-3 max-w-2xl text-texto/70">
           Indique amigos, familiares ou vizinhos para conhecer a R2 Internet. Quando a instalação

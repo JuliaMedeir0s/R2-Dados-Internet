@@ -1,12 +1,10 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 import { WhatsappButton } from "@/components/ui/whatsapp-button";
 import { BLACKBOX_BENEFITS } from "@/lib/empresarial-data";
 
-// Título com o trecho em negrito ANTES do leve, ao contrário do
-// `SectionTitle` (que é sempre leve + negrito) — por isso o `h2` na mão,
-// mesmo padrão do `cta-banner`.
 export function BlackBox() {
   return (
     <section className="bg-white py-16">
@@ -14,10 +12,15 @@ export function BlackBox() {
         <div className="text-center md:text-left">
           <SectionTag tone="corp">R2 Para Empresas</SectionTag>
 
-          <h2 className="mt-3 text-3xl leading-tight text-corp-1 md:text-4xl">
-            <span className="font-bold">Descubra problemas</span>{" "}
-            <span className="font-light">antes que eles afetem sua empresa</span>
-          </h2>
+          {/* O Figma (empresa_01) abre o título em negrito. */}
+          <SectionTitle
+            tone="corp"
+            segments={[
+              { text: "Descubra problemas", weight: "bold" },
+              { text: "antes que eles afetem sua empresa", weight: "light" },
+            ]}
+            className="mt-3"
+          />
 
           <p className="mt-4 max-w-md text-sm text-texto/70">
             A Black Box é a solução exclusiva da R2 para monitoramento

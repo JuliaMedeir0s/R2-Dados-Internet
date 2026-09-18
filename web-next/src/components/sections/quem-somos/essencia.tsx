@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 
 // Texto 100% real e legível no PDF. Ilustração exportada do Figma (quem_00):
 // já vem com o círculo cinza claro atrás da casa, sem fundo adicional aqui.
@@ -19,14 +20,17 @@ export function Essencia() {
         <div className="text-center md:text-left">
           <SectionTag>Nossa Essência</SectionTag>
 
-          {/* Título com o trecho em negrito ANTES do leve (quem_00), ao
-              contrário do `SectionTitle` (que é sempre leve + negrito) — por
-              isso o `h2` na mão, mesmo padrão do `blackbox` e do
-              `cta-banner`. */}
-          <h2 className="mt-3 text-2xl leading-tight text-brand-1 md:text-3xl">
-            <span className="font-bold">Conectando</span>{" "}
-            <span className="font-light">pessoas, empresas e histórias todos os dias</span>
-          </h2>
+          {/* Título com o trecho em negrito ANTES do leve (quem_00). O
+              `leading-tight` é repetido de propósito: o `text-2xl` do override
+              apaga o da primitiva, porque o tailwind-merge trata tamanho e
+              entrelinha como o mesmo grupo. */}
+          <SectionTitle
+            segments={[
+              { text: "Conectando", weight: "bold" },
+              { text: "pessoas, empresas e histórias todos os dias", weight: "light" },
+            ]}
+            className="mt-3 text-2xl leading-tight md:text-3xl"
+          />
 
           <p className="mt-3 max-w-xl text-texto/70">
             A R2 nasceu com o propósito de levar internet de qualidade, estabilidade e atendimento

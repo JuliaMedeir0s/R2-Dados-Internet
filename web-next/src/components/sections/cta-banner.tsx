@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 
 // Card único e clicável (sem botão): a arte do CTA exportada do Figma
 // (home_06) já vem com o fundo laranja e as linhas, cortada à direita, com o
@@ -26,14 +27,19 @@ export function CtaBanner() {
             Internet em Minas Gerais
           </SectionTag>
 
-          <h2 className="mt-4 text-3xl leading-tight md:text-5xl">
-            <span className="font-bold">Conexão</span>{" "}
-            <span className="font-light">com</span>{" "}
-            <span className="font-bold">Wi-fi</span>
-            <br />
-            <span className="font-light">na</span>{" "}
-            <span className="font-bold">casa toda!</span>
-          </h2>
+          {/* home_06/post_03: alterna negrito e leve e quebra depois de
+              "Wi-fi". */}
+          <SectionTitle
+            tone="white"
+            segments={[
+              { text: "Conexão", weight: "bold" },
+              { text: "com", weight: "light" },
+              { text: "Wi-fi", weight: "bold", breakAfter: true },
+              { text: "na", weight: "light" },
+              { text: "casa toda!", weight: "bold" },
+            ]}
+            className="mt-4 md:text-5xl"
+          />
 
           <p className="mt-4 text-sm text-white/90 md:text-base">
             Seja para assistir filmes, estudar, trabalhar ou jogar online, a R2

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react";
+import { SectionTag } from "@/components/ui/section-tag";
 import type { BlogPost, BlogAuthor } from "@/lib/blog-data";
 import { PostRow } from "./post-row";
 
@@ -32,9 +33,7 @@ export function BlogSidebar({
           aria-hidden="true"
         />
         <div className="relative">
-          <span className="inline-block rounded-full border border-white/60 px-3 py-1 text-xs font-bold uppercase tracking-wide">
-            Internet em Minas Gerais
-          </span>
+          <SectionTag tone="white">Internet em Minas Gerais</SectionTag>
           <h3 className="mt-3 text-xl font-bold">Muitas formas de se conectar!</h3>
           <p className="mt-2 text-sm text-white/85">
             Seja para assistir filmes, estudar, trabalhar, jogar online ou conectar toda a família,
