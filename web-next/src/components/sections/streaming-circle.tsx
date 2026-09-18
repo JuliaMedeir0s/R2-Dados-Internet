@@ -58,13 +58,18 @@ type LogoAppProps = {
   atraso: number;
 };
 
+// Larguras reais de renderização em cada degrau (ver `.r2-palco` no
+// globals.css); sem isso o Next monta um srcset largo demais para um ícone
+// que nunca passa de 80px.
+const SIZES_GRANDE = "(min-width: 1024px) 80px, (min-width: 768px) 68px, 44px";
+const SIZES_PEQUENO = "(min-width: 1024px) 56px, (min-width: 768px) 48px, 32px";
+
 function LogoApp({ app, raio, contragiro, atraso }: LogoAppProps) {
   const grande = app.tamanho === "grande";
   return (
     <div
       className="r2-app group/app absolute -translate-x-1/2 -translate-y-1/2"
       style={{ ...coordenadas(raio, app.angulo), animationDelay: `${atraso}ms` }}
-      title={app.nome}
     >
       {/* contrarrotação: cancela o giro da órbita e mantém o logo em pé */}
       <div
@@ -82,6 +87,7 @@ function LogoApp({ app, raio, contragiro, atraso }: LogoAppProps) {
             alt={app.nome}
             width={200}
             height={200}
+            sizes={grande ? SIZES_GRANDE : SIZES_PEQUENO}
             className="h-full w-full object-cover"
           />
         </div>
@@ -229,7 +235,7 @@ export function StreamingCircle() {
   return (
     <section
       ref={secao}
-      className="relative overflow-hidden bg-white py-16 lg:py-24"
+      className="relative overflow-hidden bg-white px-4 py-16 lg:py-24"
     >
       <div
         ref={palco}
@@ -309,15 +315,17 @@ export function StreamingCircle() {
 
           <div
             ref={nucleo}
-            className="r2-nucleo relative z-10 max-w-[168px] px-1 text-center md:max-w-[260px] lg:max-w-xs"
+            className="r2-nucleo relative z-10 max-w-[140px] px-1 text-center md:max-w-[260px] lg:max-w-xs"
           >
             <SectionTag>Aplicativos</SectionTag>
+            {/* 14px no degrau base porque "entretenimento" (a palavra mais
+                longa, que não quebra) mede ~118px e a caixa útil tem 132px */}
             <SectionTitle
               light="Um mundo de"
               bold="entretenimento para você"
-              className="mt-2 text-lg md:mt-3 md:text-2xl lg:text-3xl"
+              className="mt-2 text-sm md:mt-3 md:text-2xl lg:text-3xl"
             />
-            <p className="mt-2 text-[11px] leading-relaxed text-texto/70 md:mt-3 md:text-xs lg:text-sm">
+            <p className="mt-2 text-[11px] leading-snug text-texto/70 md:mt-3 md:text-xs md:leading-relaxed lg:text-sm">
               Assista a séries, acompanhe os jogos, escute suas músicas
               favoritas e aproveite benefícios exclusivos em uma conexão
               preparada para toda a família.

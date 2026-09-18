@@ -196,12 +196,19 @@ body {
    posição de cada logo é montada com `calc(50% + var(--raio) * seno)`
    no componente, e assim o breakpoint mora num lugar só. Os degraus
    acompanham os degraus de largura do próprio palco
-   (max-w-lg / md:max-w-2xl / lg:max-w-3xl). */
+   (max-w-lg / md:max-w-2xl / lg:max-w-3xl).
+
+   O degrau base é dimensionado para o pior caso de 320px de viewport,
+   com a `<section>` em `px-4` (palco de 288px). Como as órbitas GIRAM,
+   a conta é feita no ângulo mais desfavorável (90°/270°), não no ângulo
+   inicial de cada logo: raio + metade do logo maior. A 320px isso dá
+   14,2px de margem até a borda da tela e 17,4px de folga entre a órbita
+   interna e a caixa de texto. */
 .r2-palco {
-  --raio-int: 33%;
-  --raio-ext: 42%;
-  --app-grande: 56px;
-  --app-pequeno: 40px;
+  --raio-int: 38%;
+  --raio-ext: 43%;
+  --app-grande: 44px;
+  --app-pequeno: 32px;
 }
 
 @media (min-width: 768px) {
@@ -355,7 +362,8 @@ body {
 
 .r2-palco[data-ativo="sim"] .r2-campo,
 .r2-palco[data-ativo="sim"] .r2-camada,
-.r2-palco[data-ativo="sim"] .r2-gira {
+.r2-palco[data-ativo="sim"] .r2-gira,
+.r2-palco[data-ativo="sim"] .r2-contragira {
   will-change: transform;
 }
 
