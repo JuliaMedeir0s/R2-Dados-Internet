@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 
 const NAV_LINKS = [
   { label: "Início", href: "/" },
@@ -97,30 +97,31 @@ export function Header() {
 
           <div className="hidden items-center gap-3 xl:flex">
             {isBusiness ? (
-              <Link href="/">
-                <Button size="sm" className={outlineButtonClass}>
-                  Para sua Família
-                </Button>
-              </Link>
+              <ButtonLink href="/" size="sm" className={outlineButtonClass}>
+                Para sua Família
+              </ButtonLink>
             ) : (
-              <Link href="/para-empresas">
-                <Button size="sm" className={outlineButtonClass}>
-                  Para Empresas
-                </Button>
-              </Link>
-            )}
-            <a href={AREA_DO_CLIENTE_URL} target="_blank" rel="noopener noreferrer">
-              <Button
+              <ButtonLink
+                href="/para-empresas"
                 size="sm"
-                variant={isBusiness ? "corp" : "default"}
-                className={
-                  isBusiness ? "gap-2" : "gap-2 bg-white text-brand-1 hover:bg-cinza-claro"
-                }
+                className={outlineButtonClass}
               >
-                <Icon icon="basil:user-solid" className="h-4 w-4" />
-                Área do Cliente
-              </Button>
-            </a>
+                Para Empresas
+              </ButtonLink>
+            )}
+            <ButtonLink
+              href={AREA_DO_CLIENTE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="sm"
+              variant={isBusiness ? "corp" : "default"}
+              className={
+                isBusiness ? "gap-2" : "gap-2 bg-white text-brand-1 hover:bg-cinza-claro"
+              }
+            >
+              <Icon icon="basil:user-solid" className="h-4 w-4" />
+              Área do Cliente
+            </ButtonLink>
           </div>
 
           <button

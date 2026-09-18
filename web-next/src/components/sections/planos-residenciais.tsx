@@ -15,7 +15,7 @@ import {
   type ItemIcon,
 } from "@/lib/planos-data";
 import { useUtm, buildPlanWhatsappHref } from "@/lib/whatsapp";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
 import { StackedCard } from "@/components/ui/stacked-card";
@@ -159,12 +159,15 @@ export function PlanoCard({
         </p>
       </div>
 
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        <Button className="w-full gap-2 rounded-none">
-          <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
-          {ctaLabel}
-        </Button>
-      </a>
+      <ButtonLink
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex w-full gap-2 rounded-none"
+      >
+        <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
+        {ctaLabel}
+      </ButtonLink>
     </StackedCard>
   );
 }

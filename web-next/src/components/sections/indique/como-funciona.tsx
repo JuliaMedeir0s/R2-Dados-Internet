@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { STEPS } from "@/lib/indique-data";
 import { useUtm, getGenericWhatsappText, DEFAULT_WHATSAPP_PHONE } from "@/lib/whatsapp";
 
@@ -50,12 +50,16 @@ export function ComoFunciona() {
           *o desconto será aplicado no mês subsequente da instalação da internet.
         </p>
 
-        <a href={href} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block">
-          <Button size="lg" className="gap-2">
-            <Icon icon="basil:whatsapp-solid" className="h-5 w-5" />
-            Quero indicar
-          </Button>
-        </a>
+        <ButtonLink
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          size="lg"
+          className="mt-6 gap-2"
+        >
+          <Icon icon="basil:whatsapp-solid" className="h-5 w-5" />
+          Quero indicar
+        </ButtonLink>
       </div>
     </section>
   );

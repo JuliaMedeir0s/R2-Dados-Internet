@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { SectionNotch } from "@/components/ui/section-notch";
 import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
@@ -29,9 +28,9 @@ export function BusinessTeaser() {
             completas para manter sua empresa conectada com estabilidade,
             segurança e alta performance.
           </p>
-          <Link href="/para-empresas" className="mt-5 inline-block">
-            <Button variant="corp">Acesse aqui</Button>
-          </Link>
+          <ButtonLink href="/para-empresas" variant="corp" className="mt-5">
+            Acesse aqui
+          </ButtonLink>
         </div>
       </div>
     </section>

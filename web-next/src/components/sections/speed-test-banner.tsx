@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 
 // Card branco flutuante entre os planos e a seção de aplicativos (home_01):
 // sobe um pouco sobre a seção anterior com a margem negativa.
@@ -11,16 +11,15 @@ export function SpeedTestBanner() {
           <span className="font-light">Contratou, chegou.</span>{" "}
           <span className="font-bold">Teste agora sua conexão</span>
         </p>
-        <a
+        <ButtonLink
           href="https://www.speedtest.net/"
           target="_blank"
           rel="noopener noreferrer"
+          className="gap-2"
         >
-          <Button className="gap-2">
-            <Icon icon="mdi:speedometer" className="h-4 w-4" />
-            Testar Velocidade
-          </Button>
-        </a>
+          <Icon icon="mdi:speedometer" className="h-4 w-4" />
+          Testar Velocidade
+        </ButtonLink>
       </div>
     </section>
   );

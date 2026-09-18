@@ -1,4 +1,5 @@
 import * as React from "react"
+import Link from "next/link"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
@@ -46,4 +47,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+export type ButtonLinkProps = React.ComponentProps<typeof Link> &
+  VariantProps<typeof buttonVariants>
+
+// Mesma aparência do `Button`, mas renderizando um link de verdade. Existe
+// porque `<a>`/`<Link>` com `<button>` dentro é HTML inválido e dá dois
+// pontos de tabulação (e dois anúncios de leitor de tela) pro mesmo controle.
+// Serve tanto pra rota interna quanto pra URL externa — nesse caso o `Link`
+// do Next só emite um `<a>` comum.
+function ButtonLink({ className, variant, size, ...props }: ButtonLinkProps) {
+  return (
+    <Link
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
+    />
+  )
+}
+
+export { Button, ButtonLink, buttonVariants }

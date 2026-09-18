@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 
 import { FAQ_HOME } from "@/lib/faq-home-data";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
 
@@ -68,17 +68,15 @@ export function FaqHome() {
           <p className="mt-2 text-sm text-texto/70">
             Qualquer dúvida ou problema estamos de prontidão para ajudar.
           </p>
-          <a
+          <ButtonLink
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 block"
+            className="mt-4 flex w-full gap-2"
           >
-            <Button className="w-full gap-2">
-              <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
-              Fale com a equipe R2
-            </Button>
-          </a>
+            <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
+            Fale com a equipe R2
+          </ButtonLink>
         </div>
       </div>
     </section>

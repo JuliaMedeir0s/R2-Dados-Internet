@@ -9,7 +9,7 @@ import { Icon } from "@iconify/react";
 import "swiper/css";
 
 import { LOJAS, type Loja } from "@/lib/lojas-data";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
 import { StackedCard } from "@/components/ui/stacked-card";
@@ -121,20 +121,18 @@ export function Lojas() {
                       </p>
                     )}
 
-                    <a
-                      href={mapsHref(loja)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-auto block pt-4"
-                    >
-                      <Button
+                    <div className="mt-auto pt-4">
+                      <ButtonLink
+                        href={mapsHref(loja)}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         variant="outline"
-                        className="w-full gap-2 border-brand-1 text-brand-1 hover:bg-brand-1 hover:text-white"
+                        className="flex w-full gap-2 border-brand-1 text-brand-1 hover:bg-brand-1 hover:text-white"
                       >
                         <Icon icon="ph:map-pin-fill" className="h-4 w-4" />
                         Como Chegar
-                      </Button>
-                    </a>
+                      </ButtonLink>
+                    </div>
                   </div>
                 </StackedCard>
               </SwiperSlide>

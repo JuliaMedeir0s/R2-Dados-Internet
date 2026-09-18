@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { CtaBanner } from "@/components/sections/cta-banner";
 
 export const metadata: Metadata = {
@@ -38,12 +37,10 @@ export default function NotFound() {
               existido.
             </p>
 
-            <Link href="/" className="mt-8 inline-block">
-              <Button size="lg" className="gap-2">
-                <Icon icon="ph:arrow-left-bold" className="h-4 w-4" />
-                Voltar para o Início
-              </Button>
-            </Link>
+            <ButtonLink href="/" size="lg" className="mt-8 gap-2">
+              <Icon icon="ph:arrow-left-bold" className="h-4 w-4" />
+              Voltar para o Início
+            </ButtonLink>
           </div>
         </div>
       </section>
