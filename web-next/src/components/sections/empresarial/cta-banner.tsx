@@ -1,11 +1,10 @@
 "use client";
 
-import { Icon } from "@iconify/react";
-import { Button } from "@/components/ui/button";
+import { SectionTag } from "@/components/ui/section-tag";
 import { useUtm, getGenericWhatsappText, DEFAULT_WHATSAPP_PHONE } from "@/lib/whatsapp";
 
-// Faixa escura repetida duas vezes na página (início e perto do fim), igual
-// ao PDF. Título exato legível na exportação.
+// Mesma estrutura do CTA residencial (card inteiro clicável, sem botão), em
+// azul-marinho. A foto empresarial não foi exportada do Figma — só o fundo.
 export function EmpresarialCtaBanner() {
   const utm = useUtm();
   const href = `https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
@@ -13,27 +12,33 @@ export function EmpresarialCtaBanner() {
   )}`;
 
   return (
-    <section className="bg-corp-3 py-14 text-white">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 text-center md:flex-row md:px-8 md:text-left">
-        <div>
-          <p className="text-sm font-bold uppercase tracking-wide text-corp-7">
-            Gestão completa
-          </p>
-          <h3 className="mt-1 text-3xl font-bold md:text-4xl">
-            Infraestrutura de Telecom com Gestão Completa!
-          </h3>
-          <p className="mt-2 max-w-xl text-white/80">
+    <section className="px-4 py-14 md:px-8">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar com um especialista da R2 Empresarial no WhatsApp"
+        className="relative mx-auto flex min-h-[320px] max-w-7xl overflow-hidden rounded-[32px] bg-corp-2"
+      >
+        <div className="flex max-w-lg flex-col justify-center p-8 text-white md:p-12">
+          <SectionTag tone="white" className="self-start">
+            Internet em Minas Gerais
+          </SectionTag>
+
+          <h2 className="mt-4 text-3xl leading-tight md:text-5xl">
+            <span className="font-light">Infraestrutura de</span>
+            <br />
+            <span className="font-bold">Telecom</span>{" "}
+            <span className="font-light">com</span>{" "}
+            <span className="font-bold">Gestão Completa!</span>
+          </h2>
+
+          <p className="mt-4 text-sm text-white/80 md:text-base">
             Internet dedicada, link de alta disponibilidade e monitoramento
             pró-ativo para sua empresa nunca ficar parada.
           </p>
         </div>
-        <a href={href} target="_blank" rel="noopener noreferrer" className="shrink-0">
-          <Button size="lg" className="gap-2 bg-white text-corp-1 hover:bg-corp-6">
-            <Icon icon="basil:whatsapp-solid" className="h-5 w-5" />
-            Falar com um especialista
-          </Button>
-        </a>
-      </div>
+      </a>
     </section>
   );
 }

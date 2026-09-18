@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+import { SectionTag } from "@/components/ui/section-tag";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -49,9 +50,7 @@ const HERO_SLIDES: HeroSlide[] = [
     alt: "Mulher sorrindo, usando fone de ouvido e segurando o celular, representando a experiência de internet R2",
     content: (
       <div className="max-w-[70%] sm:max-w-sm md:max-w-md">
-        <span className="inline-block rounded-md border border-white/50 px-1.5 py-0.5 text-[0.6rem] font-medium text-white sm:px-3 sm:py-1 sm:text-xs">
-          Internet em Minas Gerais
-        </span>
+        <SectionTag tone="white">Internet em Minas Gerais</SectionTag>
 
         <h1 className="mt-2 text-white sm:mt-4">
           <span className="text-xl font-bold leading-none sm:text-3xl md:text-5xl lg:text-6xl">

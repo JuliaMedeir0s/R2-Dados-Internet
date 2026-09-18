@@ -11,9 +11,6 @@ const WHATSAPP_URL =
 const AREA_DO_CLIENTE_URL =
   "https://ixc.r2dados.com.br/central_assinante_web/login";
 
-// "Central do Assinante" foi removido daqui — o print da página Quem Somos
-// mostra só estes 5 links no rodapé (a 2ª via de boleto, na coluna ao lado,
-// já aponta pra mesma área do cliente).
 const MENU_LINKS = [
   { label: "Início", href: "/" },
   { label: "Para Empresas", href: "/para-empresas" },
@@ -22,81 +19,92 @@ const MENU_LINKS = [
   { label: "Blog", href: "/blog" },
 ];
 
+const STORE_BADGES = [
+  {
+    id: "app-store",
+    icon: "simple-icons:apple",
+    top: "Download on the",
+    bottom: "App Store",
+    href: "https://apps.apple.com/br/app/minha-r2/id6737197287",
+  },
+  {
+    id: "google-play",
+    icon: "simple-icons:googleplay",
+    top: "GET IT ON",
+    bottom: "Google Play",
+    href: "https://play.google.com/store/search?q=minha%20r2&c=apps",
+  },
+];
+
 const SOCIAL_LINKS = [
-  { id: "instagram", icon: "ant-design:instagram-filled", href: "https://www.instagram.com/r2internet/", label: "Instagram" },
-  { id: "facebook", icon: "ic:baseline-facebook", href: "https://www.facebook.com/r2dados", label: "Facebook" },
+  {
+    id: "instagram",
+    icon: "ant-design:instagram-filled",
+    href: "https://www.instagram.com/r2internet/",
+    label: "Instagram",
+  },
+  {
+    id: "facebook",
+    icon: "ic:baseline-facebook",
+    href: "https://www.facebook.com/r2dados",
+    label: "Facebook",
+  },
   { id: "whatsapp", icon: "basil:whatsapp-solid", href: WHATSAPP_URL, label: "WhatsApp" },
-  // Handle não confirmado — vi o ícone do TikTok no rodapé do print de "Quem
-  // Somos", mas não tenho o @ real. Ajustar assim que a Júlia confirmar.
-  { id: "tiktok", icon: "simple-icons:tiktok", href: "https://www.tiktok.com/@r2internet", label: "TikTok" },
-  { id: "instagram-empresas", icon: "ant-design:instagram-filled", href: "https://www.instagram.com/r2.empresas/", label: "Instagram Empresas" },
+  // Handle não confirmado — ajustar assim que a Júlia confirmar o @.
+  {
+    id: "tiktok",
+    icon: "simple-icons:tiktok",
+    href: "https://www.tiktok.com/@r2internet",
+    label: "TikTok",
+  },
 ];
 
 export function Footer() {
   const [isContractsModalOpen, setIsContractsModalOpen] = useState(false);
-  const pathname = usePathname();
-  // O print de "Quem Somos" mostra um rodapé laranja (paleta residencial),
-  // diferente do rodapé azul-marinho que já tínhamos (baseado no print da
-  // Home). Aposta: a cor do rodapé segue o mesmo padrão do Header — laranja
-  // nas páginas residenciais/institucionais, corp só em Empresarial. Vale
-  // confirmar com a Júlia se a Home realmente é navy ou se era o mesmo
-  // laranja e eu li errado da primeira vez.
-  const isBusiness = pathname?.startsWith("/para-empresas") ?? false;
-  const socialIconClass = isBusiness
-    ? "flex h-8 w-8 items-center justify-center rounded-full bg-brand-1 transition-colors hover:bg-brand-5"
-    : "flex h-8 w-8 items-center justify-center rounded-full bg-white transition-colors hover:bg-corp-6";
-  const socialIconIconClass = isBusiness ? "h-5 w-5 text-white" : "h-5 w-5 text-brand-1";
-  // `text-brand-1` (laranja) some no fundo laranja do rodapé residencial —
-  // nesse caso os acentos (ícones, bullets ">>") viram branco; no fundo
-  // navy do Empresarial continuam laranja, como antes.
-  const accentClass = isBusiness ? "text-brand-1" : "text-white";
-  const linkHoverClass = isBusiness ? "hover:text-brand-7" : "hover:text-corp-6";
+  const pathname = usePathname() ?? "/";
+  // Rodapé segue a paleta da página: laranja no residencial, azul-marinho em
+  // Empresarial. Os círculos das redes são brancos nos dois; muda só o ícone.
+  const isBusiness = pathname.startsWith("/para-empresas");
+  const socialIconClass = isBusiness ? "h-5 w-5 text-corp-1" : "h-5 w-5 text-brand-1";
+  const linkHoverClass = isBusiness ? "hover:text-corp-6" : "hover:text-brand-8";
 
   return (
-    <footer className={isBusiness ? "bg-corp-2 text-white" : "bg-gradient-to-b from-brand-1 to-brand-6 text-white"}>
-      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
-        <div className="border-t border-white/20" />
-        <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-5">
-          <div className="flex flex-col items-center md:items-start">
+    <footer className={isBusiness ? "bg-corp-2 text-white" : "bg-brand-1 text-white"}>
+      <div className="mx-auto max-w-7xl px-4 py-14 md:px-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
+          <div className="flex flex-col items-center lg:items-start">
             <Image
               src="/images/footerLogo.png"
               alt="R2 Internet"
               width={140}
               height={140}
-              className="h-28 w-28 md:h-32 md:w-32"
+              className="h-24 w-24"
             />
             <div className="mt-4 flex flex-col gap-3">
-              <a
-                href="https://play.google.com/store/search?q=minha%20r2&c=apps"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 whitespace-nowrap transition-opacity hover:opacity-80"
-              >
-                <Icon icon="ic:outline-android" className={`h-5 w-5 ${accentClass}`} />
-                <span>Baixe nosso app</span>
-              </a>
-              <a
-                href="https://apps.apple.com/br/app/minha-r2/id6737197287"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 whitespace-nowrap transition-opacity hover:opacity-80"
-              >
-                <Icon icon="ic:outline-apple" className={`h-5 w-5 ${accentClass}`} />
-                <span>Baixe nosso app</span>
-              </a>
+              {STORE_BADGES.map((badge) => (
+                <a
+                  key={badge.id}
+                  href={badge.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-40 items-center gap-2 rounded-lg bg-preto px-3 py-2 text-white transition-opacity hover:opacity-80"
+                >
+                  <Icon icon={badge.icon} className="h-6 w-6" />
+                  <span className="flex flex-col leading-none">
+                    <span className="text-[9px] uppercase">{badge.top}</span>
+                    <span className="text-sm font-bold">{badge.bottom}</span>
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
 
-          <div className="text-center md:text-left">
-            <h3 className="mb-4 text-xl font-bold">Menu</h3>
-            <ul className="space-y-2">
+          <div className="text-center lg:text-left">
+            <h3 className="mb-4 font-bold">Menu</h3>
+            <ul className="space-y-2 text-sm">
               {MENU_LINKS.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`flex items-center justify-center gap-2 transition-colors ${linkHoverClass} md:justify-start`}
-                  >
-                    <span className={accentClass}>{">>"}</span>
+                  <Link href={item.href} className={`transition-colors ${linkHoverClass}`}>
                     {item.label}
                   </Link>
                 </li>
@@ -104,62 +112,62 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="text-center md:text-left">
-            <h3 className="mb-4 text-xl font-bold">Informações Institucionais</h3>
-            <ul className="space-y-2">
+          <div className="text-center lg:text-left">
+            <h3 className="mb-4 font-bold">Links Úteis</h3>
+            <ul className="space-y-2 text-sm">
               <li>
                 <a
                   href={AREA_DO_CLIENTE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center justify-center gap-2 transition-colors ${linkHoverClass} md:justify-start`}
+                  className={`transition-colors ${linkHoverClass}`}
                 >
-                  <span className={accentClass}>{">>"}</span>2ª Via de Boleto
+                  2 Via de Boleto
                 </a>
               </li>
               <li>
                 <button
                   onClick={() => setIsContractsModalOpen(true)}
-                  className={`flex w-full cursor-pointer items-center justify-center gap-2 transition-colors ${linkHoverClass} md:justify-start`}
+                  className={`w-full cursor-pointer transition-colors lg:text-left ${linkHoverClass}`}
                 >
-                  <span className={accentClass}>{">>"}</span>Contratos
+                  Contratos
                 </button>
               </li>
             </ul>
           </div>
 
-          <div className="text-center md:text-left">
-            <h3 className="mb-4 text-xl font-bold">Fale Conosco</h3>
-            <div className="space-y-2">
+          <div className="text-center lg:text-left">
+            <h3 className="mb-4 font-bold">Fale Conosco</h3>
+            <div className="space-y-2 text-sm">
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 md:justify-start"
+                className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 lg:justify-start"
               >
-                <Icon icon="basil:whatsapp-solid" className={`h-5 w-5 ${accentClass}`} />
+                <Icon icon="basil:whatsapp-solid" className="h-5 w-5" />
                 <span>(31) 3662-1235</span>
               </a>
               <a
                 href="tel:+553136621235"
-                className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 md:justify-start"
+                className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 lg:justify-start"
               >
-                <Icon icon="basil:phone-solid" className={`h-5 w-5 ${accentClass}`} />
+                <Icon icon="basil:phone-solid" className="h-5 w-5" />
                 <span>(31) 3662-1235</span>
               </a>
               <a
                 href="mailto:contato@r2dados.com"
-                className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 md:justify-start"
+                className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 lg:justify-start"
               >
-                <Icon icon="material-symbols:mail" className={`h-5 w-5 ${accentClass}`} />
+                <Icon icon="material-symbols:mail" className="h-5 w-5" />
                 <span>contato@r2dados.com</span>
               </a>
             </div>
           </div>
 
-          <div className="text-center md:text-left">
-            <h3 className="mb-4 text-xl font-bold">Nossas Redes</h3>
-            <div className="flex justify-center gap-2 md:justify-start">
+          <div className="text-center lg:text-left">
+            <h3 className="mb-4 font-bold">Nossas Redes</h3>
+            <div className="flex justify-center gap-3 lg:justify-start">
               {SOCIAL_LINKS.map((social) => (
                 <a
                   key={social.id}
@@ -167,9 +175,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className={socialIconClass}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white transition-opacity hover:opacity-80"
                 >
-                  <Icon icon={social.icon} className={socialIconIconClass} />
+                  <Icon icon={social.icon} className={socialIconClass} />
                 </a>
               ))}
             </div>
@@ -177,18 +185,16 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/20" />
-      <div className="mx-auto max-w-7xl px-4 py-6 text-center text-sm">
-        Copyright © {new Date().getFullYear()} R2 Dados Internet | Todos os
-        direitos reservados | Desenvolvido por{" "}
-        <a
-          href="https://delipe.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={accentClass}
-        >
-          Delipe
-        </a>
+      <div className={isBusiness ? "bg-black/30" : "bg-brand-6"}>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs md:flex-row md:px-8">
+          <p>
+            R2 INTERNET © {new Date().getFullYear()}. Todos os direitos reservados |{" "}
+            <Link href="/politica-de-privacidade" className="underline">
+              Políticas de Privacidade
+            </Link>
+          </p>
+          <p>Desenvolvido por: Flow iD</p>
+        </div>
       </div>
 
       {isContractsModalOpen && (

@@ -104,7 +104,7 @@
   --radius-sm: calc(var(--radius) - 4px);
 
   --font-sans: var(--font-poppins);
-  --font-body: var(--font-inter);
+  --font-script: var(--font-caveat);
 
   /* Escala tipográfica — Web/H1..H5 do Figma */
   --text-h1: 64px;
@@ -135,5 +135,14 @@ body {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* prefers-reduced-motion: os tickers (Empresarial e Quem Somos) usam a classe
+   arbitrária `animate-[marquee_25s_linear_infinite]`; aqui ela é neutralizada
+   para quem pediu menos movimento no sistema. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[marquee_25s_linear_infinite\] {
+    animation: none;
   }
 }
