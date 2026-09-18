@@ -45,8 +45,15 @@ export function ComoFunciona() {
               {step}
             </span>
           ))}
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-1 px-5 py-2 text-sm font-bold text-white">
-            <Icon icon="ph:check-circle-bold" className="h-4 w-4" />
+          {/* Passo final: no Figma (indique_00) é a MESMA pill de contorno
+              dos quatro passos — o que muda é só o marcador da esquerda, um
+              check laranja preenchido no lugar do número. */}
+          <span className="inline-flex items-center gap-2 rounded-full border border-brand-1 px-5 py-2 text-sm font-medium text-texto">
+            <Icon
+              icon="ph:check-circle-fill"
+              className="h-5 w-5 text-brand-1"
+              aria-hidden="true"
+            />
             Você recebe sua recompensa
           </span>
         </div>
