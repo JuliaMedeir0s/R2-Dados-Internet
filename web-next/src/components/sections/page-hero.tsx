@@ -17,7 +17,7 @@ export function PageHero({ tag, title, description, tone = "brand", image }: Pag
   return (
     <section
       className={`relative overflow-hidden rounded-b-[60px] lg:rounded-b-[150px] ${
-        tone === "corp" ? "bg-corp-2" : "bg-brand-1"
+        tone === "corp" ? "bg-gradient-to-br from-corp-2 to-corp-3" : "bg-brand-1"
       }`}
     >
       {image && (
