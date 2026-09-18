@@ -146,3 +146,235 @@ body {
     animation: none;
   }
 }
+
+/* ==================================================================
+   Círculo de aplicativos da Home (home_02)
+   ------------------------------------------------------------------
+   Duas órbitas contrarrotativas em volta do texto: a interna gira no
+   sentido horário (90s) e a externa no anti-horário (140s). Cada logo
+   recebe a MESMA animação da sua órbita, só que invertida (`reverse`),
+   o que cancela a rotação exatamente e mantém o ícone sempre em pé —
+   e garante que pausar uma pausa a outra junto.
+
+   Só `transform` e `opacity` animam. O parallax do mouse é escrito
+   direto em `style.transform` pelo componente (requestAnimationFrame),
+   nunca por estado React.
+   ================================================================== */
+
+@keyframes r2-orbitar {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes r2-surgir-app {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes r2-surgir-anel {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Raios das órbitas e tamanho dos logos — em variáveis porque a
+   posição de cada logo é montada com `calc(50% + var(--raio) * seno)`
+   no componente, e assim o breakpoint mora num lugar só. Os degraus
+   acompanham os degraus de largura do próprio palco
+   (max-w-lg / md:max-w-2xl / lg:max-w-3xl). */
+.r2-palco {
+  --raio-int: 33%;
+  --raio-ext: 42%;
+  --app-grande: 56px;
+  --app-pequeno: 40px;
+}
+
+@media (min-width: 768px) {
+  .r2-palco {
+    --raio-int: 31%;
+    --raio-ext: 43%;
+    --app-grande: 68px;
+    --app-pequeno: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .r2-palco {
+    --raio-int: 30%;
+    --raio-ext: 44%;
+    --app-grande: 80px;
+    --app-pequeno: 56px;
+  }
+}
+
+.r2-app-grande {
+  width: var(--app-grande);
+  height: var(--app-grande);
+}
+
+.r2-app-pequeno {
+  width: var(--app-pequeno);
+  height: var(--app-pequeno);
+}
+
+.r2-orbita-int {
+  animation: r2-orbitar 90s linear infinite;
+}
+
+.r2-contra-int {
+  animation: r2-orbitar 90s linear infinite reverse;
+}
+
+.r2-orbita-ext {
+  animation: r2-orbitar 140s linear infinite reverse;
+}
+
+.r2-contra-ext {
+  animation: r2-orbitar 140s linear infinite;
+}
+
+/* Arco em degradê por cima do anel fino: é o que o Figma desenha (o
+   traço do anel nasce laranja e se apaga) e é também o que torna a
+   rotação legível — um círculo perfeito girando seria invisível.
+   `mask` recorta o gradiente cônico numa coroa de ~1,6px. */
+.r2-arco {
+  background: conic-gradient(
+    from var(--arco-inicio, 0deg),
+    var(--brand-1) 0deg,
+    var(--brand-6) 110deg,
+    transparent 215deg,
+    transparent 310deg,
+    var(--brand-1) 360deg
+  );
+  -webkit-mask: radial-gradient(
+    circle farthest-side,
+    transparent calc(100% - 2px),
+    black calc(100% - 1.6px),
+    black calc(100% - 0.4px),
+    transparent 100%
+  );
+  mask: radial-gradient(
+    circle farthest-side,
+    transparent calc(100% - 2px),
+    black calc(100% - 1.6px),
+    black calc(100% - 0.4px),
+    transparent 100%
+  );
+}
+
+.r2-arco-defasado {
+  --arco-inicio: 155deg;
+}
+
+.r2-ponto {
+  background: var(--brand-1);
+  transition: box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.r2-app-caixa {
+  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--preto), transparent 72%);
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* o logo em foco passa na frente dos vizinhos da mesma órbita */
+.r2-app:hover {
+  z-index: 5;
+}
+
+.r2-app:hover .r2-app-caixa {
+  transform: scale(1.15);
+  box-shadow:
+    0 18px 38px -14px color-mix(in srgb, var(--brand-1), transparent 45%),
+    0 6px 16px -8px color-mix(in srgb, var(--preto), transparent 70%);
+}
+
+/* Passar o mouse num logo congela a cena inteira (órbitas E
+   contrarrotações, que precisam parar juntas para os ícones não
+   começarem a rodar) e acende os pontinhos dos anéis. */
+.r2-palco:has(.r2-app:hover) .r2-gira,
+.r2-palco:has(.r2-app:hover) .r2-contragira {
+  animation-play-state: paused;
+}
+
+.r2-palco:has(.r2-app:hover) .r2-ponto {
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--brand-1), transparent 78%),
+    0 0 14px 2px color-mix(in srgb, var(--brand-1), transparent 45%);
+}
+
+/* Véu branco atrás do texto: a composição é apertada no celular e um
+   logo da órbita interna pode raspar o canto do bloco. O véu resolve
+   como profundidade (o logo passa ATRÁS) em vez de como colisão. */
+.r2-nucleo::before {
+  content: "";
+  position: absolute;
+  inset: -14% -20%;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(closest-side, var(--branco) 62%, transparent);
+}
+
+/* Entrada: os logos surgem do centro para fora quando a seção entra no
+   viewport (o atraso de cada um vem inline, do componente). */
+.r2-palco[data-entrada="aguardando"] .r2-app,
+.r2-palco[data-entrada="aguardando"] .r2-anel {
+  opacity: 0;
+}
+
+.r2-palco[data-entrada="visivel"] .r2-app {
+  animation: r2-surgir-app 700ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.r2-palco[data-entrada="visivel"] .r2-anel {
+  animation: r2-surgir-anel 900ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Fora do viewport nada anima e nada fica promovido a camada. */
+.r2-palco[data-ativo="nao"] .r2-gira,
+.r2-palco[data-ativo="nao"] .r2-contragira {
+  animation-play-state: paused;
+}
+
+.r2-palco[data-ativo="sim"] .r2-campo,
+.r2-palco[data-ativo="sim"] .r2-camada,
+.r2-palco[data-ativo="sim"] .r2-gira {
+  will-change: transform;
+}
+
+/* Quem pediu menos movimento fica com a composição estática do Figma: sem
+   rotação, sem entrada escalonada e sem parallax (o componente nem chega a
+   ligar os listeners). O realce de hover continua — é resposta direta a uma
+   ação do usuário, com 15% de escala, e não movimento automático.
+   Os seletores repetem [data-entrada][data-ativo] só para ganhar das regras
+   de entrada lá de cima, que têm especificidade de atributo. */
+@media (prefers-reduced-motion: reduce) {
+  .r2-palco[data-entrada][data-ativo] .r2-gira,
+  .r2-palco[data-entrada][data-ativo] .r2-contragira {
+    animation: none;
+  }
+
+  .r2-palco[data-entrada][data-ativo] .r2-app,
+  .r2-palco[data-entrada][data-ativo] .r2-anel {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

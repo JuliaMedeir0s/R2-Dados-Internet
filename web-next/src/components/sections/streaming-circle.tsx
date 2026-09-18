@@ -1,101 +1,329 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+
+import { APPS_STREAMING, type AppStreaming } from "@/lib/streaming-apps-data";
 import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
 
-// Os 11 aplicativos que o Figma (home_02) mostra girando em volta do texto,
-// na mesma ordem do desenho (sentido horário a partir do topo). Quem cai em
-// índice par fica na órbita externa e num quadrado maior; ímpar, na interna e
-// menor — é o ritmo alternado do Figma.
-const APPS = [
-  { nome: "Mestre Cursos", icon: "/images/mestre_cursos_logo.png" },
-  { nome: "Max", icon: "/images/max.png" },
-  { nome: "Kaspersky", icon: "/images/kaspersky_logo.png" },
-  { nome: "Disney+", icon: "/images/disney_plus_logo.png" },
-  { nome: "Globoplay", icon: "/images/globo_play_logo.png" },
-  { nome: "Sky+ Light", icon: "/images/SKY_light_logo.png" },
-  { nome: "Premiere", icon: "/images/premiere_logo.png" },
-  { nome: "ExitLag", icon: "/images/exitlag_logo.png" },
-  { nome: "BITT Trainers", icon: "/images/bitt_logo.png" },
-  { nome: "Deezer", icon: "/images/deezer_logo.png" },
-  { nome: "Formind", icon: "/images/formind_logo.png" },
+const GRAU = Math.PI / 180;
+
+// Parallax do mouse: inclinação máxima do conjunto, deslocamento de cada
+// camada por profundidade (a externa é a que mais anda) e o fator de lerp
+// que suaviza a perseguição do cursor a cada quadro.
+const INCLINACAO = 6; // graus de rotateX/rotateY
+const DESLOCAMENTO = { externa: 24, interna: 12, nucleo: -4 }; // px
+const SUAVIZACAO = 0.08;
+const REPOUSO = 0.0006; // abaixo disso encosta no alvo e desliga o rAF
+const PASSO_ENTRADA = 60; // ms entre um logo e o próximo
+
+// Pontinhos laranja soltos sobre os anéis (raio em % do lado do palco).
+// Ficam dentro da camada que gira para acompanharem o anel, como no Figma.
+const PONTOS_EXTERNOS = [
+  { raio: 48, angulo: 30 },
+  { raio: 45, angulo: 128 },
+  { raio: 48, angulo: 250 },
+];
+const PONTOS_INTERNOS = [
+  { raio: 39, angulo: 85 },
+  { raio: 38, angulo: 205 },
+  { raio: 36, angulo: 310 },
 ];
 
-const ORBITA_EXTERNA = 44; // % do lado do container
-const ORBITA_INTERNA = 30;
+const APPS_INTERNOS = APPS_STREAMING.filter((app) => app.orbita === "interna");
+const APPS_EXTERNOS = APPS_STREAMING.filter((app) => app.orbita === "externa");
 
-// Pontinhos laranja soltos sobre os anéis (raio em %, ângulo em graus).
-const PONTOS = [
-  { raio: 48, angulo: -60 },
-  { raio: 48, angulo: 35 },
-  { raio: 48, angulo: 160 },
-  { raio: 38, angulo: -15 },
-  { raio: 38, angulo: 110 },
-  { raio: 38, angulo: 215 },
-];
+// Monta um eixo como `calc(50% ± raio * fator)`. O raio chega como texto
+// (`var(--raio-ext)` ou `48%`) para que o breakpoint viva no CSS e a
+// trigonometria viva aqui.
+function eixo(raio: string, fator: number) {
+  const valor = Number(fator.toFixed(4));
+  if (valor === 0) return "50%";
+  return `calc(50% ${valor < 0 ? "-" : "+"} ${raio} * ${Math.abs(valor)})`;
+}
 
-function posicao(raio: number, anguloGraus: number) {
-  const rad = (anguloGraus * Math.PI) / 180;
+// 0 grau no topo, crescendo no sentido horário.
+function coordenadas(raio: string, angulo: number) {
   return {
-    left: `${50 + raio * Math.cos(rad)}%`,
-    top: `${50 + raio * Math.sin(rad)}%`,
+    left: eixo(raio, Math.sin(angulo * GRAU)),
+    top: eixo(raio, -Math.cos(angulo * GRAU)),
   };
 }
 
-export function StreamingCircle() {
+type LogoAppProps = {
+  app: AppStreaming;
+  raio: string;
+  contragiro: string;
+  atraso: number;
+};
+
+function LogoApp({ app, raio, contragiro, atraso }: LogoAppProps) {
+  const grande = app.tamanho === "grande";
   return (
-    <section className="overflow-hidden bg-white py-16">
-      <div className="relative mx-auto flex aspect-square w-full max-w-lg items-center justify-center lg:max-w-3xl">
-        {/* três anéis finos */}
-        <div className="absolute inset-0 rounded-full border border-brand-1/30" />
-        <div className="absolute inset-[10%] rounded-full border border-brand-1/30" />
-        <div className="absolute inset-[22%] rounded-full border border-brand-1/30" />
-
-        {PONTOS.map((ponto) => (
-          <span
-            key={`${ponto.raio}-${ponto.angulo}`}
-            aria-hidden="true"
-            className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-1"
-            style={posicao(ponto.raio, ponto.angulo)}
+    <div
+      className="r2-app group/app absolute -translate-x-1/2 -translate-y-1/2"
+      style={{ ...coordenadas(raio, app.angulo), animationDelay: `${atraso}ms` }}
+      title={app.nome}
+    >
+      {/* contrarrotação: cancela o giro da órbita e mantém o logo em pé */}
+      <div
+        className={`r2-contragira relative ${contragiro} ${
+          grande ? "r2-app-grande" : "r2-app-pequeno"
+        }`}
+      >
+        <div
+          className={`r2-app-caixa absolute inset-0 overflow-hidden bg-white ${
+            grande ? "rounded-2xl" : "rounded-xl"
+          }`}
+        >
+          <Image
+            src={app.icone}
+            alt={app.nome}
+            width={200}
+            height={200}
+            className="h-full w-full object-cover"
           />
-        ))}
-
-        <div className="relative max-w-[260px] text-center md:max-w-xs">
-          <SectionTag>Aplicativos</SectionTag>
-          <SectionTitle
-            light="Um mundo de"
-            bold="entretenimento para você"
-            className="mt-3 text-2xl md:text-3xl"
-          />
-          <p className="mt-3 text-xs text-texto/70 md:text-sm">
-            Assista a séries, acompanhe os jogos, escute suas músicas favoritas
-            e aproveite benefícios exclusivos em uma conexão preparada para toda
-            a família.
-          </p>
         </div>
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-full mt-3 -translate-x-1/2 whitespace-nowrap rounded-full bg-texto px-2.5 py-1 text-[11px] font-medium text-white opacity-0 transition-opacity duration-200 group-hover/app:opacity-100"
+        >
+          {app.nome}
+        </span>
+      </div>
+    </div>
+  );
+}
 
-        {APPS.map((app, index) => {
-          const externa = index % 2 === 0;
-          const raio = externa ? ORBITA_EXTERNA : ORBITA_INTERNA;
-          const angulo = (index / APPS.length) * 360 - 90;
-          return (
-            <span
-              key={app.nome}
-              title={app.nome}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl shadow-md ${
-                externa ? "h-20 w-20" : "h-14 w-14"
-              }`}
-              style={posicao(raio, angulo)}
-            >
-              <Image
-                src={app.icon}
-                alt={app.nome}
-                width={80}
-                height={80}
-                className="h-full w-full object-cover"
+export function StreamingCircle() {
+  const secao = useRef<HTMLElement>(null);
+  const palco = useRef<HTMLDivElement>(null);
+  const campo = useRef<HTMLDivElement>(null);
+  const camadaExterna = useRef<HTMLDivElement>(null);
+  const camadaInterna = useRef<HTMLDivElement>(null);
+  const nucleo = useRef<HTMLDivElement>(null);
+
+  const [entrou, setEntrou] = useState(false);
+  const [ativo, setAtivo] = useState(false);
+
+  // Entrada escalonada + desliga as órbitas fora do viewport (o loop não
+  // precisa rodar, nem promover camada, com a seção fora da tela).
+  useEffect(() => {
+    const alvo = palco.current;
+    if (!alvo) return;
+
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        const visivel = entradas[entradas.length - 1].isIntersecting;
+        setAtivo(visivel);
+        if (visivel) setEntrou(true);
+      },
+      { rootMargin: "0px 0px -8% 0px" }
+    );
+    observador.observe(alvo);
+    return () => observador.disconnect();
+  }, []);
+
+  // Parallax pelo mouse. Só com ponteiro fino e sem `prefers-reduced-motion`;
+  // zero estado React por quadro — o rAF escreve direto em `style.transform`.
+  useEffect(() => {
+    const area = secao.current;
+    const quadro = palco.current;
+    const elCampo = campo.current;
+    const elExterna = camadaExterna.current;
+    const elInterna = camadaInterna.current;
+    const elNucleo = nucleo.current;
+    if (!area || !quadro || !elCampo || !elExterna || !elInterna || !elNucleo) {
+      return;
+    }
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const alvo = { x: 0, y: 0 };
+    const atual = { x: 0, y: 0 };
+    let caixa: DOMRect | null = null;
+    let pedido: number | null = null;
+
+    const aplicar = (x: number, y: number) => {
+      elCampo.style.transform = `perspective(1200px) rotateX(${(
+        -y * INCLINACAO
+      ).toFixed(3)}deg) rotateY(${(x * INCLINACAO).toFixed(3)}deg)`;
+      elExterna.style.transform = `translate3d(${(
+        x * DESLOCAMENTO.externa
+      ).toFixed(2)}px, ${(y * DESLOCAMENTO.externa).toFixed(2)}px, 0)`;
+      elInterna.style.transform = `translate3d(${(
+        x * DESLOCAMENTO.interna
+      ).toFixed(2)}px, ${(y * DESLOCAMENTO.interna).toFixed(2)}px, 0)`;
+      elNucleo.style.transform = `translate3d(${(
+        x * DESLOCAMENTO.nucleo
+      ).toFixed(2)}px, ${(y * DESLOCAMENTO.nucleo).toFixed(2)}px, 0)`;
+    };
+
+    const passo = () => {
+      const dx = alvo.x - atual.x;
+      const dy = alvo.y - atual.y;
+      if (Math.abs(dx) < REPOUSO && Math.abs(dy) < REPOUSO) {
+        atual.x = alvo.x;
+        atual.y = alvo.y;
+        aplicar(atual.x, atual.y);
+        pedido = null;
+        return;
+      }
+      atual.x += dx * SUAVIZACAO;
+      atual.y += dy * SUAVIZACAO;
+      aplicar(atual.x, atual.y);
+      pedido = requestAnimationFrame(passo);
+    };
+
+    const acordar = () => {
+      if (pedido === null) pedido = requestAnimationFrame(passo);
+    };
+
+    const limitar = (valor: number) => Math.max(-1, Math.min(1, valor));
+
+    const aoMover = (evento: PointerEvent) => {
+      if (evento.pointerType !== "mouse") return;
+      // uma única leitura de layout por pointerenter, resize ou scroll
+      if (!caixa) caixa = quadro.getBoundingClientRect();
+      if (!caixa.width || !caixa.height) return;
+      alvo.x = limitar(
+        (evento.clientX - caixa.left - caixa.width / 2) / (caixa.width / 2)
+      );
+      alvo.y = limitar(
+        (evento.clientY - caixa.top - caixa.height / 2) / (caixa.height / 2)
+      );
+      acordar();
+    };
+
+    const aoSair = () => {
+      alvo.x = 0;
+      alvo.y = 0;
+      acordar();
+    };
+
+    const invalidar = () => {
+      caixa = null;
+    };
+
+    area.addEventListener("pointerenter", invalidar, { passive: true });
+    area.addEventListener("pointermove", aoMover, { passive: true });
+    area.addEventListener("pointerleave", aoSair, { passive: true });
+    window.addEventListener("resize", invalidar, { passive: true });
+    window.addEventListener("scroll", invalidar, { passive: true });
+
+    return () => {
+      area.removeEventListener("pointerenter", invalidar);
+      area.removeEventListener("pointermove", aoMover);
+      area.removeEventListener("pointerleave", aoSair);
+      window.removeEventListener("resize", invalidar);
+      window.removeEventListener("scroll", invalidar);
+      if (pedido !== null) cancelAnimationFrame(pedido);
+      elCampo.style.transform = "";
+      elExterna.style.transform = "";
+      elInterna.style.transform = "";
+      elNucleo.style.transform = "";
+    };
+  }, []);
+
+  return (
+    <section
+      ref={secao}
+      className="relative overflow-hidden bg-white py-16 lg:py-24"
+    >
+      <div
+        ref={palco}
+        data-entrada={entrou ? "visivel" : "aguardando"}
+        data-ativo={ativo ? "sim" : "nao"}
+        className="r2-palco relative mx-auto aspect-square w-full max-w-lg md:max-w-2xl lg:max-w-3xl"
+      >
+        <div
+          ref={campo}
+          className="r2-campo absolute inset-0 flex items-center justify-center"
+        >
+          {/* órbita interna — sentido horário, 90s */}
+          <div ref={camadaInterna} className="r2-camada absolute inset-0">
+            <div className="r2-gira r2-orbita-int absolute inset-0">
+              <div
+                aria-hidden="true"
+                className="r2-anel absolute inset-[22%] rounded-full border border-brand-1/25"
               />
-            </span>
-          );
-        })}
+              <div
+                aria-hidden="true"
+                className="r2-anel r2-arco r2-arco-defasado absolute inset-[22%] rounded-full"
+              />
+              {PONTOS_INTERNOS.map((ponto) => (
+                <span
+                  key={`int-${ponto.angulo}`}
+                  aria-hidden="true"
+                  className="r2-ponto r2-anel absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full lg:h-2.5 lg:w-2.5"
+                  style={coordenadas(`${ponto.raio}%`, ponto.angulo)}
+                />
+              ))}
+              {APPS_INTERNOS.map((app, indice) => (
+                <LogoApp
+                  key={app.nome}
+                  app={app}
+                  raio="var(--raio-int)"
+                  contragiro="r2-contra-int"
+                  atraso={indice * PASSO_ENTRADA}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* órbita externa — sentido anti-horário, 140s */}
+          <div ref={camadaExterna} className="r2-camada absolute inset-0">
+            <div className="r2-gira r2-orbita-ext absolute inset-0">
+              <div
+                aria-hidden="true"
+                className="r2-anel absolute inset-0 rounded-full border border-brand-1/25"
+              />
+              <div
+                aria-hidden="true"
+                className="r2-anel absolute inset-[10%] rounded-full border border-brand-1/25"
+              />
+              <div
+                aria-hidden="true"
+                className="r2-anel r2-arco absolute inset-[10%] rounded-full"
+              />
+              {PONTOS_EXTERNOS.map((ponto) => (
+                <span
+                  key={`ext-${ponto.angulo}`}
+                  aria-hidden="true"
+                  className="r2-ponto r2-anel absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full lg:h-2.5 lg:w-2.5"
+                  style={coordenadas(`${ponto.raio}%`, ponto.angulo)}
+                />
+              ))}
+              {APPS_EXTERNOS.map((app, indice) => (
+                <LogoApp
+                  key={app.nome}
+                  app={app}
+                  raio="var(--raio-ext)"
+                  contragiro="r2-contra-ext"
+                  atraso={(APPS_INTERNOS.length + indice) * PASSO_ENTRADA}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div
+            ref={nucleo}
+            className="r2-nucleo relative z-10 max-w-[168px] px-1 text-center md:max-w-[260px] lg:max-w-xs"
+          >
+            <SectionTag>Aplicativos</SectionTag>
+            <SectionTitle
+              light="Um mundo de"
+              bold="entretenimento para você"
+              className="mt-2 text-lg md:mt-3 md:text-2xl lg:text-3xl"
+            />
+            <p className="mt-2 text-[11px] leading-relaxed text-texto/70 md:mt-3 md:text-xs lg:text-sm">
+              Assista a séries, acompanhe os jogos, escute suas músicas
+              favoritas e aproveite benefícios exclusivos em uma conexão
+              preparada para toda a família.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

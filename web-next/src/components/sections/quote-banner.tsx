@@ -11,7 +11,7 @@ export function QuoteBanner() {
         <SectionNotch color="bg-white" iconClass="text-texto" />
         {/* flow-debt: fonte aproximada, trocar quando a Júlia informar a fonte do Figma */}
         <p className="mx-auto mt-10 max-w-3xl px-4 text-center font-script text-5xl leading-tight text-white/80 md:text-7xl">
-          Muitas formas de se conectar
+          Muitas formas de te conectar
         </p>
       </section>
 
