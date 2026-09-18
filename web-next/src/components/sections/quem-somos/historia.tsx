@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 
 // Texto 100% real e legível no PDF. Ilustração do mapa de Minas Gerais com
 // as cidades conectadas, exportada do Figma (quem_01).
@@ -7,13 +9,14 @@ export function Historia() {
     <section className="bg-white py-16">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-10 px-4 md:flex-row md:px-8">
         <div className="text-center md:text-left">
-          <span className="inline-block rounded-full border border-brand-1 px-4 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
-            Nossa História
-          </span>
-          <h2 className="mt-2 text-2xl font-bold text-texto md:text-3xl">
-            Levando ultra <span className="text-brand-1">velocidade</span> ao interior de Minas
-            Gerais
-          </h2>
+          <SectionTag>Nossa História</SectionTag>
+
+          <SectionTitle
+            light="Levando ultra"
+            bold="velocidade ao interior de Minas Gerais"
+            className="mt-3 text-2xl md:text-3xl"
+          />
+
           <p className="mt-3 max-w-xl text-texto/70">
             A R2 Internet foi fundada com o objetivo de levar o melhor em internet ao interior de
             cidades pequenas. Hoje estamos em constante expansão e já estamos conectando mais de 12

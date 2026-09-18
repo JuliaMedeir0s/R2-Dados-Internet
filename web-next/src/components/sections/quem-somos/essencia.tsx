@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SectionTag } from "@/components/ui/section-tag";
 
 // Texto 100% real e legível no PDF. Ilustração exportada do Figma (quem_00):
 // já vem com o círculo cinza claro atrás da casa, sem fundo adicional aqui.
@@ -16,13 +17,17 @@ export function Essencia() {
         />
 
         <div className="text-center md:text-left">
-          <span className="inline-block rounded-full border border-brand-1 px-4 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
-            Nossa Essência
-          </span>
-          <h2 className="mt-2 text-2xl font-bold text-texto md:text-3xl">
-            <span className="text-brand-1">Conectando</span> pessoas, empresas e histórias todos os
-            dias
+          <SectionTag>Nossa Essência</SectionTag>
+
+          {/* Título com o trecho em negrito ANTES do leve (quem_00), ao
+              contrário do `SectionTitle` (que é sempre leve + negrito) — por
+              isso o `h2` na mão, mesmo padrão do `blackbox` e do
+              `cta-banner`. */}
+          <h2 className="mt-3 text-2xl leading-tight text-brand-1 md:text-3xl">
+            <span className="font-bold">Conectando</span>{" "}
+            <span className="font-light">pessoas, empresas e histórias todos os dias</span>
           </h2>
+
           <p className="mt-3 max-w-xl text-texto/70">
             A R2 nasceu com o propósito de levar internet de qualidade, estabilidade e atendimento
             de verdade para quem precisa estar conectado.

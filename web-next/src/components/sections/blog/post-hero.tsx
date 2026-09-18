@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import type { BlogPost } from "@/lib/blog-data";
+import { SectionTag } from "@/components/ui/section-tag";
 
 // Cabeçalho do artigo: tag de categoria, título, imagem de capa e
 // autor+data — igual ao card em destaque da listagem, só que em formato de
@@ -8,9 +9,9 @@ import type { BlogPost } from "@/lib/blog-data";
 export function PostHero({ post }: { post: BlogPost }) {
   return (
     <div>
-      <span className="inline-block rounded-full border border-brand-1 px-4 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
-        {post.categoria}
-      </span>
+      <SectionTag>{post.categoria}</SectionTag>
+      {/* O título do artigo é o do post (post_00): laranja e num peso só, sem
+          a divisão leve+negrito do `SectionTitle`. */}
       <h1 className="mt-3 text-3xl font-bold leading-tight text-brand-1 md:text-4xl">
         {post.titulo}
       </h1>

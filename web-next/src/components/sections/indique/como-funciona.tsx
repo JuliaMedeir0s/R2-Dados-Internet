@@ -2,6 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { ButtonLink } from "@/components/ui/button";
+import { SectionTag } from "@/components/ui/section-tag";
 import { STEPS } from "@/lib/indique-data";
 import { useUtm, getGenericWhatsappText, DEFAULT_WHATSAPP_PHONE } from "@/lib/whatsapp";
 
@@ -16,13 +17,17 @@ export function ComoFunciona() {
   return (
     <section className="bg-white py-16 text-center">
       <div className="mx-auto max-w-4xl px-4 md:px-8">
-        <span className="inline-block rounded-full border border-brand-1 px-4 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
-          Indique &amp; Ganhe
-        </span>
-        <h2 className="mt-2 text-2xl font-bold text-texto md:text-3xl">
-          Já é cliente R2? Então sua conexão pode <span className="text-brand-1">render ainda
-          mais vantagens</span>
+        <SectionTag>Indique &amp; Ganhe</SectionTag>
+
+        {/* O Figma (indique_00) abre e fecha o título em negrito, com o
+            trecho leve no meio — não é o leve+negrito do `SectionTitle`, daí
+            o `h2` na mão, mesmo padrão do `blackbox` e do `cta-banner`. */}
+        <h2 className="mt-3 text-2xl leading-tight text-brand-1 md:text-3xl">
+          <span className="font-bold">Já é cliente R2?</span>{" "}
+          <span className="font-light">Então sua conexão pode</span>{" "}
+          <span className="font-bold">render ainda mais vantagens</span>
         </h2>
+
         <p className="mx-auto mt-3 max-w-2xl text-texto/70">
           Indique amigos, familiares ou vizinhos para conhecer a R2 Internet. Quando a instalação
           for concluída, você recebe R$30,00 de desconto na sua mensalidade* como forma de

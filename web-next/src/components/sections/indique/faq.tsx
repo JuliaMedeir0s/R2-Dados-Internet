@@ -4,6 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { INDIQUE_FAQS } from "@/lib/indique-data";
+import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 import { WhatsappButton } from "@/components/ui/whatsapp-button";
 
 // Mesmo padrão de accordion das outras páginas. Tag "FAQ" e heading/subtítulo
@@ -15,20 +17,22 @@ export function IndiqueFaq() {
     <section className="bg-white py-16">
       <div className="mx-auto grid max-w-5xl gap-10 px-4 md:grid-cols-[1fr_auto] md:px-8">
         <div>
-          <span className="inline-block rounded-full border border-brand-1 px-4 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
-            FAQ
-          </span>
-          <h2 className="mt-2 text-2xl font-bold text-texto md:text-3xl">
-            Perguntas que respondem o que você precisa saber!
-          </h2>
-          <p className="mt-2 text-texto/70">
+          <SectionTag>FAQ</SectionTag>
+
+          <SectionTitle
+            light="Perguntas que respondem o que"
+            bold="você precisa saber!"
+            className="mt-3 text-2xl md:text-3xl"
+          />
+
+          <p className="mt-3 text-texto/70">
             Aqui você encontra as respostas para as dúvidas mais comuns. Se ainda restar alguma
             questão, nossa equipe está pronta para te ajudar!
           </p>
 
           {/* Mesmo accordion acessível do `FaqHome`: heading + botão dentro,
               `aria-controls` ligado ao painel, que fica sempre no DOM. */}
-          <div className="mt-6 divide-y divide-cinza-claro">
+          <div className="mt-8 divide-y divide-cinza-claro border-t border-cinza-claro">
             {INDIQUE_FAQS.map((faq, index) => {
               const isOpen = openIndex === index;
               const perguntaId = `faq-indique-pergunta-${index}`;
@@ -40,14 +44,16 @@ export function IndiqueFaq() {
                       type="button"
                       id={perguntaId}
                       onClick={() => setOpenIndex(isOpen ? null : index)}
-                      className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left font-bold text-texto"
+                      className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left font-bold text-brand-1"
                       aria-expanded={isOpen}
                       aria-controls={respostaId}
                     >
                       <span>{faq.pergunta}</span>
                       <Icon
-                        icon={isOpen ? "ph:minus-bold" : "ph:plus-bold"}
-                        className="h-5 w-5 shrink-0 text-brand-1"
+                        icon="ph:caret-down-bold"
+                        className={`h-4 w-4 shrink-0 text-brand-1 transition-transform ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
                         aria-hidden="true"
                       />
                     </button>

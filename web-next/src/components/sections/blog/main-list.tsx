@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import type { BlogPost } from "@/lib/blog-data";
+import { SectionTag } from "@/components/ui/section-tag";
 import { PostRow } from "./post-row";
 
 // Heading em destaque ("Como Saber se Sua Internet Está Entregando a
@@ -13,10 +14,12 @@ export function MainList({
 }) {
   return (
     <div>
-      <span className="inline-block rounded-full border border-brand-1 px-4 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
-        {destaque.categoria}
-      </span>
-      <h2 className="mt-2 text-2xl font-bold text-texto md:text-3xl">{destaque.titulo}</h2>
+      <SectionTag>{destaque.categoria}</SectionTag>
+      {/* O título do destaque é o do post (blog_01): laranja e num peso só,
+          sem a divisão leve+negrito do `SectionTitle`. */}
+      <h2 className="mt-3 text-2xl font-bold leading-tight text-brand-1 md:text-3xl">
+        {destaque.titulo}
+      </h2>
       <div className="mt-3 flex items-center gap-2 text-sm text-texto/70">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-8/20">
           <Icon icon="ph:user-bold" className="h-4 w-4 text-brand-1" />
