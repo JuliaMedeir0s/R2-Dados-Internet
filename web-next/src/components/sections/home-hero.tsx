@@ -105,6 +105,14 @@ export function HomeHero() {
     <section className="relative z-0 w-full pb-16 md:pb-20">
       <Swiper
         modules={[Autoplay, Pagination]}
+        // Mesmo padrão de `lojas.tsx`: `onSwiper` só roda no cliente, depois
+        // do init — é onde dá pra consultar o `prefers-reduced-motion` sem
+        // risco de divergência entre o HTML do servidor e a hidratação.
+        onSwiper={(swiper) => {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            swiper.autoplay?.stop();
+          }
+        }}
         autoplay={isCarousel ? { delay: 6000, disableOnInteraction: false } : false}
         pagination={isCarousel ? { clickable: true } : false}
         loop={isCarousel}

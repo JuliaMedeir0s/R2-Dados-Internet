@@ -105,18 +105,6 @@
 
   --font-sans: var(--font-poppins);
   --font-script: var(--font-caveat);
-
-  /* Escala tipográfica — Web/H1..H5 do Figma */
-  --text-h1: 64px;
-  --text-h1--line-height: 69px;
-  --text-h2: 48px;
-  --text-h2--line-height: 53px;
-  --text-h3: 32px;
-  --text-h3--line-height: 37px;
-  --text-h4: 24px;
-  --text-h4--line-height: 29px;
-  --text-h5: 20px;
-  --text-h5--line-height: 25px;
 }
 
 body {
@@ -135,15 +123,6 @@ body {
   }
   to {
     transform: translateX(-50%);
-  }
-}
-
-/* prefers-reduced-motion: os tickers (Empresarial e Quem Somos) usam a classe
-   arbitrária `animate-[marquee_25s_linear_infinite]`; aqui ela é neutralizada
-   para quem pediu menos movimento no sistema. */
-@media (prefers-reduced-motion: reduce) {
-  .animate-\[marquee_25s_linear_infinite\] {
-    animation: none;
   }
 }
 

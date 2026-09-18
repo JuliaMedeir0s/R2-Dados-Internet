@@ -33,7 +33,7 @@ export default function NotFound() {
           />
 
           <div>
-            <p className="text-8xl font-bold text-brand-1 md:text-9xl">404</p>
+            <h1 className="text-8xl font-bold text-brand-1 md:text-9xl">404</h1>
             <p className="mt-4 text-lg text-texto">
               <span className="font-bold">Ops! Esta página saiu do radar.</span>{" "}
               O endereço pode ter mudado, sido removido ou talvez nunca tenha

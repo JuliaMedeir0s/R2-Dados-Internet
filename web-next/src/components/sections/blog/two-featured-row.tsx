@@ -14,7 +14,7 @@ function FeaturedCard({ post }: { post: BlogPost }) {
           src={post.imagem}
           alt=""
           fill
-          sizes="(min-width: 640px) 360px, 100vw"
+          sizes="(min-width: 640px) 528px, 100vw"
           className="object-cover"
         />
       </div>

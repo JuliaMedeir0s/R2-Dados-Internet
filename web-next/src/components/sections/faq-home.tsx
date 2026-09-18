@@ -5,12 +5,9 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 import { FAQ_HOME } from "@/lib/faq-home-data";
-import { ButtonLink } from "@/components/ui/button";
 import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
-
-const WHATSAPP_URL =
-  "https://api.whatsapp.com/send/?phone=553136621235&text=Ol%C3%A1%2C+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+os+servi%C3%A7os+da+R2+Internet.&type=phone_number&app_absent=0";
+import { WhatsappButton } from "@/components/ui/whatsapp-button";
 
 export function FaqHome() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -31,31 +28,46 @@ export function FaqHome() {
             ajudar!
           </p>
 
+          {/* Accordion no padrão acessível: cada pergunta é um heading (h3, um
+              nível abaixo do título da seção) com o botão dentro, e o botão
+              aponta pro painel de resposta por `aria-controls`. O painel fica
+              sempre no DOM, escondido por `hidden`, pra que o `aria-controls`
+              nunca aponte pra um id inexistente. */}
           <div className="mt-8 divide-y divide-cinza-claro border-t border-cinza-claro">
             {FAQ_HOME.map((faq, index) => {
               const isOpen = openIndex === index;
+              const perguntaId = `faq-home-pergunta-${index}`;
+              const respostaId = `faq-home-resposta-${index}`;
               return (
                 <div key={faq.pergunta}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left"
-                    aria-expanded={isOpen}
+                  <h3>
+                    <button
+                      type="button"
+                      id={perguntaId}
+                      onClick={() => setOpenIndex(isOpen ? null : index)}
+                      className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left font-bold text-brand-1"
+                      aria-expanded={isOpen}
+                      aria-controls={respostaId}
+                    >
+                      <span>{faq.pergunta}</span>
+                      <Icon
+                        icon="ph:caret-down-bold"
+                        className={`h-4 w-4 shrink-0 text-brand-1 transition-transform ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </h3>
+                  <p
+                    id={respostaId}
+                    role="region"
+                    aria-labelledby={perguntaId}
+                    hidden={!isOpen}
+                    className="pb-4 text-sm text-texto/70"
                   >
-                    <span className="font-bold text-brand-1">
-                      {faq.pergunta}
-                    </span>
-                    <Icon
-                      icon="ph:caret-down-bold"
-                      className={`h-4 w-4 shrink-0 text-brand-1 transition-transform ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                      aria-hidden="true"
-                    />
-                  </button>
-                  {isOpen && (
-                    <p className="pb-4 text-sm text-texto/70">{faq.resposta}</p>
-                  )}
+                    {faq.resposta}
+                  </p>
                 </div>
               );
             })}
@@ -78,15 +90,17 @@ export function FaqHome() {
             <p className="mt-2 text-sm text-texto/70">
               Qualquer dúvida ou problema estamos de prontidão para ajudar.
             </p>
-            <ButtonLink
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsappButton
+              context="falar com a equipe R2"
               className="mt-4 flex w-full gap-2"
             >
-              <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
+              <Icon
+                icon="basil:whatsapp-solid"
+                className="h-4 w-4"
+                aria-hidden="true"
+              />
               Fale com a equipe R2
-            </ButtonLink>
+            </WhatsappButton>
           </div>
         </div>
       </div>

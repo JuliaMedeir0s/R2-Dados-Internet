@@ -24,7 +24,7 @@ export function BlogSidebar({
           src="/images/figma/cta-conexao.webp"
           alt=""
           fill
-          sizes="(min-width: 1024px) 320px, 100vw"
+          sizes="(min-width: 1024px) 400px, 100vw"
           className="object-cover"
         />
         <div

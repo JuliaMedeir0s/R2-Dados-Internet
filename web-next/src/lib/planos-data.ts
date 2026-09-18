@@ -1,7 +1,23 @@
 export type Beneficio = { text: string; destaque?: boolean };
 export type ItemIcon = { nome: string; icon?: string };
+
+/**
+ * Nomes dos planos do catálogo. Existe como união (e não `string`) para que
+ * um erro de digitação em `PlanoGrupo.planNames` quebre no TypeScript, em vez
+ * de sumir em silêncio no `.filter()` que monta o carrossel.
+ */
+export type NomePlano =
+  | "R2 Start"
+  | "R2 Plus"
+  | "R2 Start PRO"
+  | "R2 Plus PRO"
+  | "R2 Ultra"
+  | "R2 Gamer"
+  | "R2 Futebol"
+  | "R2 Família";
+
 export type Plano = {
-  nome: string;
+  nome: NomePlano;
   preco: string;
   /**
    * Velocidade preservada 1:1 pro texto da mensagem de WhatsApp (ver
@@ -192,7 +208,7 @@ export type PlanoGrupo = {
   tag: string;
   title: { light: string; bold: string };
   description: string;
-  planNames: string[];
+  planNames: NomePlano[];
   reverse?: boolean;
 };
 

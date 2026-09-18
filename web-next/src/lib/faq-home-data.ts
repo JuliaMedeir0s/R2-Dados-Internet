@@ -29,7 +29,7 @@ export const FAQ_HOME: FaqHomeItem[] = [
     pergunta: "Os aplicativos já estão inclusos no plano?",
     // rascunho: validar com a Júlia
     resposta:
-      "Sim, e quais aplicativos vêm inclusos varia conforme o plano escolhido.",
+      "Sim, e quais aplicativos vêm inclusos variam conforme o plano escolhido.",
   },
   {
     pergunta: "Como faço para contratar?",

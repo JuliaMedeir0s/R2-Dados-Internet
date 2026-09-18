@@ -26,33 +26,50 @@ export function IndiqueFaq() {
             questão, nossa equipe está pronta para te ajudar!
           </p>
 
+          {/* Mesmo accordion acessível do `FaqHome`: heading + botão dentro,
+              `aria-controls` ligado ao painel, que fica sempre no DOM. */}
           <div className="mt-6 divide-y divide-cinza-claro">
             {INDIQUE_FAQS.map((faq, index) => {
               const isOpen = openIndex === index;
+              const perguntaId = `faq-indique-pergunta-${index}`;
+              const respostaId = `faq-indique-resposta-${index}`;
               return (
                 <div key={faq.pergunta}>
-                  <button
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left"
-                    aria-expanded={isOpen}
+                  <h3>
+                    <button
+                      type="button"
+                      id={perguntaId}
+                      onClick={() => setOpenIndex(isOpen ? null : index)}
+                      className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left font-bold text-texto"
+                      aria-expanded={isOpen}
+                      aria-controls={respostaId}
+                    >
+                      <span>{faq.pergunta}</span>
+                      <Icon
+                        icon={isOpen ? "ph:minus-bold" : "ph:plus-bold"}
+                        className="h-5 w-5 shrink-0 text-brand-1"
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </h3>
+                  <p
+                    id={respostaId}
+                    role="region"
+                    aria-labelledby={perguntaId}
+                    hidden={!isOpen}
+                    className="pb-4 text-sm text-texto/70"
                   >
-                    <span className="font-bold text-texto">{faq.pergunta}</span>
-                    <Icon
-                      icon={isOpen ? "ph:minus-bold" : "ph:plus-bold"}
-                      className="h-5 w-5 shrink-0 text-brand-1"
-                    />
-                  </button>
-                  {isOpen && (
-                    <p className="pb-4 text-sm text-texto/70">{faq.resposta}</p>
-                  )}
+                    {faq.resposta}
+                  </p>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Mesmo card do FAQ da Home: o mascote sobrepõe o topo e o card
-            começa na altura da barriga do robô (home_06). */}
+        {/* Mesmo card do FAQ da Home (home_06): card branco com borda tênue, o
+            mascote sobrepondo o topo e o texto começando na altura da barriga
+            do robô. */}
         <div className="relative h-fit pt-24 md:w-80">
           <Image
             src="/images/figma/mascote-laranja.svg"
@@ -61,16 +78,16 @@ export function IndiqueFaq() {
             height={284}
             className="pointer-events-none absolute -top-4 left-1/2 h-56 w-auto -translate-x-1/2"
           />
-          <div className="flex flex-col items-center gap-4 rounded-3xl bg-cinza-claro p-8 pt-36 text-center">
-            <p className="font-bold text-texto">Precisa de ajuda?</p>
-            <p className="text-sm text-texto/70">
-              Qualquer dúvida ou problema, estamos de prontidão para ajudar.
+          <div className="rounded-2xl border border-brand-1/15 bg-white p-6 pt-36 shadow-lg">
+            <p className="font-bold text-brand-1">Precisa de ajuda?</p>
+            <p className="mt-2 text-sm text-texto/70">
+              Qualquer dúvida ou problema estamos de prontidão para ajudar.
             </p>
             <WhatsappButton
               context="falar com a equipe R2 sobre o Indique e Ganhe"
-              className="gap-2"
+              className="mt-4 flex w-full gap-2"
             >
-              <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
+              <Icon icon="basil:whatsapp-solid" className="h-4 w-4" aria-hidden="true" />
               Fale com a equipe R2
             </WhatsappButton>
           </div>

@@ -8,8 +8,8 @@
 // espalhados pelos quatro quadrantes.
 //
 // Ícones: PNGs 200x200 exportados do Figma em `public/images/figma/apps/`.
-// `formind.png` também foi exportado, mas NÃO aparece no círculo do Figma —
-// o 11º logo de lá é o `bitbook.png` (quadrado roxo com o balão de conversa).
+// O 11º logo do círculo é o `bitbook.png` (quadrado roxo com o balão de
+// conversa) — o Formind não aparece nesta composição.
 
 export type OrbitaApp = "interna" | "externa";
 export type TamanhoApp = "pequeno" | "grande";

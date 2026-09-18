@@ -6,7 +6,10 @@ import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
 
 export function BlogTeaser() {
+  // A coluna lateral do Figma mostra só os quatro posts seguintes ao
+  // destaque — sem o corte, ela despejaria a listagem inteira.
   const [destaque, ...resto] = BLOG_POSTS;
+  const secundarios = resto.slice(0, 4);
 
   return (
     <section className="bg-cinza-claro py-16">
@@ -52,7 +55,7 @@ export function BlogTeaser() {
           </Link>
 
           <div className="flex flex-col gap-4">
-            {resto.map((post) => (
+            {secundarios.map((post) => (
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}

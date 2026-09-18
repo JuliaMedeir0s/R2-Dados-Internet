@@ -27,10 +27,7 @@ import { cn } from "@/lib/utils";
 function IconBadge({ item }: { item: ItemIcon }) {
   if (!item.icon) return null;
   return (
-    <span
-      title={item.nome}
-      className="block h-10 w-10 shrink-0 overflow-hidden rounded-xl"
-    >
+    <span className="block h-10 w-10 shrink-0 overflow-hidden rounded-xl">
       <Image
         src={item.icon}
         alt={item.nome}

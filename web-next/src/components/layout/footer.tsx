@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -61,12 +61,63 @@ const SOCIAL_LINKS = [
 
 export function Footer() {
   const [isContractsModalOpen, setIsContractsModalOpen] = useState(false);
+  const contractsTriggerRef = useRef<HTMLButtonElement>(null);
+  const contractsPanelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname() ?? "/";
+
   // Rodapé segue a paleta da página: laranja no residencial, azul-marinho em
   // Empresarial. Os círculos das redes são brancos nos dois; muda só o ícone.
   const isBusiness = pathname.startsWith("/para-empresas");
   const socialIconClass = isBusiness ? "h-5 w-5 text-corp-1" : "h-5 w-5 text-brand-1";
   const linkHoverClass = isBusiness ? "hover:text-corp-6" : "hover:text-brand-8";
+
+  // Gestão de foco do único modal do site: ao abrir, o foco entra no painel;
+  // enquanto aberto o Tab circula só dentro dele (é o que `aria-modal` promete
+  // ao leitor de tela) e Escape fecha; ao fechar, o foco volta pro botão que
+  // abriu, pra quem navega por teclado não ser jogado pro topo da página.
+  useEffect(() => {
+    if (!isContractsModalOpen) return;
+
+    const trigger = contractsTriggerRef.current;
+    const focaveis = () =>
+      Array.from(
+        contractsPanelRef.current?.querySelectorAll<HTMLElement>(
+          "a[href], button:not([disabled])"
+        ) ?? []
+      );
+
+    focaveis()[0]?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsContractsModalOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const itens = focaveis();
+      if (itens.length === 0) return;
+
+      const primeiro = itens[0];
+      const ultimo = itens[itens.length - 1];
+      const ativo = document.activeElement;
+      const dentro = contractsPanelRef.current?.contains(ativo) ?? false;
+
+      if (event.shiftKey && (ativo === primeiro || !dentro)) {
+        event.preventDefault();
+        ultimo.focus();
+      } else if (!event.shiftKey && (ativo === ultimo || !dentro)) {
+        event.preventDefault();
+        primeiro.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      trigger?.focus();
+    };
+  }, [isContractsModalOpen]);
 
   return (
     <footer className={isBusiness ? "bg-corp-2 text-white" : "bg-brand-1 text-white"}>
@@ -129,7 +180,11 @@ export function Footer() {
               </li>
               <li>
                 <button
+                  type="button"
+                  ref={contractsTriggerRef}
                   onClick={() => setIsContractsModalOpen(true)}
+                  aria-haspopup="dialog"
+                  aria-expanded={isContractsModalOpen}
                   className={`w-full cursor-pointer transition-colors lg:text-left ${linkHoverClass}`}
                 >
                   Contratos
@@ -203,16 +258,23 @@ export function Footer() {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
           onClick={() => setIsContractsModalOpen(false)}
-          role="dialog"
-          aria-modal="true"
         >
+          {/* `role="dialog"`/`aria-modal` vão no PAINEL, não no backdrop: é o
+              painel que é o diálogo, e o rótulo dele é o próprio título. */}
           <div
+            ref={contractsPanelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="footer-contratos-titulo"
             className="w-full max-w-md rounded-2xl bg-white p-8 text-texto shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-6 flex items-center justify-between">
-              <h3 className="text-2xl font-bold">Contratos</h3>
+              <h3 id="footer-contratos-titulo" className="text-2xl font-bold">
+                Contratos
+              </h3>
               <button
+                type="button"
                 onClick={() => setIsContractsModalOpen(false)}
                 className="cursor-pointer rounded-full p-2 transition-colors hover:bg-cinza-claro"
                 aria-label="Fechar"

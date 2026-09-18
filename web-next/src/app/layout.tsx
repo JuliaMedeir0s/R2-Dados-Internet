@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Caveat } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Script from "next/script";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -9,14 +9,6 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-});
-
-// flow-debt: fonte aproximada, trocar quando a Júlia informar a fonte do Figma
-// (faixa manuscrita "Muitas formas de se conectar"). Exposta como `font-script`.
-const caveat = Caveat({
-  variable: "--font-caveat",
-  subsets: ["latin"],
-  weight: ["400"],
 });
 
 const GTM_ID = "GTM-NLJ7KGFK";
@@ -37,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
-      className={`${poppins.variable} ${caveat.variable} h-full antialiased`}
+      className={`${poppins.variable} h-full antialiased`}
     >
       {/* next/script fora do <body>: o docs do Next 16 (guides/scripts.md)
           coloca o Script como irmão do <body>, sem <head> manual. */}

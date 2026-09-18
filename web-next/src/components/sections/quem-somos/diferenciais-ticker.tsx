@@ -13,7 +13,7 @@ export function DiferenciaisTicker() {
 
   return (
     <section className="overflow-hidden bg-brand-1 py-4">
-      <div className="flex w-max animate-[marquee_25s_linear_infinite] gap-4">
+      <div className="flex w-max gap-4 motion-safe:animate-[marquee_25s_linear_infinite]">
         {items.map((label, index) => (
           <span
             key={`${label}-${index}`}

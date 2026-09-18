@@ -31,45 +31,62 @@ export function EmpresarialFaq() {
             ajudar!
           </p>
 
+          {/* Mesmo accordion acessível do `FaqHome`: heading + botão dentro,
+              `aria-controls` ligado ao painel, que fica sempre no DOM. */}
           <div className="mt-8 divide-y divide-cinza-claro border-t border-cinza-claro">
             {EMPRESARIAL_FAQS.map((faq, index) => {
               const isOpen = openIndex === index;
+              const perguntaId = `faq-empresarial-pergunta-${index}`;
+              const respostaId = `faq-empresarial-resposta-${index}`;
               return (
                 <div key={faq.pergunta}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left"
-                    aria-expanded={isOpen}
+                  <h3>
+                    <button
+                      type="button"
+                      id={perguntaId}
+                      onClick={() => setOpenIndex(isOpen ? null : index)}
+                      className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left font-bold text-corp-1"
+                      aria-expanded={isOpen}
+                      aria-controls={respostaId}
+                    >
+                      <span>{faq.pergunta}</span>
+                      <Icon
+                        icon="ph:caret-down-bold"
+                        className={`h-4 w-4 shrink-0 text-corp-1 transition-transform ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </h3>
+                  <p
+                    id={respostaId}
+                    role="region"
+                    aria-labelledby={perguntaId}
+                    hidden={!isOpen}
+                    className="pb-4 text-sm text-texto/70"
                   >
-                    <span className="font-bold text-corp-1">{faq.pergunta}</span>
-                    <Icon
-                      icon="ph:caret-down-bold"
-                      className={`h-4 w-4 shrink-0 text-corp-1 transition-transform ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                      aria-hidden="true"
-                    />
-                  </button>
-                  {isOpen && (
-                    <p className="pb-4 text-sm text-texto/70">{faq.resposta}</p>
-                  )}
+                    {faq.resposta}
+                  </p>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="relative h-fit pt-40">
+        {/* Mesma geometria do card da Home: o `pt` do wrapper reserva a metade
+            do mascote que sobra pra fora e o `pt` do card, a metade que entra
+            nele — sem isso o robô cobre o "Precisa de ajuda?". */}
+        <div className="relative h-fit pt-24">
           <Image
             src="/images/figma/mascote-azul.svg"
             alt=""
             width={264}
             height={278}
-            className="absolute -top-4 left-1/2 h-56 w-auto -translate-x-1/2"
+            className="pointer-events-none absolute -top-4 left-1/2 h-56 w-auto -translate-x-1/2"
           />
 
-          <div className="rounded-2xl border border-corp-1/15 bg-white p-6 shadow-lg">
+          <div className="rounded-2xl border border-corp-1/15 bg-white p-6 pt-36 shadow-lg">
             <p className="font-bold text-corp-1">Precisa de ajuda?</p>
             <p className="mt-2 text-sm text-texto/70">
               Qualquer dúvida ou problema estamos de prontidão para ajudar.
