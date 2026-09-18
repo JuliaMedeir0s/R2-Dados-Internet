@@ -21,9 +21,9 @@ export default function EmpresarialPage() {
       <EmpresarialBenefitsStrip />
       <EmpresarialSolutions />
       <ServicesTicker />
-      <EmpresarialCtaBanner />
       <BlackBox />
       <EmpresarialDiferenciais />
+      <EmpresarialCtaBanner />
       <EmpresarialFaq />
       <EmpresarialCtaBanner />
     </>

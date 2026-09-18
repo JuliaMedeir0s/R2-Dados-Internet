@@ -1,27 +1,29 @@
 import { Icon } from "@iconify/react";
+import { StackedCard } from "@/components/ui/stacked-card";
 
-// Rótulos exatos vistos na tira de ícones azuis do PDF (O_MELHOR_PARA_SUA_EMPRESA.pdf).
+// Rótulos exatos da tira de cards do Figma (empresa_00). Os ícones do Figma
+// são ilustrações 3D que não foram exportadas — ficam como Iconify em
+// `corp-1`, com o glifo mais próximo de cada um.
 const BENEFITS = [
-  { icon: "mdi:account-tie-outline", label: "Suporte Premium" },
-  { icon: "mdi:flash-outline", label: "100% Fibra Óptica" },
-  { icon: "mdi:speedometer", label: "Navegue em ultravelocidade" },
-  { icon: "mdi:shield-check-outline", label: "Monitoramento Inteligente" },
+  { icon: "mdi:face-agent", label: "Suporte Premium" },
+  { icon: "mdi:cable-data", label: "100% Fibra Óptica" },
+  { icon: "mdi:lightning-bolt", label: "Navegue em ultravelocidade" },
+  { icon: "mdi:magnify", label: "Monitoramento Inteligente" },
 ];
 
 export function EmpresarialBenefitsStrip() {
   return (
     <section className="bg-white py-10">
-      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 md:grid-cols-4 md:px-8">
+      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 px-4 md:grid-cols-4 md:gap-6 md:px-8">
         {BENEFITS.map((benefit) => (
-          <div
+          <StackedCard
             key={benefit.label}
-            className="flex flex-col items-center gap-3 rounded-2xl border border-cinza-claro p-5 text-center shadow-sm"
+            tone="corp"
+            className="flex flex-col items-center gap-3 p-5 text-center shadow-lg"
           >
-            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-corp-6/50 text-corp-1">
-              <Icon icon={benefit.icon} className="h-7 w-7" />
-            </span>
-            <p className="text-sm font-bold text-texto">{benefit.label}</p>
-          </div>
+            <Icon icon={benefit.icon} className="h-12 w-12 text-corp-1" aria-hidden="true" />
+            <p className="text-sm font-bold text-corp-1">{benefit.label}</p>
+          </StackedCard>
         ))}
       </div>
     </section>

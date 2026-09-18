@@ -5,79 +5,64 @@ export type Diferencial = {
 };
 
 /**
- * Cards "Nossos Diferenciais" da página Empresarial.
- * Títulos vieram legíveis do PDF exportado pela Júlia (O_MELHOR_PARA_SUA_EMPRESA.pdf).
- * Descrições de "Link Dedicado" e "Telefonia Fixa" reaproveitam o texto real
- * do antigo componente Astro `Servicos.tsx` ("Internet Dedicada" e "Soluções
- * de Voz"). As descrições de "Internet Empresarial" e "PABX em Nuvem" são
- * rascunho — o PDF não deixava esse texto legível — e precisam da revisão
- * da Júlia / conferência com o texto exato do Figma.
+ * Cards "Nossos Diferenciais" da página Empresarial — títulos, descrições e
+ * ícones conforme o Figma (empresa_02). Os ícones do Figma são ilustrações 3D
+ * que não foram exportadas; ficam como Iconify na cor `corp-1`.
  */
 export const DIFERENCIAIS: Diferencial[] = [
   {
-    icon: "mdi:domain",
+    icon: "mdi:wifi",
     titulo: "Internet Empresarial",
     descricao:
-      "Conexão de fibra óptica dedicada ao seu negócio, com estabilidade e suporte prioritário para o dia a dia da empresa.",
+      "Conexão estável e de alta performance para manter sua equipe produtiva e seus sistemas funcionando sem interrupções.",
   },
   {
-    icon: "mdi:lan-connect",
+    icon: "mdi:link-variant",
     titulo: "Link Dedicado",
     descricao:
-      "Conexão de internet de alta disponibilidade, simétrica e com IP fixo para sua empresa.",
+      "Internet exclusiva para sua empresa, com maior estabilidade, baixa latência e desempenho garantido para operações críticas.",
   },
   {
-    icon: "mdi:phone-in-talk-outline",
+    icon: "mdi:cloud",
     titulo: "PABX em Nuvem",
     descricao:
-      "Central telefônica em nuvem para sua empresa, sem custo de equipamentos e com gestão simplificada.",
+      "Gerencie chamadas, ramais e atendimentos de qualquer lugar com uma solução moderna e escalável.",
   },
   {
-    icon: "mdi:phone-classic",
+    icon: "mdi:phone-in-talk",
     titulo: "Telefonia Fixa",
     descricao:
-      "Solução completa que abrange PABX em nuvem, telefone fixo e Tronco E1 com 30 canais.",
+      "Comunicação profissional com qualidade e economia para sua empresa.",
   },
 ];
 
-/**
- * Tags do ticker/marquee de serviços. Nomes reais de serviços que já existiam
- * no site antigo (Servicos.tsx), completados com rótulos estruturais vistos
- * no PDF (ex. "Suporte 24h", "IP Fixo").
- */
+/** Faixa azul de serviços que rola entre as seções (empresa_01). */
 export const SERVICE_TAGS = [
-  "Internet Dedicada",
-  "Lan to Lan",
-  "Gestão de Infraestrutura",
-  "Monitoramento Pró-Ativo",
-  "PABX em Nuvem",
+  "Link Dedicado",
   "Telefonia Fixa",
-  "IP Fixo",
-  "Suporte 24h",
+  "PABX em Nuvem",
+  "Black Box",
+  "Redundância de Link",
+  "Internet Empresarial",
 ];
 
 /**
- * Benefícios da seção "Black Box" (monitoramento inteligente). O PDF mostra
- * uma lista de benefícios real ao lado do botão "Quero conhecer a Black Box",
- * mas o texto de cada item não ficou totalmente legível na exportação — os
- * itens abaixo são rascunho, escritos a partir do tema da seção (monitoramento
- * pró-ativo, já presente no site antigo) e precisam da revisão da Júlia.
+ * Benefícios da seção "Black Box" (empresa_01). O Figma repete
+ * "Monitoramento em tempo real" duas vezes; aqui entra uma vez só.
  */
 export const BLACKBOX_BENEFITS = [
-  "Monitoramento 24h da sua conexão em tempo real",
-  "Alertas automáticos ao menor sinal de instabilidade",
-  "Acionamento imediato da equipe técnica",
-  "Relatórios de desempenho da sua rede",
+  "Monitoramento em tempo real",
+  "Identificação rápida de falhas",
+  "Mais estabilidade para a operação",
+  "Redução de paradas e indisponibilidade.",
 ];
 
 export type EmpresarialFaq = { pergunta: string; resposta: string };
 
 /**
- * Perguntas do FAQ da página Empresarial. A primeira resposta veio legível
- * no PDF (texto real); a pergunta correspondente foi inferida a partir do
- * assunto da resposta e precisa de conferência com o texto exato do Figma.
- * As demais perguntas/respostas são rascunho, no mesmo espírito do FAQ da
- * Home, e precisam da revisão da Júlia antes de publicar.
+ * FAQ da página Empresarial (empresa_02 / empresa_03). As perguntas e a
+ * primeira resposta vieram legíveis do Figma; as demais respostas ficam com o
+ * texto já existente no site ou com rascunho marcado abaixo.
  */
 export const EMPRESARIAL_FAQS: EmpresarialFaq[] = [
   {
@@ -86,23 +71,25 @@ export const EMPRESARIAL_FAQS: EmpresarialFaq[] = [
       "A internet empresarial atende a maioria dos negócios com excelente desempenho. O link dedicado oferece uma conexão exclusiva para empresas que exigem máxima estabilidade e disponibilidade.",
   },
   {
-    pergunta: "A instalação tem algum custo?",
-    resposta:
-      "Fale com a gente pelo WhatsApp para confirmar a disponibilidade e as condições de instalação no endereço da sua empresa.",
-  },
-  {
-    pergunta: "O que é a Black Box de monitoramento?",
+    pergunta: "O que é a Black Box?",
     resposta:
       "É a nossa solução de monitoramento inteligente que acompanha a saúde da sua conexão 24h e aciona automaticamente nossa equipe técnica ao menor sinal de instabilidade.",
   },
   {
-    pergunta: "Atendem empresas de qualquer porte?",
+    pergunta: "A R2 atende empresas de qualquer porte?",
     resposta:
       "Sim, temos soluções para pequenas, médias e grandes empresas, com planos de internet empresarial e link dedicado sob medida para cada operação.",
   },
   {
-    pergunta: "Como funciona o suporte técnico?",
+    pergunta: "O PABX em nuvem substitui uma central telefônica tradicional?",
+    // rascunho: validar com a Júlia
     resposta:
-      "Contamos com equipe de suporte especializada 24h e monitoramento pró-ativo do link, com acionamento automático da equipe de manutenção sempre que necessário.",
+      "Sim. O PABX em nuvem faz tudo que a central tradicional faz, sem equipamento físico, com ramais e atendimentos gerenciados pela internet.",
+  },
+  {
+    pergunta: "Como solicitar uma análise para minha empresa?",
+    // rascunho: validar com a Júlia
+    resposta:
+      "Fale com a gente pelo WhatsApp. Nossa equipe levanta as necessidades da sua empresa e monta uma proposta sob medida.",
   },
 ];

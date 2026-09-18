@@ -1,31 +1,41 @@
 import { Icon } from "@iconify/react";
+import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
+import { StackedCard } from "@/components/ui/stacked-card";
 import { DIFERENCIAIS } from "@/lib/empresarial-data";
 
 export function EmpresarialDiferenciais() {
   return (
     <section className="bg-white py-16">
       <div className="mx-auto max-w-6xl px-4 md:px-8">
-        <div className="mb-10 text-center">
-          <p className="text-sm font-bold uppercase tracking-wide text-corp-1">
-            Por que a R2
+        <div className="text-center">
+          <SectionTag tone="corp">Nossos Diferenciais</SectionTag>
+
+          <SectionTitle
+            tone="corp"
+            light="Soluções empresariais"
+            bold="sob medida para o seu negócio"
+            className="mt-3"
+          />
+
+          <p className="mx-auto mt-3 max-w-3xl text-sm text-texto/70">
+            Cada empresa possui necessidades diferentes. Por isso, oferecemos
+            soluções personalizadas para garantir máxima performance e
+            segurança.
           </p>
-          <h2 className="mt-1 text-2xl font-bold text-texto md:text-3xl">
-            Nossos Diferenciais
-          </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {DIFERENCIAIS.map((item) => (
-            <div
+            <StackedCard
               key={item.titulo}
-              className="flex flex-col items-center gap-3 rounded-2xl bg-corp-2 p-6 text-center text-white shadow-lg"
+              tone="corp"
+              className="flex flex-col gap-3 border-corp-1 p-6"
             >
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
-                <Icon icon={item.icon} className="h-7 w-7 text-corp-7" />
-              </span>
-              <h3 className="text-lg font-bold">{item.titulo}</h3>
-              <p className="text-sm text-white/70">{item.descricao}</p>
-            </div>
+              <Icon icon={item.icon} className="h-14 w-14 text-corp-1" aria-hidden="true" />
+              <h3 className="text-2xl font-bold text-corp-1">{item.titulo}</h3>
+              <p className="text-sm text-texto/70">{item.descricao}</p>
+            </StackedCard>
           ))}
         </div>
       </div>

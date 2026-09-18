@@ -1,7 +1,8 @@
 import { PageHero } from "@/components/sections/page-hero";
 
-// A foto do homem com notebook não foi exportada do Figma — o hero fica só
-// com o fundo corp-2 e o espaço reservado à direita.
+// A foto exportada do Figma já vem com o fundo azul-marinho e as linhas
+// azuis: ela é o hero inteiro, por isso cobre a seção toda e não leva
+// nenhum gradiente por cima.
 export function EmpresarialHero() {
   return (
     <PageHero
@@ -16,6 +17,10 @@ export function EmpresarialHero() {
         </>
       }
       description="Conexão de verdade para sua empresa!"
+      image={{
+        src: "/images/figma/hero-empresarial.webp",
+        alt: "Homem sorrindo usando notebook",
+      }}
     />
   );
 }
