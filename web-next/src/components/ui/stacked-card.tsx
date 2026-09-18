@@ -17,7 +17,11 @@ export function StackedCard({ children, tone = "brand", className }: StackedCard
   return (
     <div
       className={cn(
-        "relative before:absolute before:inset-0 before:translate-x-2 before:translate-y-2 before:rounded-2xl before:border before:bg-white before:content-['']",
+        // `h-full` no wrapper pra o `h-full` do card da frente ter de fato uma
+        // altura de referência quando o slot é esticado (slide de carrossel,
+        // célula de grid) — sem isso os cards de uma mesma linha ficam com
+        // alturas diferentes.
+        "relative h-full before:absolute before:inset-0 before:translate-x-2 before:translate-y-2 before:rounded-2xl before:border before:bg-white before:content-['']",
         isCorp ? "before:border-corp-1/10" : "before:border-brand-1/10"
       )}
     >

@@ -187,3 +187,38 @@ export const PLANOS_RESIDENCIAIS: Plano[] = [
     assinaturas: ASSINATURAS_PLUS,
   },
 ];
+
+export type PlanoGrupo = {
+  tag: string;
+  title: { light: string; bold: string };
+  description: string;
+  planNames: string[];
+  reverse?: boolean;
+};
+
+/**
+ * Os dois grupos curados do Figma (`home_01` e `indique_01`): a Home e a
+ * página Indique e Ganhe mostram exatamente os mesmos, por isso a lista mora
+ * aqui — e não dentro do componente, que é client e não pode ser lido por um
+ * Server Component.
+ */
+export const PLANOS_GRUPOS: PlanoGrupo[] = [
+  {
+    tag: "Essencial de Alta Qualidade",
+    title: { light: "Internet rápida", bold: "para toda sua casa" },
+    description:
+      "Seja para assistir filmes, estudar, trabalhar, jogar online ou conectar toda a família, a R2 tem o plano ideal para sua rotina.",
+    planNames: ["R2 Start", "R2 Plus", "R2 Start PRO", "R2 Plus PRO"],
+  },
+  {
+    tag: "Experiência Premium",
+    title: {
+      light: "Performance máxima para",
+      bold: "quem quer o melhor da conexão",
+    },
+    description:
+      "Os planos de internet 1000 Mega da R2 entregam ultra velocidade, estabilidade e benefícios exclusivos para quem busca a melhor experiência em streaming, games online e múltiplos dispositivos conectados.",
+    planNames: ["R2 Gamer", "R2 Ultra", "R2 Futebol", "R2 Família"],
+    reverse: true,
+  },
+];

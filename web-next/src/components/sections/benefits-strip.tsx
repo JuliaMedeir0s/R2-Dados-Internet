@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { StackedCard } from "@/components/ui/stacked-card";
 
 // Ícones reais enviados pela Júlia (PNG com transparência, já vêm com a cor
 // laranja e o glifo prontos — inclusive "Instalação Grátis", que já é um
@@ -37,9 +38,9 @@ export function BenefitsStrip() {
           referência. */}
       <div className="relative z-10 mx-auto -mt-28 grid max-w-5xl grid-cols-2 gap-4 px-4 md:-mt-32 md:grid-cols-4 md:gap-6 md:px-8">
         {BENEFITS.map((benefit) => (
-          <div
+          <StackedCard
             key={benefit.label}
-            className="flex flex-col items-center gap-3 rounded-2xl border border-cinza-claro bg-white p-5 text-center shadow-lg"
+            className="flex flex-col items-center gap-3 p-5 text-center shadow-lg"
           >
             <Image
               src={benefit.icon}
@@ -48,8 +49,8 @@ export function BenefitsStrip() {
               height={48}
               className="h-12 w-12"
             />
-            <p className="text-sm font-bold text-texto">{benefit.label}</p>
-          </div>
+            <p className="text-sm font-bold text-brand-1">{benefit.label}</p>
+          </StackedCard>
         ))}
       </div>
     </section>

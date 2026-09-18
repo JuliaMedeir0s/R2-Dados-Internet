@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { IndiqueHero } from "@/components/sections/indique/hero";
 import { ComoFunciona } from "@/components/sections/indique/como-funciona";
-import { FeaturedPlans } from "@/components/sections/indique/featured-plans";
+import { PlanosGroup } from "@/components/sections/planos-residenciais";
+import { PLANOS_GRUPOS } from "@/lib/planos-data";
 import { CtaBanner } from "@/components/sections/cta-banner";
 import { IndiqueFaq } from "@/components/sections/indique/faq";
 
@@ -16,19 +17,11 @@ export default function IndiqueEGanhePage() {
     <>
       <IndiqueHero />
       <ComoFunciona />
-      <FeaturedPlans
-        tag="Essencial de Alta Qualidade"
-        heading="Internet rápida para toda sua casa"
-        description="Seja para assistir filmes, estudar, trabalhar, jogar online ou conectar toda a família, a R2 tem o plano ideal para sua rotina."
-        planNames={["R2 Start", "R2 Plus"]}
-      />
-      <FeaturedPlans
-        tag="Experiência Premium"
-        heading="Performance máxima para quem quer o melhor da conexão"
-        description="Os planos de internet 1000 Mega da R2 entregam ultra velocidade, estabilidade e benefícios exclusivos para quem busca a melhor experiência em streaming, games online e múltiplos dispositivos conectados."
-        planNames={["R2 Gamer", "R2 Ultra"]}
-        reverse
-      />
+      <section className="space-y-14 bg-white py-16">
+        {PLANOS_GRUPOS.map((grupo) => (
+          <PlanosGroup key={grupo.tag} {...grupo} />
+        ))}
+      </section>
       <CtaBanner />
       <IndiqueFaq />
       <CtaBanner />

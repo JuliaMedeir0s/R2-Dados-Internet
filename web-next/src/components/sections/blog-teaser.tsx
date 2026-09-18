@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { BLOG_POSTS } from "@/lib/blog-data";
+import { SectionTag } from "@/components/ui/section-tag";
+import { SectionTitle } from "@/components/ui/section-title";
 
 export function BlogTeaser() {
   const [destaque, ...resto] = BLOG_POSTS;
@@ -8,13 +10,18 @@ export function BlogTeaser() {
   return (
     <section className="bg-cinza-claro py-16">
       <div className="mx-auto max-w-6xl px-4 md:px-8">
-        <div className="mb-10 text-center">
-          <p className="text-sm font-bold uppercase tracking-wide text-brand-1">
-            Blog R2
-          </p>
-          <h2 className="mt-1 text-2xl font-bold text-texto md:text-3xl">
-            A sua janela para um mundo sem interrupções
-          </h2>
+        <div className="mb-10 flex flex-col items-center text-center">
+          <SectionTag>Nossos Blog</SectionTag>
+          <SectionTitle
+            light="A sua janela para"
+            bold="um mundo sem interrupções"
+            className="mt-3 max-w-2xl text-2xl md:text-3xl"
+          />
+          <Icon
+            icon="ph:caret-down-bold"
+            className="mt-4 h-5 w-5 text-brand-1"
+            aria-hidden="true"
+          />
         </div>
 
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr]">
