@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { SectionTag } from "@/components/ui/section-tag";
 
-// Card único e clicável (sem botão): o Figma mostra a mesma foto do hero da
-// Home cortada à direita, com o texto por cima à esquerda.
+// Card único e clicável (sem botão): a arte do CTA exportada do Figma
+// (home_06) já vem com o fundo laranja e as linhas, cortada à direita, com o
+// texto por cima à esquerda.
 export function CtaBanner() {
   return (
     <section className="px-4 py-14 md:px-8">
@@ -13,8 +14,8 @@ export function CtaBanner() {
         className="relative mx-auto flex min-h-[320px] max-w-7xl overflow-hidden rounded-[32px] bg-brand-1"
       >
         <Image
-          src="/images/home-hero.png"
-          alt=""
+          src="/images/figma/cta-conexao.webp"
+          alt="Mulher sorrindo com fone de ouvido segurando o celular"
           fill
           sizes="(min-width: 1280px) 1280px, 100vw"
           className="object-cover object-right"

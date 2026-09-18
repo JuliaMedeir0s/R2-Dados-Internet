@@ -1,24 +1,41 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { SectionTag } from "@/components/ui/section-tag";
+import { cn } from "@/lib/utils";
 
-// Hero das páginas internas: mesmo visual do slide da Home (fundo colorido,
-// cantos de baixo arredondados, foto à direita). O `pt-*` reserva o espaço do
-// header fixo, que flutua transparente por cima dele.
+// Hero das páginas internas: mesmo visual do slide da Home (cantos de baixo
+// arredondados, foto à direita). O `pt-*` reserva o espaço do header fixo,
+// que flutua transparente por cima dele. As fotos exportadas do Figma já vêm
+// com o fundo colorido e as linhas — cobrem a seção inteira, e o `bg-*` da
+// seção só aparece enquanto a imagem carrega.
 type PageHeroProps = {
   tag: string;
   title: ReactNode;
   description: ReactNode;
   tone?: "brand" | "corp";
   image?: { src: string; alt: string };
+  /**
+   * Reserva respiro extra embaixo (mesmo `pb` do `home-hero.tsx`) pra tira de
+   * cards da seção seguinte subir por cima da borda arredondada do hero.
+   */
+  overlapBelow?: boolean;
 };
 
-export function PageHero({ tag, title, description, tone = "brand", image }: PageHeroProps) {
+export function PageHero({
+  tag,
+  title,
+  description,
+  tone = "brand",
+  image,
+  overlapBelow = false,
+}: PageHeroProps) {
   return (
     <section
-      className={`relative overflow-hidden rounded-b-[60px] lg:rounded-b-[150px] ${
-        tone === "corp" ? "bg-gradient-to-br from-corp-2 to-corp-3" : "bg-brand-1"
-      }`}
+      className={cn(
+        "relative overflow-hidden rounded-b-[60px] lg:rounded-b-[150px]",
+        tone === "corp" ? "bg-gradient-to-br from-corp-2 to-corp-3" : "bg-brand-1",
+        overlapBelow && "pb-16 md:pb-20"
+      )}
     >
       {image && (
         <Image
@@ -27,7 +44,7 @@ export function PageHero({ tag, title, description, tone = "brand", image }: Pag
           fill
           priority
           sizes="100vw"
-          className="object-cover object-right-top"
+          className="object-cover object-right"
         />
       )}
 

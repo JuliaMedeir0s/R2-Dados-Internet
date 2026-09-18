@@ -1,22 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { INDIQUE_FAQS } from "@/lib/indique-data";
-import { useUtm, getGenericWhatsappText, DEFAULT_WHATSAPP_PHONE } from "@/lib/whatsapp";
+import { WhatsappButton } from "@/components/ui/whatsapp-button";
 
 // Mesmo padrão de accordion das outras páginas. Tag "FAQ" e heading/subtítulo
 // reais e legíveis no PDF (ver indique-data.ts pra origem de cada resposta).
-// Mascote: usando um ícone de robô mais "fofo" (emoji-style) — mais perto do
-// mascote real (robô laranja detalhado, visto com clareza aqui pela terceira
-// vez, nas 3 páginas com FAQ) do que o ícone de linha genérico anterior, mas
-// ainda não é a ilustração real — falta exportar esse asset do Figma.
 export function IndiqueFaq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const utm = useUtm();
-  const href = `https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
-    getGenericWhatsappText(utm, "falar com a equipe R2 sobre o Indique e Ganhe")
-  )}`;
 
   return (
     <section className="bg-white py-16">
@@ -58,21 +51,29 @@ export function IndiqueFaq() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-4 rounded-3xl bg-cinza-claro p-8 text-center">
-          <Icon icon="noto:robot" className="h-16 w-16" />
-          <p className="font-bold text-texto">Precisa de ajuda?</p>
-          <p className="text-sm text-texto/70">
-            Qualquer dúvida ou problema, estamos de prontidão para ajudar.
-          </p>
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-brand-1 px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-brand-5"
-          >
-            <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
-            Fale com a equipe R2
-          </a>
+        {/* Mesmo card do FAQ da Home: o mascote sobrepõe o topo e o card
+            começa na altura da barriga do robô (home_06). */}
+        <div className="relative h-fit pt-24 md:w-80">
+          <Image
+            src="/images/figma/mascote-laranja.svg"
+            alt="Mascote robô da R2 acenando"
+            width={269}
+            height={284}
+            className="pointer-events-none absolute -top-4 left-1/2 h-56 w-auto -translate-x-1/2"
+          />
+          <div className="flex flex-col items-center gap-4 rounded-3xl bg-cinza-claro p-8 pt-36 text-center">
+            <p className="font-bold text-texto">Precisa de ajuda?</p>
+            <p className="text-sm text-texto/70">
+              Qualquer dúvida ou problema, estamos de prontidão para ajudar.
+            </p>
+            <WhatsappButton
+              context="falar com a equipe R2 sobre o Indique e Ganhe"
+              className="gap-2"
+            >
+              <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
+              Fale com a equipe R2
+            </WhatsappButton>
+          </div>
         </div>
       </div>
     </section>

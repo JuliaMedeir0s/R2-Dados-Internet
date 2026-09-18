@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import type { BlogPost } from "@/lib/blog-data";
@@ -9,8 +10,15 @@ import { CATEGORIAS } from "./hero-search";
 function RelatedCard({ post }: { post: BlogPost }) {
   return (
     <Link href={`/blog/${post.slug}`} className="group flex flex-col gap-3">
-      <div className="flex h-40 items-center justify-center rounded-2xl bg-brand-8/20">
-        <Icon icon="mdi:image-outline" className="h-10 w-10 text-brand-1/60" />
+      {/* Decorativa: o título do post está logo abaixo, dentro do mesmo link. */}
+      <div className="relative h-40 overflow-hidden rounded-2xl bg-brand-8/20">
+        <Image
+          src={post.imagem}
+          alt=""
+          fill
+          sizes="(min-width: 640px) 360px, 100vw"
+          className="object-cover"
+        />
       </div>
       <span className="inline-block w-fit rounded-full border border-brand-1 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">
         {post.categoria}

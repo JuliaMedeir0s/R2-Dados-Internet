@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react";
+import Image from "next/image";
 import { ButtonLink } from "@/components/ui/button";
 import { SectionNotch } from "@/components/ui/section-notch";
 import { SectionTag } from "@/components/ui/section-tag";
@@ -11,10 +11,16 @@ export function BusinessTeaser() {
       <SectionNotch color="bg-brand-1" iconClass="text-white" />
 
       <div className="mx-auto mt-10 flex max-w-5xl flex-col items-center gap-8 px-4 md:flex-row md:px-8">
-        {/* Ilustração do robô ainda não exportada do Figma — placeholder. */}
-        <div className="flex h-40 w-40 shrink-0 items-center justify-center rounded-full bg-corp-6/40">
-          <Icon icon="mdi:robot-outline" className="h-20 w-20 text-corp-1" />
-        </div>
+        {/* Ilustração exportada do Figma: já vem com o cenário (monitor,
+            nuvem, pasta) e fundo transparente — sem círculo atrás. */}
+        <Image
+          src="/images/figma/robo-empresas.webp"
+          alt="Mascote robô azul da R2 Empresas ao lado de um monitor, uma nuvem e uma pasta de arquivos"
+          width={571}
+          height={402}
+          sizes="(min-width: 768px) 480px, 90vw"
+          className="h-auto w-full max-w-[480px] shrink-0"
+        />
         <div className="text-center md:text-left">
           <SectionTag tone="corp">R2 Para Empresas</SectionTag>
           <SectionTitle

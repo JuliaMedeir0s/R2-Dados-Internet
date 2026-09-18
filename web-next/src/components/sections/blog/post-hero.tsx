@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import type { BlogPost } from "@/lib/blog-data";
 
@@ -14,8 +15,16 @@ export function PostHero({ post }: { post: BlogPost }) {
         {post.titulo}
       </h1>
 
-      <div className="mt-8 flex h-72 items-center justify-center overflow-hidden rounded-3xl bg-brand-8/20 md:h-96">
-        <Icon icon="mdi:image-outline" className="h-16 w-16 text-brand-1/60" />
+      {/* Decorativa: o título do artigo é o h1 logo acima. */}
+      <div className="relative mt-8 h-72 overflow-hidden rounded-3xl bg-brand-8/20 md:h-96">
+        <Image
+          src={post.imagem}
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1024px) 720px, 100vw"
+          className="object-cover"
+        />
       </div>
 
       <div className="mt-4 flex items-center gap-2 text-sm text-texto/70">

@@ -12,8 +12,8 @@ export function IndiqueHero() {
       }
       description="Indique amigos, familiares ou vizinhos para conhecer a R2 Internet. Quando a instalação for concluída, você recebe R$30,00 de desconto na sua mensalidade* como forma de agradecimento pela indicação."
       image={{
-        src: "/images/home-hero.png",
-        alt: "Mulher sorrindo, usando fone de ouvido e segurando o celular",
+        src: "/images/figma/hero-quem-indique.webp",
+        alt: "Mulher sorrindo com fone de ouvido segurando o celular",
       }}
     />
   );

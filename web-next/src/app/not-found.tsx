@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { ButtonLink } from "@/components/ui/button";
 import { CtaBanner } from "@/components/sections/cta-banner";
@@ -9,14 +10,9 @@ export const metadata: Metadata = {
 };
 
 // Página 404 — a mais simples do site, como a própria Júlia avisou. Uma
-// seção só: mascote + "404" + mensagem, como aparece no PDF (erro_404.pdf).
-// O mascote real do robô da R2 apareceu com clareza pela primeira vez nesse
-// print (laranja, tela preta arredondada, aceno) — ainda uso o ícone
-// "estilo emoji" (`noto:robot`) como aproximação, mesma escolha já feita no
-// FAQ da Home/Empresarial/Indique e Ganhe, até a ilustração real ser
-// exportada do Figma.
+// seção só: mascote + "404" + mensagem, como aparece no Figma (404_00).
 //
-// O PDF não mostra nenhum botão/link de volta — só mascote + texto. Achei
+// O Figma não mostra nenhum botão/link de volta — só mascote + texto. Achei
 // que deixar uma página de erro sem nenhum caminho de volta é ruim pro
 // usuário, então adicionei o botão "Voltar para o Início" abaixo (o menu do
 // Header já permite navegar, mas um atalho direto aqui ajuda). É uma
@@ -27,7 +23,14 @@ export default function NotFound() {
     <>
       <section className="flex items-center justify-center bg-white px-4 py-24 md:px-8 md:py-32">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 text-center md:flex-row md:items-center md:text-left">
-          <Icon icon="noto:robot" className="h-40 w-40 shrink-0 md:h-56 md:w-56" />
+          <Image
+            src="/images/figma/mascote-laranja.svg"
+            alt="Mascote robô da R2 acenando"
+            width={269}
+            height={284}
+            className="h-56 w-auto shrink-0 md:h-72"
+            priority
+          />
 
           <div>
             <p className="text-8xl font-bold text-brand-1 md:text-9xl">404</p>

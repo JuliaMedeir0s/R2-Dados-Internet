@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 import { FAQ_HOME } from "@/lib/faq-home-data";
@@ -61,22 +62,32 @@ export function FaqHome() {
           </div>
         </div>
 
-        <div className="h-fit rounded-2xl border border-brand-1/15 bg-white p-6 shadow-lg">
-          {/* Ilustração do mascote ainda não exportada do Figma — placeholder. */}
-          <Icon icon="noto:robot" className="h-16 w-16" aria-hidden="true" />
-          <p className="mt-4 font-bold text-brand-1">Precisa de ajuda?</p>
-          <p className="mt-2 text-sm text-texto/70">
-            Qualquer dúvida ou problema estamos de prontidão para ajudar.
-          </p>
-          <ButtonLink
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 flex w-full gap-2"
-          >
-            <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
-            Fale com a equipe R2
-          </ButtonLink>
+        {/* O mascote sobrepõe o topo do card: o card branco começa na altura
+            da barriga do robô (home_06). O `pt` do wrapper reserva a metade
+            que sobra pra fora; o `pt` do card, a metade que entra nele. */}
+        <div className="relative h-fit pt-24">
+          <Image
+            src="/images/figma/mascote-laranja.svg"
+            alt="Mascote robô da R2 acenando"
+            width={269}
+            height={284}
+            className="pointer-events-none absolute -top-4 left-1/2 h-56 w-auto -translate-x-1/2"
+          />
+          <div className="rounded-2xl border border-brand-1/15 bg-white p-6 pt-36 shadow-lg">
+            <p className="font-bold text-brand-1">Precisa de ajuda?</p>
+            <p className="mt-2 text-sm text-texto/70">
+              Qualquer dúvida ou problema estamos de prontidão para ajudar.
+            </p>
+            <ButtonLink
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex w-full gap-2"
+            >
+              <Icon icon="basil:whatsapp-solid" className="h-4 w-4" />
+              Fale com a equipe R2
+            </ButtonLink>
+          </div>
         </div>
       </div>
     </section>

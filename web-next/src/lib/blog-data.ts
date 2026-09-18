@@ -5,7 +5,13 @@ export type BlogPost = {
   categoria: string;
   data: string;
   resumo: string;
-  imagem?: string;
+  /**
+   * Foto de capa do post. Obrigatória: todo post da listagem aparece com
+   * foto no Figma. As 11 fotos são as do mockup (banco de imagens),
+   * distribuídas pelo mapeamento título -> foto extraído do arquivo; os 2
+   * posts que o Figma não mostra ficaram com as 2 fotos que sobraram.
+   */
+  imagem: string;
   /**
    * Corpo do artigo (parágrafos). Só preenchido para o post usado no print
    * de BLOG - POST.pdf ("como-saber-se-sua-internet..."), que no Figma
@@ -43,6 +49,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Dicas e Suporte",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124431.jpg",
     resumo:
       "Entenda o que muda entre um plano residencial e um link empresarial e qual faz mais sentido para o seu negócio.",
   },
@@ -52,6 +59,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Dicas e Suporte",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-125712.jpg",
     resumo:
       "Aprenda a testar sua conexão corretamente e entenda o que pode influenciar o resultado.",
     conteudo: [
@@ -68,6 +76,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Rede e Wi-Fi",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124307.jpg",
     resumo:
       "Dicas de posicionamento de roteador e quando vale a pena investir em Mesh para cobrir a casa toda.",
   },
@@ -77,6 +86,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Mariana Albuquerque",
     categoria: "Rede e Wi-Fi",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124559.jpg",
     resumo: "Os sinais mais comuns de que sua operadora atual não está mais entregando o que promete.",
   },
   {
@@ -85,6 +95,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Mariana Albuquerque",
     categoria: "Segurança Digital",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124307.jpg",
     resumo: "Boas práticas de segurança que qualquer pessoa pode aplicar na rede de casa.",
   },
   {
@@ -93,6 +104,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Felipe Noronha",
     categoria: "Rede e Wi-Fi",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124051.jpg",
     resumo: "As diferenças de estabilidade e velocidade entre as duas tecnologias, e quando cada uma faz sentido.",
   },
   {
@@ -101,6 +113,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Felipe Noronha",
     categoria: "Rede e Wi-Fi",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-123950.jpg",
     resumo: "As causas mais comuns de instabilidade na conexão e como resolver cada uma delas.",
   },
   {
@@ -109,6 +122,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Dicas e Suporte",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-125034.jpg",
     resumo: "Um guia rápido pra escolher o plano ideal pra videochamadas, uploads e múltiplos dispositivos.",
   },
   {
@@ -117,6 +131,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Mariana Albuquerque",
     categoria: "Tecnologia",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124559.jpg",
     resumo: "O que considerar de banda e estabilidade antes de encher a casa de dispositivos conectados.",
   },
   {
@@ -125,6 +140,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Dicas e Suporte",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124051.jpg",
     resumo: "Hábitos comuns que derrubam a velocidade da sua conexão sem você perceber.",
   },
   {
@@ -133,6 +149,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Mariana Albuquerque",
     categoria: "Tecnologia",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124840.jpg",
     resumo: "Uma explicação simples de como a luz vira internet até chegar na sua casa.",
   },
   {
@@ -141,6 +158,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Dicas e Suporte",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-123755.jpg",
     resumo: "O que fazer quando todo mundo em casa está online ao mesmo tempo.",
   },
   {
@@ -149,6 +167,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Mariana Albuquerque",
     categoria: "Rede e Wi-Fi",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124945.jpg",
     resumo: "Prós, contras e alternativas ao repetidor de sinal tradicional.",
   },
   {
@@ -157,6 +176,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Mariana Albuquerque",
     categoria: "Problemas de Conexão",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-125753.jpg",
     resumo: "As causas mais comuns de instabilidade na conexão e como resolver cada uma delas.",
   },
   {
@@ -165,6 +185,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Produtividade",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124559.jpg",
     resumo: "Um guia rápido pra escolher o plano ideal pra videochamadas, uploads e múltiplos dispositivos.",
   },
   {
@@ -173,6 +194,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Felipe Noronha",
     categoria: "Tecnologia",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124840.jpg",
     resumo: "Entenda o papel da latência nos seus jogos online e como reduzi-la.",
   },
   {
@@ -181,6 +203,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Mariana Albuquerque",
     categoria: "Entretenimento",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-123755.jpg",
     resumo: "Ajustes simples pra parar de ver a rodinha de carregamento no meio do episódio.",
   },
   {
@@ -189,6 +212,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Ricardo Valente",
     categoria: "Central de Ajuda",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124559.jpg",
     resumo: "Passo a passo pra diagnosticar se o problema é do roteador, do cabo ou do próprio computador.",
   },
   {
@@ -197,6 +221,7 @@ export const BLOG_POSTS: BlogPost[] = [
     autor: "Felipe Noronha",
     categoria: "Dicas e Suporte",
     data: "22/02/2025",
+    imagem: "/images/figma/blog/foto-124307.jpg",
     resumo: "O que observar em infraestrutura de rede para acompanhar o crescimento do seu negócio.",
   },
 ];

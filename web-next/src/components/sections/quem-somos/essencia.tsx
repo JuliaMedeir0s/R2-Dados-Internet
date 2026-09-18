@@ -1,14 +1,19 @@
-import { Icon } from "@iconify/react";
+import Image from "next/image";
 
-// Texto 100% real e legível no PDF. A ilustração da casa ainda não existe
-// no repo (arte nova do Figma) — bloco com ícone no lugar por ora.
+// Texto 100% real e legível no PDF. Ilustração exportada do Figma (quem_00):
+// já vem com o círculo cinza claro atrás da casa, sem fundo adicional aqui.
 export function Essencia() {
   return (
     <section className="bg-white py-16">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-10 px-4 md:flex-row md:px-8">
-        <div className="flex h-48 w-48 shrink-0 items-center justify-center rounded-full bg-cinza-claro md:h-64 md:w-64">
-          <Icon icon="mdi:home-city-outline" className="h-20 w-20 text-brand-1 md:h-28 md:w-28" />
-        </div>
+        <Image
+          src="/images/figma/essencia-casa.webp"
+          alt="Ilustração de uma casa laranja cercada por árvores e jardim"
+          width={635}
+          height={482}
+          sizes="(min-width: 768px) 420px, 90vw"
+          className="h-auto w-full max-w-[420px] shrink-0"
+        />
 
         <div className="text-center md:text-left">
           <span className="inline-block rounded-full border border-brand-1 px-4 py-1 text-xs font-bold uppercase tracking-wide text-brand-1">

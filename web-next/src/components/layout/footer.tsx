@@ -19,19 +19,19 @@ const MENU_LINKS = [
   { label: "Blog", href: "/blog" },
 ];
 
+// Badges oficiais exportados do Figma (PNG com alfa, conferidos sobre o
+// laranja do rodapé) — substituem a versão montada em CSS.
 const STORE_BADGES = [
   {
     id: "app-store",
-    icon: "simple-icons:apple",
-    top: "Download on the",
-    bottom: "App Store",
+    src: "/images/figma/badge-app-store.png",
+    alt: "Baixar o app Minha R2 na App Store",
     href: "https://apps.apple.com/br/app/minha-r2/id6737197287",
   },
   {
     id: "google-play",
-    icon: "simple-icons:googleplay",
-    top: "GET IT ON",
-    bottom: "Google Play",
+    src: "/images/figma/badge-google-play.png",
+    alt: "Baixar o app Minha R2 no Google Play",
     href: "https://play.google.com/store/search?q=minha%20r2&c=apps",
   },
 ];
@@ -87,13 +87,15 @@ export function Footer() {
                   href={badge.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-40 items-center gap-2 rounded-lg bg-preto px-3 py-2 text-white transition-opacity hover:opacity-80"
+                  className="transition-opacity hover:opacity-80"
                 >
-                  <Icon icon={badge.icon} className="h-6 w-6" />
-                  <span className="flex flex-col leading-none">
-                    <span className="text-[9px] uppercase">{badge.top}</span>
-                    <span className="text-sm font-bold">{badge.bottom}</span>
-                  </span>
+                  <Image
+                    src={badge.src}
+                    alt={badge.alt}
+                    width={828}
+                    height={245}
+                    className="h-10 w-auto"
+                  />
                 </a>
               ))}
             </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import type { BlogPost } from "@/lib/blog-data";
@@ -11,8 +12,9 @@ export function PostRow({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug}`}
       className="group flex items-start gap-3 py-3"
     >
-      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-brand-8/20">
-        <Icon icon="mdi:image-outline" className="h-6 w-6 text-brand-1/60" />
+      {/* Decorativa: o título do post está do lado, dentro do mesmo link. */}
+      <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-brand-8/20">
+        <Image src={post.imagem} alt="" fill sizes="64px" className="object-cover" />
       </span>
       <div>
         <h4 className="text-sm font-bold leading-snug text-brand-1 group-hover:text-brand-5">

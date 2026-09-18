@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import type { BlogAuthor, BlogPost } from "@/lib/blog-data";
 import { PostRow } from "./post-row";
@@ -37,15 +38,30 @@ export function PostSidebar({
         </div>
       </div>
 
-      <div className="rounded-3xl bg-gradient-to-br from-brand-1 to-brand-6 p-6 text-white">
-        <span className="inline-block rounded-full border border-white/60 px-3 py-1 text-xs font-bold uppercase tracking-wide">
-          Internet em Minas Gerais
-        </span>
-        <h3 className="mt-3 text-xl font-bold">Muitas formas de se conectar!</h3>
-        <p className="mt-2 text-sm text-white/85">
-          Seja para assistir filmes, estudar, trabalhar, jogar online ou conectar toda a família, a
-          R2 tem o plano ideal para sua rotina.
-        </p>
+      {/* Card promocional: mesma arte do CTA "Conexão com Wi-fi na casa toda"
+          ao fundo, com um gradiente por cima pro texto continuar legível. */}
+      <div className="relative overflow-hidden rounded-3xl bg-brand-1 p-6 text-white">
+        <Image
+          src="/images/figma/cta-conexao.webp"
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 320px, 100vw"
+          className="object-cover"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-brand-1 via-brand-1/70 to-brand-1/20"
+          aria-hidden="true"
+        />
+        <div className="relative">
+          <span className="inline-block rounded-full border border-white/60 px-3 py-1 text-xs font-bold uppercase tracking-wide">
+            Internet em Minas Gerais
+          </span>
+          <h3 className="mt-3 text-xl font-bold">Muitas formas de se conectar!</h3>
+          <p className="mt-2 text-sm text-white/85">
+            Seja para assistir filmes, estudar, trabalhar, jogar online ou conectar toda a família,
+            a R2 tem o plano ideal para sua rotina.
+          </p>
+        </div>
       </div>
 
       <div>

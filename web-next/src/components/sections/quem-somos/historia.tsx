@@ -1,8 +1,7 @@
-import { Icon } from "@iconify/react";
+import Image from "next/image";
 
-// Texto 100% real e legível no PDF. A ilustração do mapa de Minas Gerais
-// com as cidades conectadas ainda não existe no repo — bloco com ícone no
-// lugar até a arte ser exportada do Figma.
+// Texto 100% real e legível no PDF. Ilustração do mapa de Minas Gerais com
+// as cidades conectadas, exportada do Figma (quem_01).
 export function Historia() {
   return (
     <section className="bg-white py-16">
@@ -28,9 +27,14 @@ export function Historia() {
           </p>
         </div>
 
-        <div className="flex h-56 w-56 shrink-0 items-center justify-center rounded-3xl bg-brand-8/20 md:h-72 md:w-72">
-          <Icon icon="mdi:map-marker-radius-outline" className="h-24 w-24 text-brand-1 md:h-32 md:w-32" />
-        </div>
+        <Image
+          src="/images/figma/historia-mapa-mg.svg"
+          alt="Mapa de Minas Gerais com as cidades atendidas pela R2 ligadas entre si"
+          width={584}
+          height={450}
+          sizes="(min-width: 768px) 380px, 80vw"
+          className="h-auto w-full max-w-[380px] shrink-0"
+        />
       </div>
     </section>
   );

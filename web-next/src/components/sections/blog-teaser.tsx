@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { BLOG_POSTS } from "@/lib/blog-data";
@@ -29,8 +30,15 @@ export function BlogTeaser() {
             href={`/blog/${destaque.slug}`}
             className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm transition-shadow hover:shadow-lg"
           >
-            <div className="flex h-56 items-center justify-center bg-brand-8/30">
-              <Icon icon="mdi:image-outline" className="h-12 w-12 text-brand-1/60" />
+            {/* Decorativa: o título do post está logo abaixo, no mesmo link. */}
+            <div className="relative h-56 bg-brand-8/30">
+              <Image
+                src={destaque.imagem}
+                alt=""
+                fill
+                sizes="(min-width: 768px) 640px, 100vw"
+                className="object-cover"
+              />
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold text-texto group-hover:text-brand-1">
@@ -50,8 +58,8 @@ export function BlogTeaser() {
                 href={`/blog/${post.slug}`}
                 className="group flex items-center gap-4 rounded-2xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
               >
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-brand-8/30">
-                  <Icon icon="mdi:image-outline" className="h-6 w-6 text-brand-1/60" />
+                <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-brand-8/30">
+                  <Image src={post.imagem} alt="" fill sizes="56px" className="object-cover" />
                 </span>
                 <div>
                   <h4 className="text-sm font-bold text-texto group-hover:text-brand-1">
