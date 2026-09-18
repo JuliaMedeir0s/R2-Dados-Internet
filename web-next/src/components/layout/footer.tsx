@@ -222,8 +222,8 @@ export function Footer() {
             </div>
             <div className="space-y-4">
               {[
-                { href: "/pdfs/link_dedicado.pdf", icon: "ph:file-pdf-bold", label: "Link Dedicado" },
-                { href: "/pdfs/scm_e_sva.pdf", icon: "ph:file-pdf-bold", label: "SCM e SVA" },
+                { href: "/pdfs/link-dedicado.pdf", icon: "ph:file-pdf-bold", label: "Link Dedicado" },
+                { href: "/pdfs/scm-e-sva.pdf", icon: "ph:file-pdf-bold", label: "SCM e SVA" },
               ].map((doc) => (
                 <a
                   key={doc.href}
