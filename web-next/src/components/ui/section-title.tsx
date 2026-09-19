@@ -47,7 +47,9 @@ export function SectionTitle(props: SectionTitleProps) {
         <Fragment key={index}>
           {index > 0 && !segments[index - 1].breakAfter ? " " : null}
           <span className={WEIGHT_CLASS[segment.weight]}>{segment.text}</span>
-          {segment.breakAfter ? <br /> : null}
+          {/* `breakAfter` no último trecho não quebra nada e só deixaria um
+              <br /> solto no fim do título. */}
+          {segment.breakAfter && index < segments.length - 1 ? <br /> : null}
         </Fragment>
       ))}
     </Tag>
