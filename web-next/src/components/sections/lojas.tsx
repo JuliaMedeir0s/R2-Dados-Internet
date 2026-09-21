@@ -80,7 +80,7 @@ export function Lojas() {
               }
             }}
             modules={[Autoplay]}
-            spaceBetween={20}
+            spaceBetween={28}
             // `auto` + largura em CSS no slide, em vez de `breakpoints`: a
             // quantidade de cards visiveis passa a ser uma regra de estilo
             // que da pra ler no proprio slide, e continua valendo mesmo se o
@@ -96,20 +96,23 @@ export function Lojas() {
             {LOJAS.map((loja) => (
               <SwiperSlide
                 key={`${loja.nome}-${loja.unidade ?? ""}`}
-                className="h-auto w-[85%] sm:w-[47%] lg:w-[31.5%]"
+                className="h-auto w-[85%] sm:w-[47%] lg:w-[30%]"
               >
-                <StackedCard className="flex flex-col p-2">
-                  <div className="relative h-44 w-full overflow-hidden rounded-xl">
+                <StackedCard className="flex flex-col overflow-hidden">
+                  {/* A foto encosta nas bordas do card e o `overflow-hidden`
+                      do card a corta nos cantos de cima — no Figma ela e o
+                      topo do card, nao uma imagem emoldurada dentro dele. */}
+                  <div className="relative aspect-[3/2] w-full">
                     <Image
                       src={loja.imagem}
                       alt={loja.nome}
                       fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 47vw, 85vw"
                       className="object-cover"
                     />
                   </div>
 
-                  <div className="flex flex-1 flex-col gap-1 p-4">
+                  <div className="flex flex-1 flex-col gap-1 p-5">
                     <h3 className="font-bold text-brand-1">{loja.nome}</h3>
                     {loja.unidade && (
                       <p className="text-xs text-texto/60">{loja.unidade}</p>
