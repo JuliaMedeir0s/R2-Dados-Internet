@@ -80,7 +80,11 @@ export function Lojas() {
               }
             }}
             modules={[Autoplay]}
-            spaceBetween={28}
+            spaceBetween={20}
+            // O vao do Figma e 19% da largura do card (63px num card de 327).
+            // Isso so cabe a partir do desktop; nas telas menores um vao
+            // grande comeria a largura util do card.
+            breakpoints={{ 1024: { spaceBetween: 60 } }}
             // `auto` + largura em CSS no slide, em vez de `breakpoints`: a
             // quantidade de cards visiveis passa a ser uma regra de estilo
             // que da pra ler no proprio slide, e continua valendo mesmo se o
@@ -96,13 +100,13 @@ export function Lojas() {
             {LOJAS.map((loja) => (
               <SwiperSlide
                 key={`${loja.nome}-${loja.unidade ?? ""}`}
-                className="h-auto w-[85%] sm:w-[47%] lg:w-[30%]"
+                className="h-auto w-[85%] sm:w-[47%] lg:w-[29%]"
               >
                 <StackedCard className="flex flex-col overflow-hidden">
                   {/* A foto encosta nas bordas do card e o `overflow-hidden`
                       do card a corta nos cantos de cima — no Figma ela e o
                       topo do card, nao uma imagem emoldurada dentro dele. */}
-                  <div className="relative aspect-[3/2] w-full">
+                  <div className="relative aspect-[10/7] w-full">
                     <Image
                       src={loja.imagem}
                       alt={loja.nome}
@@ -112,7 +116,7 @@ export function Lojas() {
                     />
                   </div>
 
-                  <div className="flex flex-1 flex-col gap-1 p-5">
+                  <div className="flex flex-1 flex-col gap-1 p-6">
                     <h3 className="font-bold text-brand-1">{loja.nome}</h3>
                     {loja.unidade && (
                       <p className="text-xs text-texto/60">{loja.unidade}</p>
@@ -124,7 +128,7 @@ export function Lojas() {
                       </p>
                     )}
 
-                    <div className="mt-auto pt-4">
+                    <div className="mt-auto pt-6">
                       <ButtonLink
                         href={mapsHref(loja)}
                         target="_blank"
