@@ -320,10 +320,10 @@ body {
 
 /* Entrada: os logos surgem do centro para fora quando a seção entra no
    viewport (o atraso de cada um vem inline, do componente). */
-.r2-palco[data-entrada="aguardando"] .r2-app,
-.r2-palco[data-entrada="aguardando"] .r2-anel {
-  opacity: 0;
-}
+/* O repouso e VISIVEL de proposito: a entrada escalonada e enfeite, e
+   enfeite nao pode ser a unica coisa que decide se a secao aparece. Quando
+   isso dependia de `opacity: 0` ate o IntersectionObserver rodar, qualquer
+   tropeco no JS deixava a peca principal da Home como um quadrado vazio. */
 
 .r2-palco[data-entrada="visivel"] .r2-app {
   animation: r2-surgir-app 700ms cubic-bezier(0.16, 1, 0.3, 1) backwards;

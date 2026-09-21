@@ -81,22 +81,22 @@ export function Lojas() {
             }}
             modules={[Autoplay]}
             spaceBetween={20}
-            slidesPerView={1}
+            // `auto` + largura em CSS no slide, em vez de `breakpoints`: a
+            // quantidade de cards visiveis passa a ser uma regra de estilo
+            // que da pra ler no proprio slide, e continua valendo mesmo se o
+            // JS do carrossel demorar a assumir.
+            slidesPerView="auto"
             autoplay={{
               delay: 3500,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
-            }}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
             }}
             className="!px-1 !py-3"
           >
             {LOJAS.map((loja) => (
               <SwiperSlide
                 key={`${loja.nome}-${loja.unidade ?? ""}`}
-                className="h-auto"
+                className="h-auto w-[85%] sm:w-[47%] lg:w-[31.5%]"
               >
                 <StackedCard className="flex flex-col p-2">
                   <div className="relative h-44 w-full overflow-hidden rounded-xl">
