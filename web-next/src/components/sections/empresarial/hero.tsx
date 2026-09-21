@@ -7,7 +7,6 @@ export function EmpresarialHero() {
   return (
     <PageHero
       tone="corp"
-      overlapBelow
       tag="Internet em Minas Gerais"
       title={
         <>

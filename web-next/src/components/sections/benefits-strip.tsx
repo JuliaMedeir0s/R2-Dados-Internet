@@ -28,7 +28,7 @@ export function BenefitsStrip() {
   // `z-10`/`z-0` espelhado, sem precisar de nada adicional nos ícones em
   // si (eles só herdam o empilhamento da seção que já está por cima).
   return (
-    <section className="relative z-10 bg-white pb-10">
+    <section className="relative z-10 pb-10">
       {/* Margem negativa MAIOR que o `pb` do hero (ver `home-hero.tsx`): não é
           só cancelar o respiro reservado embaixo do banner (isso deixaria os
           cards apenas encostados na borda, sem sobrepor nada — foi o que a
@@ -36,7 +36,7 @@ export function BenefitsStrip() {
           O excedente (48px) é o quanto os cards realmente sobem por cima do
           banner, "furando" a faixa laranja de verdade, como no print de
           referência. */}
-      <div className="relative z-10 mx-auto -mt-36 grid max-w-5xl grid-cols-2 gap-4 px-4 md:-mt-40 md:grid-cols-4 md:gap-6 md:px-8">
+      <div className="relative z-10 mx-auto -mt-12 grid max-w-5xl grid-cols-2 gap-4 px-4 md:-mt-16 md:grid-cols-4 md:gap-6 md:px-8">
         {BENEFITS.map((benefit) => (
           <StackedCard
             key={benefit.label}

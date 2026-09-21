@@ -15,11 +15,11 @@ export function EmpresarialBenefitsStrip() {
   // Mesmo empilhamento da tira da Home (`sections/benefits-strip.tsx`):
   // `relative z-10` na seção inteira garante que ela pinte por cima do hero.
   return (
-    <section className="relative z-10 bg-white pb-10">
+    <section className="relative z-10 pb-10">
       {/* Margem negativa MAIOR que o `pb` reservado pelo hero
           (`overlapBelow` no `PageHero`): o excedente é o quanto os cards
           realmente sobem por cima da borda arredondada do banner. */}
-      <div className="relative z-10 mx-auto -mt-36 grid max-w-5xl grid-cols-2 gap-4 px-4 md:-mt-40 md:grid-cols-4 md:gap-6 md:px-8">
+      <div className="relative z-10 mx-auto -mt-12 grid max-w-5xl grid-cols-2 gap-4 px-4 md:-mt-16 md:grid-cols-4 md:gap-6 md:px-8">
         {BENEFITS.map((benefit) => (
           <StackedCard
             key={benefit.label}

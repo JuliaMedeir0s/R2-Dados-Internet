@@ -14,11 +14,6 @@ type PageHeroProps = {
   description: ReactNode;
   tone?: "brand" | "corp";
   image?: { src: string; alt: string };
-  /**
-   * Reserva respiro extra embaixo (mesmo `pb` do `home-hero.tsx`) pra tira de
-   * cards da seção seguinte subir por cima da borda arredondada do hero.
-   */
-  overlapBelow?: boolean;
 };
 
 export function PageHero({
@@ -27,7 +22,6 @@ export function PageHero({
   description,
   tone = "brand",
   image,
-  overlapBelow = false,
 }: PageHeroProps) {
   return (
     <section
@@ -38,7 +32,6 @@ export function PageHero({
         // as fotos internas tenham a mesma altura e o mesmo enquadramento que
         // a capa residencial. Se o texto passar da caixa, a seção cresce.
         image && "aspect-[4/3] sm:aspect-[16/9] lg:aspect-[1920/954]",
-        overlapBelow && "pb-16 md:pb-20"
       )}
     >
       {image && (

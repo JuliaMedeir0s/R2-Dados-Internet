@@ -80,12 +80,11 @@ const HERO_SLIDES: HeroSlide[] = [
 export function HomeHero() {
   const isCarousel = HERO_SLIDES.length > 1;
 
-  // `pb-16 md:pb-20` na seção (fora do carrossel): a `BenefitsStrip` logo
-  // abaixo puxa os cards pra cima com essa mesma medida (`-mt-16`/`-mt-20`)
-  // de propósito, pra eles "furarem" a borda arredondada do banner. A
-  // imagem real (com o arredondado já embutido no arquivo) preenche a
-  // section inteira até o pixel final — sem esse respiro extra, os cards
-  // entrariam por cima da própria foto/círculos em vez de só tocar a borda.
+  // A seção não reserva respiro embaixo: a `BenefitsStrip` puxa os cards
+  // pra cima com uma margem negativa única (`-mt-12`/`md:-mt-16`), que é
+  // exatamente o quanto eles sobem por cima da foto. Antes o respiro daqui
+  // era subtraído lá, e a sobreposição dependia da diferença entre dois
+  // valores em arquivos diferentes — frágil e difícil de conferir.
   //
   // `relative z-0` aqui (em vez de deixar `z-index: auto`): a Júlia pediu
   // explicitamente pra garantir que o hero não "corte"/atrapalhe o
@@ -101,7 +100,7 @@ export function HomeHero() {
   // contrato de CSS que ela sempre pinta acima do hero, com ou sem
   // carrossel.
   return (
-    <section className="relative z-0 w-full pb-16 md:pb-20">
+    <section className="relative z-0 w-full">
       <Swiper
         modules={[Autoplay, Pagination]}
         // Mesmo padrão de `lojas.tsx`: `onSwiper` só roda no cliente, depois
