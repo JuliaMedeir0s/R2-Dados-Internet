@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         </div>
       </section>
 
-      <CtaBanner />
+      <CtaBanner overlapFooter />
     </>
   );
 }

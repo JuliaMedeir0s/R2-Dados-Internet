@@ -8,14 +8,18 @@ import { useUtm, getGenericWhatsappText, DEFAULT_WHATSAPP_PHONE } from "@/lib/wh
 // Mesma estrutura do CTA residencial (card inteiro clicável, sem botão), em
 // azul-marinho e com a foto do hero empresarial cortada à direita. O parágrafo
 // é o empresarial — o Figma mostra o residencial por erro de copiar e colar.
-export function EmpresarialCtaBanner() {
+export function EmpresarialCtaBanner({ overlapFooter = false }: { overlapFooter?: boolean }) {
   const utm = useUtm();
   const href = `https://wa.me/${DEFAULT_WHATSAPP_PHONE}?text=${encodeURIComponent(
     getGenericWhatsappText(utm, "falar sobre infraestrutura de telecom para minha empresa")
   )}`;
 
   return (
-    <section className="px-4 py-14 md:px-8">
+    <section
+      className={`px-4 py-14 md:px-8 ${
+        overlapFooter ? "relative z-10 -mb-20" : ""
+      }`}
+    >
       <a
         href={href}
         target="_blank"

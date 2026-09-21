@@ -33,7 +33,7 @@ function IconBadge({ item }: { item: ItemIcon }) {
         alt={item.nome}
         width={40}
         height={40}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-contain"
       />
     </span>
   );

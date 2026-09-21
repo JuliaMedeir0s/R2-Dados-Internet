@@ -149,7 +149,7 @@ export function HomeHero() {
                   nunca fica escondido atrás do header em nenhuma largura de
                   tela (ver `header.tsx`). */}
               <div className="absolute inset-0">
-                <div className="mx-auto h-full max-w-7xl px-4 pt-24 sm:pt-28 md:px-8 md:pt-32 lg:pt-40">
+                <div className="mx-auto flex h-full max-w-7xl items-center px-4 md:px-8">
                   {slide.content}
                 </div>
               </div>

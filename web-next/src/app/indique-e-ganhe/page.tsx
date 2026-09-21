@@ -24,7 +24,7 @@ export default function IndiqueEGanhePage() {
       </section>
       <CtaBanner />
       <IndiqueFaq />
-      <CtaBanner />
+      <CtaBanner overlapFooter />
     </>
   );
 }

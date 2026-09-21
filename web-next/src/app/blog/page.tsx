@@ -72,7 +72,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <CtaBanner />
+      <CtaBanner overlapFooter />
     </>
   );
 }

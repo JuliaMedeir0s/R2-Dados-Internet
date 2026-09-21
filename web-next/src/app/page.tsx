@@ -24,7 +24,7 @@ export default function HomePage() {
       <Lojas />
       <BusinessTeaser />
       <FaqHome />
-      <CtaBanner />
+      <CtaBanner overlapFooter />
     </>
   );
 }

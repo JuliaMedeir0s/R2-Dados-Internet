@@ -48,7 +48,7 @@ export default function NotFound() {
         </div>
       </section>
 
-      <CtaBanner />
+      <CtaBanner overlapFooter />
     </>
   );
 }

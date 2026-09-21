@@ -23,7 +23,7 @@ export default function NossaHistoriaPage() {
       <DiferenciaisTicker />
       <Historia />
       <PorQueDiferente />
-      <CtaBanner />
+      <CtaBanner overlapFooter />
     </>
   );
 }

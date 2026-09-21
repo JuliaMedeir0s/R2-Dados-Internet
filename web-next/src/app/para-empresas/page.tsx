@@ -25,7 +25,7 @@ export default function EmpresarialPage() {
       <EmpresarialDiferenciais />
       <EmpresarialCtaBanner />
       <EmpresarialFaq />
-      <EmpresarialCtaBanner />
+      <EmpresarialCtaBanner overlapFooter />
     </>
   );
 }

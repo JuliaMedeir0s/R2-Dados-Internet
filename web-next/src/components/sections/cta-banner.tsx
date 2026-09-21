@@ -6,9 +6,13 @@ import { SectionTitle } from "@/components/ui/section-title";
 // Card único e clicável (sem botão): a arte do CTA exportada do Figma
 // (home_06) já vem com o fundo laranja e as linhas, cortada à direita, com o
 // texto por cima à esquerda.
-export function CtaBanner() {
+export function CtaBanner({ overlapFooter = false }: { overlapFooter?: boolean }) {
   return (
-    <section className="px-4 py-14 md:px-8">
+    <section
+      className={`px-4 py-14 md:px-8 ${
+        overlapFooter ? "relative z-10 -mb-20" : ""
+      }`}
+    >
       <Link
         href="/#planos"
         aria-label="Ver os planos de internet residencial da R2"

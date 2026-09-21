@@ -45,7 +45,7 @@ export function PageHero({
         />
       )}
 
-      <div className="relative mx-auto max-w-7xl px-4 pt-28 pb-14 md:px-8 md:pt-36 md:pb-20 lg:pt-44 lg:pb-28">
+      <div className="relative mx-auto flex h-full max-w-7xl items-center px-4 md:px-8">
         <div className={image ? "max-w-[60%] sm:max-w-md md:max-w-xl" : "max-w-2xl"}>
           <SectionTag tone="white">{tag}</SectionTag>
 
