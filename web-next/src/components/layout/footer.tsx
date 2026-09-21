@@ -206,13 +206,6 @@ export function Footer() {
                 <span>(31) 3662-1235</span>
               </a>
               <a
-                href="tel:+553136621235"
-                className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 lg:justify-start"
-              >
-                <Icon icon="basil:phone-solid" className="h-5 w-5" />
-                <span>(31) 3662-1235</span>
-              </a>
-              <a
                 href="mailto:contato@r2dados.com"
                 className="flex items-center justify-center gap-2 transition-opacity hover:opacity-80 lg:justify-start"
               >

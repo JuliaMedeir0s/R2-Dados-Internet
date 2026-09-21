@@ -52,16 +52,15 @@ const HERO_SLIDES: HeroSlide[] = [
       <div className="max-w-[70%] sm:max-w-sm md:max-w-md">
         <SectionTag tone="white">Internet em Minas Gerais</SectionTag>
 
+        {/* Duas linhas, como a R2 escreve a frase: "Muitas formas" em cima,
+            "de te conectar!" embaixo. */}
         <h1 className="mt-2 text-white sm:mt-4">
           <span className="text-xl font-bold leading-none sm:text-3xl md:text-5xl lg:text-6xl">
             Muitas formas
-          </span>{" "}
-          <span className="text-xs font-normal sm:text-lg md:text-xl lg:text-2xl">
-            de
           </span>
           <br />
           <span className="text-xs font-normal sm:text-lg md:text-xl lg:text-2xl">
-            se
+            de te
           </span>{" "}
           <span className="text-xl font-bold leading-none sm:text-3xl md:text-5xl lg:text-6xl">
             conectar!

@@ -36,7 +36,7 @@ export function BenefitsStrip() {
           O excedente (48px) é o quanto os cards realmente sobem por cima do
           banner, "furando" a faixa laranja de verdade, como no print de
           referência. */}
-      <div className="relative z-10 mx-auto -mt-28 grid max-w-5xl grid-cols-2 gap-4 px-4 md:-mt-32 md:grid-cols-4 md:gap-6 md:px-8">
+      <div className="relative z-10 mx-auto -mt-36 grid max-w-5xl grid-cols-2 gap-4 px-4 md:-mt-40 md:grid-cols-4 md:gap-6 md:px-8">
         {BENEFITS.map((benefit) => (
           <StackedCard
             key={benefit.label}

@@ -55,7 +55,7 @@ export function PostSidebar({
         />
         <div className="relative">
           <SectionTag tone="white">Internet em Minas Gerais</SectionTag>
-          <h3 className="mt-3 text-xl font-bold">Muitas formas de se conectar!</h3>
+          <h3 className="mt-3 text-xl font-bold">Muitas formas de te conectar!</h3>
           <p className="mt-2 text-sm text-white/85">
             Seja para assistir filmes, estudar, trabalhar, jogar online ou conectar toda a família,
             a R2 tem o plano ideal para sua rotina.

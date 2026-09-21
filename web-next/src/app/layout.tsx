@@ -40,7 +40,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');`}
       </Script>
-      <body className="min-h-full flex flex-col">
+      {/* `suppressHydrationWarning` no <body>: extensões de navegador (ClickUp,
+          ColorZilla e afins) injetam classe e atributo no <body> antes do React
+          hidratar. Sem isso o React acha divergência nesse nó e desiste de
+          hidratar a árvore inteira — o site renderiza mas nada responde a
+          clique. Vale pro visitante real, não só pra máquina de quem
+          desenvolve. */}
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}

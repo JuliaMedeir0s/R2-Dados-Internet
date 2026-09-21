@@ -19,6 +19,11 @@ const ROTAS_ANTIGAS = [
 ];
 
 const nextConfig: NextConfig = {
+  // Libera o `next dev` para outros aparelhos da mesma rede Wi-Fi (o Next
+  // bloqueia recursos de desenvolvimento vindos de outra origem por padrão,
+  // e sem isso o HMR não conecta em quem abre pelo IP da máquina).
+  // Não afeta produção.
+  allowedDevOrigins: ["192.168.1.5", "192.168.1.*"],
   images: {
     // As fotos exportadas do Figma são PNGs grandes: servir AVIF/WebP quando
     // o navegador aceita corta a maior parte do peso.

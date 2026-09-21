@@ -4,7 +4,7 @@ import { SectionTag } from "@/components/ui/section-tag";
 import type { BlogPost, BlogAuthor } from "@/lib/blog-data";
 import { PostRow } from "./post-row";
 
-// Card promo compacto ("Muitas formas de se conectar!") + listas "Mais
+// Card promo compacto ("Muitas formas de te conectar!") + listas "Mais
 // lidos" / "Mais relevantes" + card de bio do autor, tudo como aparece na
 // coluna lateral do PDF.
 export function BlogSidebar({
@@ -34,7 +34,7 @@ export function BlogSidebar({
         />
         <div className="relative">
           <SectionTag tone="white">Internet em Minas Gerais</SectionTag>
-          <h3 className="mt-3 text-xl font-bold">Muitas formas de se conectar!</h3>
+          <h3 className="mt-3 text-xl font-bold">Muitas formas de te conectar!</h3>
           <p className="mt-2 text-sm text-white/85">
             Seja para assistir filmes, estudar, trabalhar, jogar online ou conectar toda a família,
             a R2 tem o plano ideal para sua rotina.

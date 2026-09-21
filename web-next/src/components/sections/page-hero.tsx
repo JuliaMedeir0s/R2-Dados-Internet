@@ -34,6 +34,10 @@ export function PageHero({
       className={cn(
         "relative overflow-hidden rounded-b-[60px] lg:rounded-b-[150px]",
         tone === "corp" ? "bg-gradient-to-br from-corp-2 to-corp-3" : "bg-brand-1",
+        // Mesma faixa de proporções do hero da Home (`home-hero.tsx`), pra que
+        // as fotos internas tenham a mesma altura e o mesmo enquadramento que
+        // a capa residencial. Se o texto passar da caixa, a seção cresce.
+        image && "aspect-[4/3] sm:aspect-[16/9] lg:aspect-[1920/954]",
         overlapBelow && "pb-16 md:pb-20"
       )}
     >

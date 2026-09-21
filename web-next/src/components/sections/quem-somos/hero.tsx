@@ -10,7 +10,7 @@ export function QuemSomosHero() {
       title={
         <>
           <span className="font-light">Atendimento de</span>{" "}
-          <span className="font-bold">Qualidade e suporte premium</span>{" "}
+          <span className="font-bold">qualidade e suporte premium</span>{" "}
           <span className="font-light">e humanizado!</span>
         </>
       }
