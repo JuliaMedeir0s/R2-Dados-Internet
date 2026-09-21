@@ -81,15 +81,16 @@ export function Lojas() {
             }}
             modules={[Autoplay]}
             spaceBetween={20}
-            // O vao do Figma e 19% da largura do card (63px num card de 327).
-            // Isso so cabe a partir do desktop; nas telas menores um vao
-            // grande comeria a largura util do card.
-            breakpoints={{ 1024: { spaceBetween: 60 } }}
-            // `auto` + largura em CSS no slide, em vez de `breakpoints`: a
-            // quantidade de cards visiveis passa a ser uma regra de estilo
-            // que da pra ler no proprio slide, e continua valendo mesmo se o
-            // JS do carrossel demorar a assumir.
-            slidesPerView="auto"
+            // Contagem exata de cards por largura. O vao segue a proporcao do
+            // Figma (19% da largura do card) e so abre no desktop, onde cabe.
+            breakpoints={{
+              640: { slidesPerView: 2, spaceBetween: 28 },
+              1024: { slidesPerView: 3, spaceBetween: 56 },
+            }}
+            // A largura tambem esta em CSS no slide: enquanto o JS do
+            // carrossel nao assume, e ela que evita o card unico ocupando a
+            // tela inteira. Depois que assume, o `slidesPerView` acima manda.
+            slidesPerView={1}
             autoplay={{
               delay: 3500,
               disableOnInteraction: false,
@@ -116,7 +117,7 @@ export function Lojas() {
                     />
                   </div>
 
-                  <div className="flex flex-1 flex-col gap-1 p-6">
+                  <div className="flex flex-1 flex-col gap-1 p-5">
                     <h3 className="font-bold text-brand-1">{loja.nome}</h3>
                     {loja.unidade && (
                       <p className="text-xs text-texto/60">{loja.unidade}</p>
@@ -128,7 +129,7 @@ export function Lojas() {
                       </p>
                     )}
 
-                    <div className="mt-auto pt-6">
+                    <div className="mt-auto pt-4">
                       <ButtonLink
                         href={mapsHref(loja)}
                         target="_blank"
