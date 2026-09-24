@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -46,7 +44,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           hidratar a árvore inteira — o site renderiza mas nada responde a
           clique. Vale pro visitante real, não só pra máquina de quem
           desenvolve. */}
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+      <body className="h-full" suppressHydrationWarning>
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
@@ -56,9 +54,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
