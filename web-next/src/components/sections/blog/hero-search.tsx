@@ -1,17 +1,9 @@
-import { Icon } from "@iconify/react";
+import type { BlogCategoria } from "@/lib/blog";
+import { Busca } from "./busca";
+import { Categorias } from "./categorias";
 
-// Título real e legível no PDF (mesma frase-base do teaser da Home). Barra
-// de busca e pills de categoria são só visuais por enquanto — sem back-end
-// de busca/filtro ainda.
-export const CATEGORIAS = [
-  "Tecnologia",
-  "Entretenimento",
-  "Dicas de Performance",
-  "Segurança Digital",
-  "Central de Ajuda",
-];
-
-export function BlogHeroSearch() {
+// Topo da listagem: título do Figma, busca e pills de categoria.
+export function BlogHeroSearch({ categorias }: { categorias: BlogCategoria[] }) {
   return (
     <section className="bg-white py-16 text-center">
       <div className="mx-auto max-w-3xl px-4 md:px-8">
@@ -20,29 +12,10 @@ export function BlogHeroSearch() {
           Janela para um mundo sem interrupções
         </h1>
 
-        <div className="relative mx-auto mt-8 max-w-xl">
-          <input
-            type="search"
-            placeholder="Buscar por ...."
-            disabled
-            className="w-full rounded-2xl bg-cinza-claro px-5 py-4 text-sm text-texto placeholder:text-texto/50 focus:outline-none"
-          />
-          <Icon
-            icon="ph:magnifying-glass-bold"
-            className="absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-texto/50"
-          />
+        <div className="mt-8">
+          <Busca />
         </div>
-
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          {CATEGORIAS.map((categoria) => (
-            <span
-              key={categoria}
-              className="rounded-full border border-brand-1 px-4 py-1.5 text-sm font-bold text-brand-1"
-            >
-              {categoria}
-            </span>
-          ))}
-        </div>
+        <Categorias categorias={categorias} className="mt-6" />
       </div>
     </section>
   );

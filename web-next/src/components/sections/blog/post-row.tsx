@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import type { BlogPost } from "@/lib/blog-data";
+import type { BlogPost } from "@/lib/blog";
+import { Capa } from "./capa";
 
 // Item de lista reaproveitado no grid principal e nas duas listas da
 // sidebar ("Mais lidos" / "Mais relevantes") — mesmo padrão visual do PDF
@@ -12,16 +12,15 @@ export function PostRow({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug}`}
       className="group flex items-start gap-3 py-3"
     >
-      {/* Decorativa: o título do post está do lado, dentro do mesmo link. */}
       <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-brand-8/20">
-        <Image src={post.imagem} alt="" fill sizes="64px" className="object-cover" />
+        <Capa imagem={post.imagem} sizes="64px" />
       </span>
       <div>
         <h4 className="text-sm font-bold leading-snug text-brand-1 group-hover:text-brand-5">
           {post.titulo}
         </h4>
         <p className="mt-1 flex items-center gap-1 text-xs text-texto/60">
-          <span className="font-bold text-texto">{post.autor}</span>
+          <span className="font-bold text-texto">{post.autor.nome}</span>
           <Icon icon="ph:clock-bold" className="ml-1 h-3 w-3" />
           {post.data}
         </p>

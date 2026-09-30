@@ -1,14 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { BLOG_POSTS } from "@/lib/blog-data";
+import type { BlogPost } from "@/lib/blog";
+import { Capa } from "@/components/sections/blog/capa";
 import { SectionTag } from "@/components/ui/section-tag";
 import { SectionTitle } from "@/components/ui/section-title";
 
-export function BlogTeaser() {
+// Fora da Home no momento; para voltar, passe `await getPosts()` (lib/blog).
+export function BlogTeaser({ posts }: { posts: BlogPost[] }) {
   // A coluna lateral do Figma mostra só os quatro posts seguintes ao
   // destaque — sem o corte, ela despejaria a listagem inteira.
-  const [destaque, ...resto] = BLOG_POSTS;
+  const [destaque, ...resto] = posts;
+  if (!destaque) return null;
   const secundarios = resto.slice(0, 4);
 
   return (
@@ -35,13 +37,7 @@ export function BlogTeaser() {
           >
             {/* Decorativa: o título do post está logo abaixo, no mesmo link. */}
             <div className="relative h-56 bg-brand-8/30">
-              <Image
-                src={destaque.imagem}
-                alt=""
-                fill
-                sizes="(min-width: 768px) 640px, 100vw"
-                className="object-cover"
-              />
+              <Capa imagem={destaque.imagem} sizes="(min-width: 768px) 640px, 100vw" />
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold text-texto group-hover:text-brand-1">
@@ -49,7 +45,7 @@ export function BlogTeaser() {
               </h3>
               <p className="mt-2 text-sm text-texto/70">{destaque.resumo}</p>
               <p className="mt-4 text-xs font-bold text-texto/50">
-                {destaque.autor}
+                {destaque.autor.nome}
               </p>
             </div>
           </Link>
@@ -62,13 +58,13 @@ export function BlogTeaser() {
                 className="group flex items-center gap-4 rounded-2xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
               >
                 <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-brand-8/30">
-                  <Image src={post.imagem} alt="" fill sizes="56px" className="object-cover" />
+                  <Capa imagem={post.imagem} sizes="56px" />
                 </span>
                 <div>
                   <h4 className="text-sm font-bold text-texto group-hover:text-brand-1">
                     {post.titulo}
                   </h4>
-                  <p className="mt-1 text-xs text-texto/50">{post.autor}</p>
+                  <p className="mt-1 text-xs text-texto/50">{post.autor.nome}</p>
                 </div>
               </Link>
             ))}

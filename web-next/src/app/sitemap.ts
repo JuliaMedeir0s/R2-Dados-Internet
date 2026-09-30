@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import { BLOG_POSTS } from "@/lib/blog-data";
-
-const BASE_URL = "https://r2dados.com";
+import { categoriasDe, getPosts } from "@/lib/blog";
+import { SITE_URL } from "@/lib/site";
 
 const ROTAS_ESTATICAS = [
   { path: "/", changeFrequency: "weekly", priority: 1 },
@@ -18,18 +17,27 @@ const ROTAS_ESTATICAS = [
   priority: number;
 }>;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const estaticas = ROTAS_ESTATICAS.map((rota) => ({
-    url: `${BASE_URL}${rota.path}`,
+    url: `${SITE_URL}${rota.path}`,
     changeFrequency: rota.changeFrequency,
     priority: rota.priority,
   }));
 
-  const posts = BLOG_POSTS.map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
+  const blog = await getPosts();
+
+  const categorias = categoriasDe(blog).map((categoria) => ({
+    url: `${SITE_URL}/blog/categoria/${categoria.slug}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.4,
+  }));
+
+  const posts = blog.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: post.atualizadoEm ?? post.publishedAt,
     changeFrequency: "monthly" as const,
     priority: 0.5,
   }));
 
-  return [...estaticas, ...posts];
+  return [...estaticas, ...categorias, ...posts];
 }

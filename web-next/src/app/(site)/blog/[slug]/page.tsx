@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  BLOG_POSTS,
-  getPostBySlug,
-  getAuthorByName,
-  getPostSidebarMaisLidos,
-  getPostSidebarMaisRelevantes,
-  getRelatedPosts,
-} from "@/lib/blog-data";
+import { categoriasDe, getCuradoria, getPost, getPosts, getRelacionados } from "@/lib/blog";
+import { SITE_URL } from "@/lib/site";
 import { PostSearchBar } from "@/components/sections/blog/post-search-bar";
 import { PostHero } from "@/components/sections/blog/post-hero";
 import { PostBody } from "@/components/sections/blog/post-body";
@@ -15,37 +9,68 @@ import { PostSidebar } from "@/components/sections/blog/post-sidebar";
 import { RelatedPosts } from "@/components/sections/blog/related-posts";
 import { CtaBanner } from "@/components/sections/cta-banner";
 
+// Os posts que já existem no build saem prontos; um post publicado depois
+// é gerado na primeira visita (dynamicParams, padrão) e fica em cache.
 export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({ slug: post.slug }));
+  const posts = await getPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/blog/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPost(slug);
   if (!post) return {};
 
+  const description = post.seo?.metaDescription || post.resumo;
   return {
-    title: `${post.titulo} — Blog R2 Internet`,
-    description: post.resumo,
+    // O "Título para o Google" do Studio já vem no tamanho certo; sem ele,
+    // o título do post + a marca.
+    title: post.seo?.seoTitle || `${post.titulo} — Blog R2 Internet`,
+    description,
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      type: "article",
+      title: post.titulo,
+      description,
+      publishedTime: post.publishedAt,
+      modifiedTime: post.atualizadoEm,
+      authors: [post.autor.nome],
+      images: post.imagem ? [{ url: post.imagem.src, alt: post.imagem.alt }] : undefined,
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const [post, posts] = await Promise.all([getPost(slug), getPosts()]);
   if (!post) notFound();
 
-  // Autor padrão de segurança: todo post do catálogo hoje tem `autor`
-  // batendo com um nome em BLOG_AUTHORS, mas caso um post novo não tenha
-  // (ainda) um card de autor cadastrado, cai no da Mariana pra sidebar não
-  // quebrar.
-  const autor = getAuthorByName(post.autor) ?? getAuthorByName("Mariana Albuquerque")!;
+  const { maisLidos, maisRelevantes } = await getCuradoria(posts, post.slug);
+  const categorias = categoriasDe(posts);
+  const url = `${SITE_URL}/blog/${post.slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.titulo,
+    description: post.seo?.metaDescription || post.resumo,
+    image: post.imagem?.src,
+    datePublished: post.publishedAt,
+    dateModified: post.atualizadoEm || post.publishedAt,
+    author: { "@type": "Person", name: post.autor.nome, jobTitle: post.autor.cargo },
+    publisher: { "@type": "Organization", name: "R2 Internet", url: SITE_URL },
+    mainEntityOfPage: url,
+  };
 
   return (
     <>
-      <PostSearchBar />
+      <script
+        type="application/ld+json"
+        // `<` escapado: o JSON vem de texto digitado no Studio.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+
+      <PostSearchBar categorias={categorias} />
 
       <section className="bg-white pb-16">
         <div className="mx-auto max-w-6xl px-4 md:px-8">
@@ -53,19 +78,15 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
             <article>
               <PostHero post={post} />
               <div className="mt-8">
-                <PostBody post={post} />
+                <PostBody post={post} url={url} />
               </div>
             </article>
 
-            <PostSidebar
-              autor={autor}
-              maisLidos={getPostSidebarMaisLidos(post.slug)}
-              maisRelevantes={getPostSidebarMaisRelevantes(post.slug)}
-            />
+            <PostSidebar autor={post.autor} maisLidos={maisLidos} maisRelevantes={maisRelevantes} />
           </div>
 
           <div className="mt-16">
-            <RelatedPosts posts={getRelatedPosts(post.slug)} />
+            <RelatedPosts posts={getRelacionados(posts, post)} categorias={categorias} />
           </div>
         </div>
       </section>

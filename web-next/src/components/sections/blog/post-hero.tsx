@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Icon } from "@iconify/react";
-import type { BlogPost } from "@/lib/blog-data";
+import type { BlogPost } from "@/lib/blog";
 import { SectionTag } from "@/components/ui/section-tag";
+import { Capa } from "./capa";
 
 // Cabeçalho do artigo: tag de categoria, título, imagem de capa e
 // autor+data — igual ao card em destaque da listagem, só que em formato de
@@ -18,21 +18,14 @@ export function PostHero({ post }: { post: BlogPost }) {
 
       {/* Decorativa: o título do artigo é o h1 logo acima. */}
       <div className="relative mt-8 h-72 overflow-hidden rounded-3xl bg-brand-8/20 md:h-96">
-        <Image
-          src={post.imagem}
-          alt=""
-          fill
-          priority
-          sizes="(min-width: 1024px) 720px, 100vw"
-          className="object-cover"
-        />
+        <Capa imagem={post.imagem} sizes="(min-width: 1024px) 720px, 100vw" priority />
       </div>
 
       <div className="mt-4 flex items-center gap-2 text-sm text-texto/70">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-8/20">
           <Icon icon="ph:user-bold" className="h-4 w-4 text-brand-1" />
         </span>
-        <span className="font-bold text-texto">{post.autor}</span>
+        <span className="font-bold text-texto">{post.autor.nome}</span>
         <Icon icon="ph:clock-bold" className="ml-2 h-4 w-4" />
         <span>{post.data}</span>
       </div>

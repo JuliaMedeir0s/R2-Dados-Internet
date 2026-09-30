@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { BLOG_POSTS, BLOG_AUTHORS } from "@/lib/blog-data";
+import { categoriasDe, getCuradoria, getPosts } from "@/lib/blog";
 import { BlogHeroSearch } from "@/components/sections/blog/hero-search";
 import { FeaturedPost } from "@/components/sections/blog/featured-post";
 import { MainList } from "@/components/sections/blog/main-list";
+import { PostRow } from "@/components/sections/blog/post-row";
 import { BlogSidebar } from "@/components/sections/blog/sidebar";
 import { TwoFeaturedRow } from "@/components/sections/blog/two-featured-row";
 import { CtaBanner } from "@/components/sections/cta-banner";
@@ -11,64 +12,67 @@ export const metadata: Metadata = {
   title: "Blog — R2 Internet",
   description:
     "Sua janela para um mundo sem interrupções: dicas de rede, fibra óptica, Wi-Fi, segurança e tecnologia da R2 Internet.",
+  alternates: { canonical: "/blog" },
 };
 
-function findPost(slug: string) {
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
-  if (!post) throw new Error(`Post não encontrado em blog-data.ts: ${slug}`);
-  return post;
-}
+export default async function BlogPage() {
+  const posts = await getPosts();
+  const { destaque, maisLidos, maisRelevantes } = await getCuradoria(posts);
 
-export default function BlogPage() {
-  const destaque = findPost("internet-empresarial-diferencas-plano-residencial-corporativo");
-  const principal = findPost("como-saber-se-sua-internet-esta-entregando-a-velocidade-contratada");
-
-  const grid = [
-    "como-melhorar-o-sinal-do-wifi-em-casas-grandes",
-    "fibra-optica-ou-radio-qual-a-melhor-internet-para-sua-regiao",
-    "7-sinais-de-que-esta-na-hora-de-trocar-de-provedor",
-    "wifi-lento-em-casa-veja-os-principais-motivos-e-como-resolver",
-    "10-dicas-para-proteger-sua-rede-wifi-contra-invasoes",
-    "quantos-mega-sao-ideais-para-sua-casa",
-  ].map(findPost);
-
-  const maisLidos = [
-    "smart-tv-alexa-e-automacao-sua-internet-esta-preparada",
-    "5-erros-que-estao-deixando-sua-internet-mais-lenta",
-    "como-funciona-a-fibra-optica-na-pratica",
-    "internet-empresarial-diferencas-plano-residencial-corporativo",
-  ].map(findPost);
-
-  const maisRelevantes = [
-    "como-evitar-lentidao-na-internet-em-horarios-de-pico",
-    "vale-a-pena-usar-repetidor-de-sinal",
-    "o-que-e-ping-e-como-ele-afeta-jogos-online",
-    "streaming-travando-veja-como-ter-mais-estabilidade-na-conexao",
-  ].map(findPost);
-
-  const destaquesFinais: [ReturnType<typeof findPost>, ReturnType<typeof findPost>] = [
-    findPost("internet-caiu-toda-hora"),
-    findPost("home-office-sem-travar"),
-  ];
-
-  const autor = BLOG_AUTHORS.find((a) => a.nome === "Mariana Albuquerque")!;
+  // Distribuição do layout do Figma: o destaque (escolhido no Studio ou o
+  // mais recente) no topo; os demais, do mais novo para o mais antigo,
+  // preenchem o título principal, o grid de 6, o par final e, passando
+  // disso, a lista "Mais posts" — assim nenhum post publicado fica sem
+  // aparecer na listagem.
+  const resto = posts.filter((post) => post.slug !== destaque?.slug);
+  const principal = resto[0];
+  const grid = resto.slice(1, 7);
+  const par = resto.slice(7, 9);
+  const maisPosts = resto.slice(9);
 
   return (
     <>
-      <BlogHeroSearch />
+      <BlogHeroSearch categorias={categoriasDe(posts)} />
 
       <section className="bg-white pb-16">
         <div className="mx-auto max-w-6xl px-4 md:px-8">
-          <FeaturedPost post={destaque} />
+          {destaque ? (
+            <>
+              <FeaturedPost post={destaque} />
 
-          <div className="mt-12 grid gap-12 lg:grid-cols-[1.6fr_1fr]">
-            <MainList destaque={principal} posts={grid} />
-            <BlogSidebar maisLidos={maisLidos} maisRelevantes={maisRelevantes} autor={autor} />
-          </div>
+              <div className="mt-12 grid gap-12 lg:grid-cols-[1.6fr_1fr]">
+                {principal ? <MainList destaque={principal} posts={grid} /> : <div />}
+                <BlogSidebar
+                  maisLidos={maisLidos}
+                  maisRelevantes={maisRelevantes}
+                  autor={destaque.autor}
+                />
+              </div>
 
-          <div className="mt-16">
-            <TwoFeaturedRow posts={destaquesFinais} />
-          </div>
+              {par.length > 0 && (
+                <div className="mt-16">
+                  <TwoFeaturedRow posts={par} />
+                </div>
+              )}
+
+              {maisPosts.length > 0 && (
+                <div className="mt-16">
+                  <h2 className="border-b-2 border-brand-1 pb-2 text-lg font-bold text-brand-1">
+                    Mais posts
+                  </h2>
+                  <div className="mt-2 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+                    {maisPosts.map((post) => (
+                      <PostRow key={post.slug} post={post} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="rounded-3xl bg-cinza-claro p-10 text-center text-texto/70">
+              Os primeiros posts estão a caminho. Volte em breve!
+            </p>
+          )}
         </div>
       </section>
 

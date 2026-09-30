@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
+import { SITE_NOINDEX, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -12,10 +13,11 @@ const poppins = Poppins({
 const GTM_ID = "GTM-NLJ7KGFK";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://r2dados.com"),
+  metadataBase: new URL(SITE_URL),
   title: "R2 Internet",
   description:
     "Internet de fibra óptica de alta velocidade para sua casa e sua empresa. Conexão estável, Wi-Fi total e suporte humanizado.",
+  robots: SITE_NOINDEX ? { index: false, follow: false } : undefined,
   openGraph: {
     siteName: "R2 Internet",
     locale: "pt_BR",

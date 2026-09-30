@@ -1,4 +1,9 @@
-import type { NextConfig } from "next";
+/*
+ * Em .mjs (e não .ts) de propósito: o servidor da Hostinger tem glibc antiga
+ * demais para o SWC nativo do Next, e com o SWC em WebAssembly o build não
+ * consegue transpilar um next.config.ts. Pelo mesmo motivo o `build` do
+ * package.json usa `--webpack` (o Turbopack exige o SWC nativo).
+ */
 
 /**
  * Rotas do site antigo (o app Astro que está no ar) que não existem mais no
@@ -18,7 +23,8 @@ const ROTAS_ANTIGAS = [
   { source: "/direcionador_folder", destination: "/tutoriais" },
 ];
 
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   // Libera o `next dev` para outros aparelhos da mesma rede Wi-Fi (o Next
   // bloqueia recursos de desenvolvimento vindos de outra origem por padrão,
   // e sem isso o HMR não conecta em quem abre pelo IP da máquina).
@@ -28,6 +34,8 @@ const nextConfig: NextConfig = {
     // As fotos exportadas do Figma são PNGs grandes: servir AVIF/WebP quando
     // o navegador aceita corta a maior parte do peso.
     formats: ["image/avif", "image/webp"],
+    // Fotos dos posts, enviadas pelo Studio do Sanity.
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" }],
   },
   redirects() {
     return ROTAS_ANTIGAS.map((rota) => ({ ...rota, permanent: true }));
